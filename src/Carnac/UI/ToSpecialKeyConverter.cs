@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Carnac.UI
-{
-    public class ToSpecialKeyConverter : IValueConverter
-    {
+namespace Carnac.UI {
+    public class ToSpecialKeyConverter: IValueConverter {
 
-        private readonly List<String> specialKeys = new List<String>(){
+        private readonly List<string> specialKeys = new List<string>(){
             "Escape",
             "Alt",
             "Ctrl",
@@ -42,13 +40,11 @@ namespace Carnac.UI
             "BrowserHome",
         };
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             return specialKeys.Contains(value.ToString()) ? "SPECIAL_KEY" : value;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
             throw new NotImplementedException();
         }
     }

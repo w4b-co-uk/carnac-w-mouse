@@ -1,23 +1,21 @@
 ﻿using Carnac.Logic.KeyMonitor;
+using Gma.System.MouseKeyHook;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows.Forms;
-using Gma.System.MouseKeyHook;
-using System.Collections.Generic;
 
-namespace Carnac.Logic.MouseMonitor
-{
-    public class InterceptMouse : IInterceptKeys
-    {
+namespace Carnac.Logic.MouseMonitor {
+    public class InterceptMouse: IInterceptKeys {
 
         public static readonly InterceptMouse Current = new InterceptMouse();
-        readonly IKeyboardMouseEvents m_GlobalHook = Hook.GlobalEvents();
-        readonly IObservable<InterceptKeyEventArgs> keyStream;
+        private readonly IKeyboardMouseEvents m_GlobalHook = Hook.GlobalEvents();
+        private readonly IObservable<InterceptKeyEventArgs> keyStream;
         private IObserver<InterceptKeyEventArgs> observer;
         private readonly KeysConverter kc = new KeysConverter();
-        
+
         public static readonly List<Keys> MouseKeys = new List<Keys>()
         {
             Keys.LButton,
@@ -29,18 +27,15 @@ namespace Carnac.Logic.MouseMonitor
             Keys.VolumeDown
         };
 
-        InterceptMouse()
-        {
-            keyStream = Observable.Create<InterceptKeyEventArgs>(observer =>
-            {
+        private InterceptMouse() {
+            keyStream = Observable.Create<InterceptKeyEventArgs>(observer => {
                 this.observer = observer;
                 m_GlobalHook.MouseClick += OnMouseClick;
                 m_GlobalHook.MouseDoubleClick += OnMouseDoubleClick;
                 m_GlobalHook.MouseWheel += HookManager_MouseWheel;
                 Debug.Write("Subscribed to mouse");
 
-                return Disposable.Create(() =>
-                {
+                return Disposable.Create(() => {
                     m_GlobalHook.MouseClick -= OnMouseClick;
                     m_GlobalHook.MouseDoubleClick -= OnMouseDoubleClick;
                     m_GlobalHook.MouseWheel -= HookManager_MouseWheel;
@@ -52,10 +47,8 @@ namespace Carnac.Logic.MouseMonitor
 
         }
 
-        private Keys MouseButtonsToKeys(MouseButtons button)
-        {
-            switch(button)
-            {
+        private Keys MouseButtonsToKeys(MouseButtons button) {
+            switch (button) {
                 case MouseButtons.Left:
                     return Keys.LButton;
                 case MouseButtons.Middle:
@@ -71,8 +64,7 @@ namespace Carnac.Logic.MouseMonitor
             }
         }
 
-        private void OnMouseClick(object sender, MouseEventArgs e)
-        {
+        private void OnMouseClick(object sender, MouseEventArgs e) {
             bool alt = (Control.ModifierKeys & Keys.Alt) != 0;
             bool control = (Control.ModifierKeys & Keys.Control) != 0;
             bool shift = (Control.ModifierKeys & Keys.Shift) != 0;
@@ -84,8 +76,7 @@ namespace Carnac.Logic.MouseMonitor
                 shift));
         }
 
-        private void OnMouseDoubleClick(object sender, MouseEventArgs e)
-        {
+        private void OnMouseDoubleClick(object sender, MouseEventArgs e) {
             observer.OnNext(new InterceptKeyEventArgs(
                 MouseButtonsToKeys(e.Button),
                 KeyDirection.Down,
@@ -94,8 +85,7 @@ namespace Carnac.Logic.MouseMonitor
                 Control.ModifierKeys == Keys.Shift));
         }
 
-        private void HookManager_MouseWheel(object sender, MouseEventArgs e)
-        {
+        private void HookManager_MouseWheel(object sender, MouseEventArgs e) {
             // for now using VolumeDown and Up as proxy could be refactored
             observer.OnNext(new InterceptKeyEventArgs(
                 e.Delta > 0 ? Keys.VolumeUp : Keys.VolumeDown,
@@ -105,11 +95,9 @@ namespace Carnac.Logic.MouseMonitor
                 Control.ModifierKeys == Keys.Shift));
         }
 
-        public IObservable<InterceptKeyEventArgs> GetKeyStream()
-        {
+        public IObservable<InterceptKeyEventArgs> GetKeyStream() {
             return keyStream;
         }
-
     }
 }
 

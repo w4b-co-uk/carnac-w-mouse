@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
-using System.Windows.Input;
 
-namespace Carnac.Logic
-{
-    public static class ReplaceKey
-    {
-        static readonly Dictionary<Keys, string> ShiftReplacements = new Dictionary<Keys, string>
+namespace Carnac.Logic {
+    public static class ReplaceKey {
+        private static readonly Dictionary<Keys, string> ShiftReplacements = new Dictionary<Keys, string>
         {
             {Keys.D0, ")"},
             {Keys.D1, "!"},
@@ -36,8 +33,7 @@ namespace Carnac.Logic
             {Keys.Insert, "ins"},
             {Keys.Delete, "del"}
         };
-
-        static readonly Dictionary<Keys, string> Replacements = new Dictionary<Keys, string>
+        private static readonly Dictionary<Keys, string> Replacements = new Dictionary<Keys, string>
         {
             {Keys.Space, " "},
             {Keys.D0, "0"},
@@ -86,8 +82,7 @@ namespace Carnac.Logic
             {Keys.Alt, "Alt"},
             {Keys.LMenu, "Alt"},
         };
-
-        static readonly Dictionary<Keys, string> SpecialCases = new Dictionary<Keys, string>
+        private static readonly Dictionary<Keys, string> SpecialCases = new Dictionary<Keys, string>
         {
             {Keys.Divide, " / "},
             {Keys.Multiply, " * "},
@@ -108,35 +103,31 @@ namespace Carnac.Logic
         };
 
         // kept to continue to support keymaps parsing
-        public static Keys? ToKey(string keyText)
-        {
-            foreach (var shiftReplacement in ShiftReplacements)
-            {
-                if (shiftReplacement.Value.Equals(keyText, StringComparison.CurrentCultureIgnoreCase))
+        public static Keys? ToKey(string keyText) {
+            foreach (KeyValuePair<Keys, string> shiftReplacement in ShiftReplacements) {
+                if (shiftReplacement.Value.Equals(keyText, StringComparison.CurrentCultureIgnoreCase)) {
                     return shiftReplacement.Key;
+                }
             }
-            Keys parsedKey;
-            if (Enum.TryParse(keyText, true, out parsedKey))
+            if (Enum.TryParse(keyText, true, out Keys parsedKey)) {
                 return parsedKey;
+            }
 
-            foreach (var replacement in Replacements)
-            {
-                if (replacement.Value.Equals(keyText, StringComparison.CurrentCultureIgnoreCase))
+            foreach (KeyValuePair<Keys, string> replacement in Replacements) {
+                if (replacement.Value.Equals(keyText, StringComparison.CurrentCultureIgnoreCase)) {
                     return replacement.Key;
+                }
             }
             return null;
         }
 
         // new implementation of sanitize to support locals
         // https://stackoverflow.com/questions/318777/c-sharp-how-to-translate-virtual-keycode-to-char
-        static public string KeyCodeToUnicode(Keys key, bool lowerOnly = false)
-        {
+        public static string KeyCodeToUnicode(Keys key, bool lowerOnly = false) {
             byte[] keyboardState = new byte[255];
-            if (!lowerOnly)
-            {
+            if (!lowerOnly) {
                 bool keyboardStateStatus = GetKeyboardState(keyboardState);
-                if (!keyboardStateStatus)
-                {
+                if (!keyboardStateStatus) {
                     return "";
                 }
             }
@@ -146,50 +137,37 @@ namespace Carnac.Logic
             IntPtr inputLocaleIdentifier = GetKeyboardLayout(0);
 
             StringBuilder result = new StringBuilder();
-            ToUnicodeEx(virtualKeyCode, scanCode, keyboardState, result, (int)5, (uint)0, inputLocaleIdentifier);
+            _ = ToUnicodeEx(virtualKeyCode, scanCode, keyboardState, result, 5, 0, inputLocaleIdentifier);
 
             return result.ToString();
         }
 
         [DllImport("user32.dll")]
-        static extern bool GetKeyboardState(byte[] lpKeyState);
+        private static extern bool GetKeyboardState(byte[] lpKeyState);
 
         [DllImport("user32.dll")]
-        static extern uint MapVirtualKey(uint uCode, uint uMapType);
+        private static extern uint MapVirtualKey(uint uCode, uint uMapType);
 
         [DllImport("user32.dll")]
-        static extern IntPtr GetKeyboardLayout(uint idThread);
+        private static extern IntPtr GetKeyboardLayout(uint idThread);
 
         [DllImport("user32.dll")]
-        static extern int ToUnicodeEx(uint wVirtKey, uint wScanCode, byte[] lpKeyState, [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pwszBuff, int cchBuff, uint wFlags, IntPtr dwhkl);
+        private static extern int ToUnicodeEx(uint wVirtKey, uint wScanCode, byte[] lpKeyState, [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pwszBuff, int cchBuff, uint wFlags, IntPtr dwhkl);
 
-        public static string Sanitise(this Keys key)
-        {
-            if (SpecialCases.ContainsKey(key))
-            {
+        public static string Sanitise(this Keys key) {
+            if (SpecialCases.ContainsKey(key)) {
                 return SpecialCases[key];
             }
             string result = KeyCodeToUnicode(key);
-            if (result.Length > 0)
-            {
-                return result;
-            }
-            return key.ToString();
+            return result.Length > 0 ? result : key.ToString();
         }
 
-        public static string SanitiseLower(this Keys key)
-        {
-            if (SpecialCases.ContainsKey(key))
-            {
+        public static string SanitiseLower(this Keys key) {
+            if (SpecialCases.ContainsKey(key)) {
                 return SpecialCases[key];
             }
             string result = KeyCodeToUnicode(key, true);
-            if (result.Length > 0)
-            {
-                return result;
-            }
-            return key.ToString();
+            return result.Length > 0 ? result : key.ToString();
         }
-
     }
 }

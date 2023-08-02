@@ -1,26 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using Carnac.Logic;
+using Carnac.Logic.Enums;
+using Carnac.Logic.Models;
+using Carnac.Logic.Native;
+using SettingsProviderNet;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
 using System.Windows.Media;
-using Carnac.Logic;
-using Carnac.Logic.Enums;
-using Carnac.Logic.Models;
-using Carnac.Logic.Native;
-using SettingsProviderNet;
 
-namespace Carnac.UI
-{
-    public class PreferencesViewModel : NotifyPropertyChanged
-    {
-        readonly ISettingsProvider settingsProvider;
-        
-        public PreferencesViewModel(ISettingsProvider settingsProvider, IScreenManager screenManager)
-        {
+namespace Carnac.UI {
+    public class PreferencesViewModel: NotifyPropertyChanged {
+        private readonly ISettingsProvider settingsProvider;
+
+        public PreferencesViewModel(ISettingsProvider settingsProvider, IScreenManager screenManager) {
             this.settingsProvider = settingsProvider;
-            
+
             Screens = new ObservableCollection<DetailedScreen>(screenManager.GetScreens());
 
             Settings = settingsProvider.GetSettings<PopupSettings>();
@@ -28,53 +25,58 @@ namespace Carnac.UI
             PlaceScreen();
 
             AvailableColors = new ObservableCollection<AvailableColor>();
-            var properties = typeof(Colors).GetProperties(BindingFlags.Static | BindingFlags.Public);
-            foreach (var prop in properties)
-            {
-                var name = prop.Name;
-                var value = (Color)prop.GetValue(null, null);
+            PropertyInfo[] properties = typeof(Colors).GetProperties(BindingFlags.Static | BindingFlags.Public);
+            foreach (PropertyInfo prop in properties) {
+                string name = prop.Name;
+                Color value = (Color)prop.GetValue(null, null);
 
-                var availableColor = new AvailableColor(name, value);
-                if (Settings.FontColor == name)
+                AvailableColor availableColor = new AvailableColor(name, value);
+                if (Settings.FontColor == name) {
                     FontColor = availableColor;
-                if (Settings.ItemBackgroundColor == name)
-                    ItemBackgroundColor = availableColor;
+                }
 
-                if (Settings.LeftClickColor == name)
+                if (Settings.ItemBackgroundColor == name) {
+                    ItemBackgroundColor = availableColor;
+                }
+
+                if (Settings.LeftClickColor == name) {
                     LeftClickColor = availableColor;
-                if (Settings.RightClickColor == name)
+                }
+
+                if (Settings.RightClickColor == name) {
                     RightClickColor = availableColor;
-                if (Settings.ScrollClickColor == name)
+                }
+
+                if (Settings.ScrollClickColor == name) {
                     ScrollClickColor = availableColor;
-                if (Settings.XButton1ClickColor == name)
+                }
+
+                if (Settings.XButton1ClickColor == name) {
                     XButton1ClickColor = availableColor;
-                if (Settings.XButton2ClickColor == name)
+                }
+
+                if (Settings.XButton2ClickColor == name) {
                     XButton2ClickColor = availableColor;
+                }
 
                 AvailableColors.Add(availableColor);
             }
 
-            if (LeftClickColor == null)
-            {
+            if (LeftClickColor == null) {
                 LeftClickColor = new AvailableColor("OrangeRed", Colors.OrangeRed);
             }
-            if (RightClickColor == null)
-            {
+            if (RightClickColor == null) {
                 RightClickColor = new AvailableColor("RoyalBlue", Colors.RoyalBlue);
             }
-            if (ScrollClickColor == null)
-            {
+            if (ScrollClickColor == null) {
                 ScrollClickColor = new AvailableColor("Gold", Colors.Gold);
             }
-            if (XButton1ClickColor == null)
-            {
+            if (XButton1ClickColor == null) {
                 XButton1ClickColor = new AvailableColor("Peru", Colors.Peru);
             }
-            if (XButton2ClickColor == null)
-            {
+            if (XButton2ClickColor == null) {
                 XButton2ClickColor = new AvailableColor("Plum", Colors.Plum);
             }
-
 
             SaveCommand = new DelegateCommand(SaveSettings);
             ResetToDefaultsCommand = new DelegateCommand(() => settingsProvider.ResetToDefaults<PopupSettings>());
@@ -95,12 +97,9 @@ namespace Carnac.UI
 
         public PopupSettings Settings { get; set; }
 
-        public string Version
-        {
-            get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
-        }
+        public string Version => Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-        readonly List<string> authors = new List<string>
+        private readonly List<string> authors = new List<string>
                                                     {
                                                          "Brendan Forster",
                                                          "Alex Friedman",
@@ -113,7 +112,7 @@ namespace Carnac.UI
                                                          "Henrik Andersson",
                                                          "Boris Fritscher"
                                                      };
-        readonly List<string> components = new List<string>
+        private readonly List<string> components = new List<string>
                                                        {
                                                          "MahApps.Metro",
                                                          "Fody",
@@ -122,15 +121,9 @@ namespace Carnac.UI
                                                          "Squirrel.Windows",
                                                          "MouseKeyHook"
                                                      };
-        public string Authors
-        {
-            get { return string.Join(", ", authors); }
-        }
+        public string Authors => string.Join(", ", authors);
 
-        public string Components
-        {
-            get { return string.Join(", ", components); }
-        }
+        public string Components => string.Join(", ", components);
 
         public AvailableColor FontColor { get; set; }
 
@@ -146,39 +139,32 @@ namespace Carnac.UI
 
         public AvailableColor XButton2ClickColor { get; set; }
 
-        void Visit()
-        {
-            try
-            {
-                Process.Start("http://code52.org/carnac/");
-            }
-            catch
-            {
+        private void Visit() {
+            try {
+                _ = Process.Start("http://code52.org/carnac/");
+            } catch {
                 //I forget what exceptions can be raised if the browser is crashed?
             }
         }
 
-        void SaveSettings()
-        {
-            if (Screens.Count < 1)
+        private void SaveSettings() {
+            if (Screens.Count < 1) {
                 return;
+            }
 
-            if (SelectedScreen == null)
+            if (SelectedScreen == null) {
                 SelectedScreen = Screens.First();
+            }
 
             Settings.Screen = SelectedScreen.Index;
 
-            if (SelectedScreen.NotificationPlacementTopLeft)
-                Settings.Placement = NotificationPlacement.TopLeft;
-            else if (SelectedScreen.NotificationPlacementBottomLeft)
-                Settings.Placement = NotificationPlacement.BottomLeft;
-            else if (SelectedScreen.NotificationPlacementTopRight)
-                Settings.Placement = NotificationPlacement.TopRight;
-            else if (SelectedScreen.NotificationPlacementBottomRight)
-                Settings.Placement = NotificationPlacement.BottomRight;
-            else
-                Settings.Placement = NotificationPlacement.BottomLeft;
-
+            Settings.Placement = SelectedScreen.NotificationPlacementTopLeft
+                ? NotificationPlacement.TopLeft
+                : SelectedScreen.NotificationPlacementBottomLeft
+                    ? NotificationPlacement.BottomLeft
+                    : SelectedScreen.NotificationPlacementTopRight
+                                    ? NotificationPlacement.TopRight
+                                    : SelectedScreen.NotificationPlacementBottomRight ? NotificationPlacement.BottomRight : NotificationPlacement.BottomLeft;
             PlaceScreen();
 
             Settings.SettingsConfigured = true;
@@ -192,18 +178,18 @@ namespace Carnac.UI
             settingsProvider.SaveSettings(Settings);
         }
 
-        void PlaceScreen()
-        {
-            if (Screens == null) 
+        private void PlaceScreen() {
+            if (Screens == null) {
                 return;
+            }
 
             SelectedScreen = Screens.FirstOrDefault(s => s.Index == Settings.Screen);
 
-            if (SelectedScreen == null) 
+            if (SelectedScreen == null) {
                 return;
+            }
 
-            switch (Settings.Placement)
-            {
+            switch (Settings.Placement) {
                 case NotificationPlacement.TopLeft:
                     SelectedScreen.NotificationPlacementTopLeft = true;
                     break;
@@ -222,6 +208,7 @@ namespace Carnac.UI
             }
 
             Settings.Left = SelectedScreen.Left;
+            Settings.Top = SelectedScreen.Top;
         }
     }
 }

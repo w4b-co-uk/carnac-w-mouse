@@ -44,7 +44,6 @@ namespace Carnac.Logic.MouseMonitor {
                 });
             })
             .Publish().RefCount();
-
         }
 
         private Keys MouseButtonsToKeys(MouseButtons button) {

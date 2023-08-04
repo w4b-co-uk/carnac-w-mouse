@@ -3,12 +3,13 @@ using Carnac.Logic.KeyMonitor;
 using Carnac.Logic.Models;
 using Carnac.UI;
 using Carnac.Utilities;
+using CarnacCore;
 using SettingsProviderNet;
 using System.Net;
 using System.Windows;
 
 namespace Carnac {
-    public partial class App {
+    public partial class App: System.IDisposable {
         private readonly SettingsProvider settingsProvider;
         private readonly IMessageProvider messageProvider;
         private readonly PopupSettings settings;
@@ -23,7 +24,7 @@ namespace Carnac {
         public App() {
             settingsProvider = new SettingsProvider(new RoamingAppDataStorage("Carnac"));
             settings = settingsProvider.GetSettings<PopupSettings>();
-            KeyProvider keyProvider = new KeyProvider(InterceptKeys.Current, new PasswordModeService(), new DesktopLockEventService(), settingsProvider);
+            KeyProvider keyProvider = new(InterceptKeys.Current, new PasswordModeService(), new DesktopLockEventService(), settingsProvider);
             messageProvider = new MessageProvider(new ShortcutProvider(), keyProvider, settings);
         }
 
@@ -38,7 +39,7 @@ namespace Carnac {
 
             trayIcon = new CarnacTrayIcon();
             trayIcon.OpenPreferences += TrayIconOnOpenPreferences;
-            KeyShowViewModel keyShowViewModel = new KeyShowViewModel(settings);
+            KeyShowViewModel keyShowViewModel = new(settings);
             keyShowView = new KeyShowView(keyShowViewModel);
             keyShowView.Show();
 
@@ -80,9 +81,13 @@ namespace Carnac {
         }
 
         private void TrayIconOnOpenPreferences() {
-            PreferencesViewModel preferencesViewModel = new PreferencesViewModel(settingsProvider, new ScreenManager());
-            PreferencesView preferencesView = new PreferencesView(preferencesViewModel);
+            PreferencesViewModel preferencesViewModel = new(settingsProvider, new ScreenManager());
+            PreferencesView preferencesView = new(preferencesViewModel);
             preferencesView.Show();
+        }
+
+        public void Dispose() {
+            throw new System.NotImplementedException();
         }
     }
 }

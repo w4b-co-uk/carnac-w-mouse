@@ -45,9 +45,6 @@
     <Resource Include="Resources\Entypo.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Carnac.Logic\Carnac.Logic.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -70,7 +67,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="DeltaCompressionDotNet" Version="2.0.1" />
+    <PackageReference Include="DeltaCompressionDotNet" Version="1.1.0" />
     <PackageReference Include="Fody" Version="6.8.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -90,6 +87,9 @@
     <PackageReference Include="System.Reactive.Linq" Version="6.0.0" />
     <PackageReference Include="System.Reactive.PlatformServices" Version="6.0.0" />
     <PackageReference Include="System.Reactive.Windows.Threading" Version="6.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Carnac.LogicCore\Carnac.LogicCore.csproj" />
   </ItemGroup>
   <Target AfterTargets="AfterBuild;NonWinFodyTarget" Name="CleanReferenceCopyLocalPaths">
     <Delete Files="@(ReferenceCopyLocalPaths->'$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" />

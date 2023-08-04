@@ -10,19 +10,11 @@ namespace Carnac {
         }
 
         private void RadioChecked(object sender, RoutedEventArgs e) {
-            if (!(DataContext is PreferencesViewModel dc)) {
-                return;
+            if (DataContext is PreferencesViewModel dc &&
+                sender is RadioButton rb &&
+                rb.Tag is DetailedScreen tag) {
+                dc.SelectedScreen = tag;
             }
-
-            if (!(sender is RadioButton rb)) {
-                return;
-            }
-
-            if (!(rb.Tag is DetailedScreen tag)) {
-                return;
-            }
-
-            dc.SelectedScreen = tag;
         }
     }
 }

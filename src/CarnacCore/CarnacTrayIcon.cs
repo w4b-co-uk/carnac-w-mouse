@@ -1,25 +1,29 @@
 using System;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Forms;
 using Application = System.Windows.Application;
 
-namespace Carnac {
+namespace CarnacCore {
     public class CarnacTrayIcon: IDisposable {
         private readonly NotifyIcon trayIcon;
 
         public CarnacTrayIcon() {
-            MenuItem exitMenuItem = new MenuItem {
-                Text = Properties.Resources.ShellView_Exit
+            ToolStripMenuItem exitMenuItem = new() {
+                Text = "Exit" //Properties.Resources.ShellView_Exit
             };
 
-            System.IO.Stream iconStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Carnac.icon.embedded.ico");
+            Stream iconStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("CarnacCore.icon.embedded.ico");
+
+            ContextMenuStrip contextMenu = new();
+            _ = contextMenu.Items.Add(exitMenuItem);
 
             trayIcon = new NotifyIcon {
                 Icon = new Icon(iconStream),
-                ContextMenu = new ContextMenu(new[] { exitMenuItem })
+                ContextMenuStrip = contextMenu
             };
 
             exitMenuItem.Click += (sender, args) => {

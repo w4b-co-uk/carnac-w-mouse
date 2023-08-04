@@ -28,7 +28,7 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
-    <Page Update="PositionOnMonitorSelector.xaml">
+    <Page Update="UI\PositionOnMonitorSelector.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Themes\Generic.xaml">

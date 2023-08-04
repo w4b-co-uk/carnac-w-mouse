@@ -1,9 +1,8 @@
 using Carnac.Logic.Native;
-using Carnac.UI;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Carnac {
+namespace Carnac.UI {
     public partial class PositionOnMonitorSelector {
         public PositionOnMonitorSelector() {
             InitializeComponent();

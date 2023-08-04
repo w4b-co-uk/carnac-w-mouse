@@ -61,7 +61,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <StackPanel Margin="10,0,0,0" Orientation="Vertical">
-                        <carnac:PositionOnMonitorSelector />
+                        <ui:PositionOnMonitorSelector />
                         <ui:PreferencesField Header="Top Offset">
                             <Slider
                                 IsSnapToTickEnabled="True"

@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <OutputType>Library</OutputType>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\src\</SolutionDir>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <AssemblyTitle>Carnac.Tests</AssemblyTitle>
+    <Product>Carnac.Tests</Product>
+    <Copyright>Copyright ©  2012</Copyright>
+    <AssemblyVersion>2.3.0.0</AssemblyVersion>
+    <FileVersion>2.3.0.0</FileVersion>
+    <InformationalVersion>2.3.0-ci.32+Branch.master.Sha.69515520313d5c26261a8b05660255cd9da08bfa</InformationalVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Carnac.LogicCore\Carnac.LogicCore.csproj" />
+    <ProjectReference Include="..\CarnacCore\CarnacCore.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Reactive.Testing" Version="6.0.0" />
+    <PackageReference Include="NSubstitute" Version="5.0.0" />
+    <PackageReference Include="SettingsProviderNet" Version="2.1.1" />
+    <PackageReference Include="Shouldly" Version="4.2.1" />
+    <PackageReference Include="System.Reactive" Version="6.0.0" />
+    <PackageReference Include="System.Reactive.Core" Version="6.0.0" />
+    <PackageReference Include="System.Reactive.Interfaces" Version="6.0.0" />
+    <PackageReference Include="System.Reactive.Linq" Version="6.0.0" />
+    <PackageReference Include="System.Reactive.PlatformServices" Version="6.0.0" />
+    <PackageReference Include="System.Reactive.Windows.Threading" Version="6.0.0" />
+    <PackageReference Include="xunit" Version="2.5.0" />
+  </ItemGroup>
+</Project>

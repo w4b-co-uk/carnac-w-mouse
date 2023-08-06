@@ -17,15 +17,15 @@
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Carnac.LogicCore\w4b.carnac.logic.csproj" />
-    <ProjectReference Include="..\CarnacCore\w4b.carnac.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.Reactive.Testing" Version="6.0.0" />
     <PackageReference Include="NSubstitute" Version="5.0.0" />
     <PackageReference Include="SettingsProviderNet" Version="2.1.1" />
     <PackageReference Include="Shouldly" Version="4.2.1" />
     <PackageReference Include="System.Reactive" Version="6.0.0" />
     <PackageReference Include="xunit" Version="2.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\w4b.carnac.logic\w4b.carnac.logic.csproj" />
+    <ProjectReference Include="..\w4b.carnac\w4b.carnac.csproj" />
   </ItemGroup>
 </Project>

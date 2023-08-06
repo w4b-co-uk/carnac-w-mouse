@@ -23,7 +23,7 @@ namespace Carnac.UI {
 
             IntPtr hwnd = new WindowInteropHelper(this).Handle;
             Win32Methods.SetWindowExTransparentAndNotInWindowList(hwnd);
-            Timer timer = new Timer(100);
+            Timer timer = new(100);
             timer.Elapsed +=
                 (s, x) => SetWindowPos(hwnd,
                                  HWND.TOPMOST,
@@ -55,11 +55,11 @@ namespace Carnac.UI {
         /// </summary>
         public static class HWND {
             public static readonly IntPtr
-            NOTOPMOST = new IntPtr(-2),
-            BROADCAST = new IntPtr(0xffff),
-            TOPMOST = new IntPtr(-1),
-            TOP = new IntPtr(0),
-            BOTTOM = new IntPtr(1);
+            NOTOPMOST = new(-2),
+            BROADCAST = new(0xffff),
+            TOPMOST = new(-1),
+            TOP = new(0),
+            BOTTOM = new(1);
         }
 
         /// <summary>
@@ -122,9 +122,7 @@ namespace Carnac.UI {
         }
 
         private void SetupMouseEvents() {
-            if (m_GlobalHook == null) {
-                m_GlobalHook = Hook.GlobalEvents();
-            }
+            m_GlobalHook ??= Hook.GlobalEvents();
             m_GlobalHook.MouseDown += OnMouseDown;
             m_GlobalHook.MouseMove += OnMouseMove;
         }

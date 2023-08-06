@@ -15,13 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyStreamCaptureCore", "KeyStreamCaptureCore\KeyStreamCaptureCore.csproj", "{13FC121E-668E-4720-9A16-0838DA2F404B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "w4b.key.stream.capture", "KeyStreamCaptureCore\w4b.key.stream.capture.csproj", "{13FC121E-668E-4720-9A16-0838DA2F404B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carnac.LogicCore", "Carnac.LogicCore\Carnac.LogicCore.csproj", "{049F2A11-2E0F-40FF-A37A-BC764928B0D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "w4b.carnac.logic", "Carnac.LogicCore\w4b.carnac.logic.csproj", "{049F2A11-2E0F-40FF-A37A-BC764928B0D0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carnac.TestsCore", "Carnac.TestsCore\Carnac.TestsCore.csproj", "{761A0AAA-BDB1-4BDB-9CC2-1862094B40C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "w4b.carnac.tests", "Carnac.TestsCore\w4b.carnac.tests.csproj", "{761A0AAA-BDB1-4BDB-9CC2-1862094B40C7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarnacCore", "CarnacCore\CarnacCore.csproj", "{0A936D6B-5B6B-495A-AE4E-264DC730D23D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "w4b.carnac", "CarnacCore\w4b.carnac.csproj", "{0A936D6B-5B6B-495A-AE4E-264DC730D23D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Forms;
 using Application = System.Windows.Application;
 
-namespace CarnacCore {
+namespace w4b.carnac {
     public class CarnacTrayIcon: IDisposable {
         private readonly NotifyIcon trayIcon;
 
@@ -16,7 +16,7 @@ namespace CarnacCore {
                 Text = "Exit" //Properties.Resources.ShellView_Exit
             };
 
-            Stream iconStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("CarnacCore.icon.embedded.ico");
+            Stream iconStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("w4b.carnac.icon.embedded.ico");
 
             ContextMenuStrip contextMenu = new();
             _ = contextMenu.Items.Add(exitMenuItem);

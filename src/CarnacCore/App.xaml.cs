@@ -3,10 +3,10 @@ using Carnac.Logic.KeyMonitor;
 using Carnac.Logic.Models;
 using Carnac.UI;
 using Carnac.Utilities;
-using CarnacCore;
 using SettingsProviderNet;
 using System.Net;
 using System.Windows;
+using w4b.carnac;
 
 namespace Carnac {
     public partial class App: System.IDisposable {

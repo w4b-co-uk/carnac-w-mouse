@@ -17,8 +17,8 @@
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Carnac.LogicCore\Carnac.LogicCore.csproj" />
-    <ProjectReference Include="..\CarnacCore\CarnacCore.csproj" />
+    <ProjectReference Include="..\Carnac.LogicCore\w4b.carnac.logic.csproj" />
+    <ProjectReference Include="..\CarnacCore\w4b.carnac.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Reactive.Testing" Version="6.0.0" />

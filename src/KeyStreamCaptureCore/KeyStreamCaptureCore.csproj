@@ -26,11 +26,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Reactive.Core" Version="6.0.0" />
-    <PackageReference Include="System.Reactive.Interfaces" Version="6.0.0" />
-    <PackageReference Include="System.Reactive.Linq" Version="6.0.0" />
-    <PackageReference Include="System.Reactive.PlatformServices" Version="6.0.0" />
-    <PackageReference Include="System.Reactive.Windows.Threading" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Carnac.LogicCore\Carnac.LogicCore.csproj" />

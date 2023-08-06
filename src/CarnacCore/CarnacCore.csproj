@@ -82,11 +82,6 @@
     <PackageReference Include="Splat" Version="14.7.1" />
     <PackageReference Include="squirrel.windows" Version="2.0.1" />
     <PackageReference Include="System.Reactive" Version="6.0.0" />
-    <PackageReference Include="System.Reactive.Core" Version="6.0.0" />
-    <PackageReference Include="System.Reactive.Interfaces" Version="6.0.0" />
-    <PackageReference Include="System.Reactive.Linq" Version="6.0.0" />
-    <PackageReference Include="System.Reactive.PlatformServices" Version="6.0.0" />
-    <PackageReference Include="System.Reactive.Windows.Threading" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Carnac.LogicCore\Carnac.LogicCore.csproj" />

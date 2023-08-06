@@ -26,11 +26,6 @@
     <PackageReference Include="SettingsProviderNet" Version="2.1.1" />
     <PackageReference Include="Shouldly" Version="4.2.1" />
     <PackageReference Include="System.Reactive" Version="6.0.0" />
-    <PackageReference Include="System.Reactive.Core" Version="6.0.0" />
-    <PackageReference Include="System.Reactive.Interfaces" Version="6.0.0" />
-    <PackageReference Include="System.Reactive.Linq" Version="6.0.0" />
-    <PackageReference Include="System.Reactive.PlatformServices" Version="6.0.0" />
-    <PackageReference Include="System.Reactive.Windows.Threading" Version="6.0.0" />
     <PackageReference Include="xunit" Version="2.5.0" />
   </ItemGroup>
 </Project>

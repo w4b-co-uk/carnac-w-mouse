@@ -41,11 +41,6 @@
     <PackageReference Include="SettingsProviderNet" Version="2.1.1" />
     <PackageReference Include="System.Interactive" Version="6.0.1" />
     <PackageReference Include="System.Reactive" Version="6.0.0" />
-    <PackageReference Include="System.Reactive.Core" Version="6.0.0" />
-    <PackageReference Include="System.Reactive.Interfaces" Version="6.0.0" />
-    <PackageReference Include="System.Reactive.Linq" Version="6.0.0" />
-    <PackageReference Include="System.Reactive.PlatformServices" Version="6.0.0" />
-    <PackageReference Include="System.Reactive.Windows.Threading" Version="6.0.0" />
     <PackageReference Include="YamlDotNet" Version="13.1.1" />
   </ItemGroup>
 </Project>

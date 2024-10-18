@@ -61,181 +61,74 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <StackPanel Margin="10,0,0,0"
-                                Orientation="Vertical">
+                    <StackPanel Margin="10,0,0,0" Orientation="Vertical">
                         <ui:PositionOnMonitorSelector />
                         <w4bui:ThreeColumnControl LabelText="Top Offset">
                             <w4bui:ThreeColumnControl.MainContent>
-                                <Slider IsSnapToTickEnabled="True"
-                                        LargeChange="10"
-                                        Maximum="{Binding SelectedScreen.Height}"
-                                        Minimum="0"
-                                        SmallChange="1"
-                                        TickFrequency="20"
-                                        Value="{Binding Settings.TopOffset}" />
+                                <Slider
+                                    IsSnapToTickEnabled="True"
+                                    LargeChange="10"
+                                    Maximum="{Binding SelectedScreen.Height}"
+                                    Minimum="0"
+                                    SmallChange="1"
+                                    TickFrequency="20"
+                                    Value="{Binding Settings.TopOffset}" />
                             </w4bui:ThreeColumnControl.MainContent>
                             <w4bui:ThreeColumnControl.OptionalContent>
-                                <TextBox Foreground="White"
-                                         Text="{Binding Settings.TopOffset}" />
+                                <TextBox Foreground="White" Text="{Binding Settings.TopOffset}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
                         <w4bui:ThreeColumnControl LabelText="Bottom Offset">
                             <w4bui:ThreeColumnControl.MainContent>
-                                <Slider IsSnapToTickEnabled="True"
-                                        LargeChange="10"
-                                        Maximum="{Binding SelectedScreen.Height}"
-                                        Minimum="0"
-                                        SmallChange="1"
-                                        TickFrequency="20"
-                                        Value="{Binding Settings.BottomOffset}" />
+                                <Slider
+                                    IsSnapToTickEnabled="True"
+                                    LargeChange="10"
+                                    Maximum="{Binding SelectedScreen.Height}"
+                                    Minimum="0"
+                                    SmallChange="1"
+                                    TickFrequency="20"
+                                    Value="{Binding Settings.BottomOffset}" />
                             </w4bui:ThreeColumnControl.MainContent>
                             <w4bui:ThreeColumnControl.OptionalContent>
-                                <TextBox Foreground="White"
-                                         Text="{Binding Settings.BottomOffset}" />
+                                <TextBox Foreground="White" Text="{Binding Settings.BottomOffset}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
                         <w4bui:ThreeColumnControl LabelText="Left Offset">
                             <w4bui:ThreeColumnControl.MainContent>
-                                <Slider IsSnapToTickEnabled="True"
-                                        LargeChange="10"
-                                        Maximum="{Binding SelectedScreen.Width}"
-                                        Minimum="0"
-                                        SmallChange="1"
-                                        TickFrequency="20"
-                                        Value="{Binding Settings.LeftOffset}" />
+                                <Slider
+                                    IsSnapToTickEnabled="True"
+                                    LargeChange="10"
+                                    Maximum="{Binding SelectedScreen.Width}"
+                                    Minimum="0"
+                                    SmallChange="1"
+                                    TickFrequency="20"
+                                    Value="{Binding Settings.LeftOffset}" />
                             </w4bui:ThreeColumnControl.MainContent>
                             <w4bui:ThreeColumnControl.OptionalContent>
-                                <TextBox Foreground="White"
-                                         Text="{Binding Settings.LeftOffset}" />
+                                <TextBox Foreground="White" Text="{Binding Settings.LeftOffset}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
                         <w4bui:ThreeColumnControl LabelText="Right Offset">
                             <w4bui:ThreeColumnControl.MainContent>
-                                <Slider IsSnapToTickEnabled="True"
-                                        LargeChange="10"
-                                        Maximum="{Binding SelectedScreen.Width}"
-                                        Minimum="0"
-                                        SmallChange="1"
-                                        TickFrequency="20"
-                                        Value="{Binding Settings.RightOffset}" />
+                                <Slider
+                                    IsSnapToTickEnabled="True"
+                                    LargeChange="10"
+                                    Maximum="{Binding SelectedScreen.Width}"
+                                    Minimum="0"
+                                    SmallChange="1"
+                                    TickFrequency="20"
+                                    Value="{Binding Settings.RightOffset}" />
                             </w4bui:ThreeColumnControl.MainContent>
                             <w4bui:ThreeColumnControl.OptionalContent>
-                                <TextBox Foreground="White"
-                                         Text="{Binding Settings.RightOffset}" />
+                                <TextBox Foreground="White" Text="{Binding Settings.RightOffset}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
-                        <Separator Height="10"
-                                   Margin="0" />
+                        <Separator Height="10" Margin="0" />
                         <w4bui:ThreeColumnControl LabelText="Auto Update">
                             <w4bui:ThreeColumnControl.MainContent>
-                                <CheckBox Content="auto check updates from GitHub (need to restart this program)"
-                                          IsChecked="{Binding Settings.AutoUpdate}" />
+                                <CheckBox Content="auto check updates from GitHub (need to restart this program)" IsChecked="{Binding Settings.AutoUpdate}" />
                             </w4bui:ThreeColumnControl.MainContent>
                         </w4bui:ThreeColumnControl>
-                    </StackPanel>
-                    <StackPanel Grid.Row="1"
-                                Margin="5"
-                                HorizontalAlignment="Right"
-                                Orientation="Horizontal">
-                        <Button Width="150"
-                                Margin="0,0,5,0"
-                                Command="{Binding ResetToDefaultsCommand}"
-                                Content="Reset to Defaults" />
-                        <Button Width="50"
-                                Command="{Binding SaveCommand}"
-                                Content="Save" />
-                    </StackPanel>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Keyboard">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <StackPanel Margin="10,0,0,0" Orientation="Vertical">
-                        <ui:PreferencesField Header="Popup Text Width">
-                            <Slider
-                                IsSnapToTickEnabled="True"
-                                LargeChange="50"
-                                Maximum="1000"
-                                Minimum="0"
-                                SmallChange="10"
-                                TickFrequency="10"
-                                Value="{Binding Settings.ItemMaxWidth}" />
-                            <ui:PreferencesField.SecondaryControl>
-                                <TextBox Foreground="White" Text="{Binding Settings.ItemMaxWidth}" />
-                            </ui:PreferencesField.SecondaryControl>
-                        </ui:PreferencesField>
-                        <ui:PreferencesField Header="Popup Opacity">
-                            <Slider
-                                IsSnapToTickEnabled="True"
-                                LargeChange="0.1"
-                                Maximum="1"
-                                Minimum="0"
-                                SmallChange="0.05"
-                                TickFrequency="0.05"
-                                Value="{Binding Settings.ItemOpacity}" />
-                            <ui:PreferencesField.SecondaryControl>
-                                <TextBox Foreground="White" Text="{Binding Settings.ItemOpacity}" />
-                            </ui:PreferencesField.SecondaryControl>
-                        </ui:PreferencesField>
-                        <ui:PreferencesField Header="Popup Fade Delay (sec)">
-                            <Slider
-                                IsSnapToTickEnabled="True"
-                                LargeChange="2"
-                                Maximum="50"
-                                Minimum="1"
-                                SmallChange="1"
-                                TickFrequency="1"
-                                Value="{Binding Settings.ItemFadeDelay}" />
-                            <ui:PreferencesField.SecondaryControl>
-                                <TextBox Foreground="White" Text="{Binding Settings.ItemFadeDelay}" />
-                            </ui:PreferencesField.SecondaryControl>
-                        </ui:PreferencesField>
-                        <ui:PreferencesField Header="Font Size">
-                            <Slider
-                                IsSnapToTickEnabled="True"
-                                LargeChange="2"
-                                Maximum="48"
-                                Minimum="8"
-                                SmallChange="1"
-                                TickFrequency="1"
-                                Value="{Binding Settings.FontSize}" />
-                            <ui:PreferencesField.SecondaryControl>
-                                <TextBox Foreground="White" Text="{Binding Settings.FontSize}" />
-                            </ui:PreferencesField.SecondaryControl>
-                        </ui:PreferencesField>
-                        <ui:PreferencesField Header="Font Colour">
-                            <ComboBox
-                                ItemTemplate="{StaticResource ColourPickerTemplate}"
-                                ItemsSource="{Binding AvailableColors}"
-                                SelectedItem="{Binding FontColor}" />
-                        </ui:PreferencesField>
-                        <ui:PreferencesField Header="Background Color">
-                            <ComboBox
-                                ItemTemplate="{StaticResource ColourPickerTemplate}"
-                                ItemsSource="{Binding AvailableColors}"
-                                SelectedItem="{Binding ItemBackgroundColor}" />
-                        </ui:PreferencesField>
-                        <ui:PreferencesField Header="Shortcuts Only">
-                            <CheckBox Content="Only show keys that are listed in keymaps folder" IsChecked="{Binding Settings.DetectShortcutsOnly}" />
-                        </ui:PreferencesField>
-                        <ui:PreferencesField Header="Only keys with Modifiers">
-                            <CheckBox Content="Only show keys that have ctrl, shift, alt or windows" IsChecked="{Binding Settings.ShowOnlyModifiers}" />
-                        </ui:PreferencesField>
-                        <ui:PreferencesField Header="Show Space as ␣">
-                            <CheckBox Content="Show Space as Unicode character '␣'" IsChecked="{Binding Settings.ShowSpaceAsUnicode}" />
-                        </ui:PreferencesField>
-                        <ui:PreferencesField Header="Show Application Icon">
-                            <CheckBox Content="Display the icon of the active application" IsChecked="{Binding Settings.ShowApplicationIcon}" />
-                        </ui:PreferencesField>
-                        <ui:PreferencesField Header="Process Filter">
-                            <StackPanel Orientation="Vertical">
-                                <TextBox Text="{Binding Settings.ProcessFilterExpression}" />
-                                <TextBlock HorizontalAlignment="Left">Only show keys from processes matching this regular expression</TextBlock>
-                            </StackPanel>
-                        </ui:PreferencesField>
                     </StackPanel>
                     <StackPanel
                         Grid.Row="1"
@@ -252,6 +145,136 @@
                             Command="{Binding SaveCommand}"
                             Content="Save" />
                     </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Keyboard">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Margin="10,0,0,0" Orientation="Vertical">
+                        <w4bui:ThreeColumnControl LabelText="Popup Text Width">
+                            <w4bui:ThreeColumnControl.MainContent>
+                                <Slider
+                                    IsSnapToTickEnabled="True"
+                                    LargeChange="50"
+                                    Maximum="1000"
+                                    Minimum="0"
+                                    SmallChange="10"
+                                    TickFrequency="10"
+                                    Value="{Binding Settings.ItemMaxWidth}" />
+                            </w4bui:ThreeColumnControl.MainContent>
+                            <w4bui:ThreeColumnControl.OptionalContent>
+                                <TextBox Foreground="White" Text="{Binding Settings.ItemMaxWidth}" />
+                            </w4bui:ThreeColumnControl.OptionalContent>
+                        </w4bui:ThreeColumnControl>
+                        <w4bui:ThreeColumnControl LabelText="Popup Opacity">
+                            <w4bui:ThreeColumnControl.MainContent>
+                                <Slider
+                                    IsSnapToTickEnabled="True"
+                                    LargeChange="0.1"
+                                    Maximum="1"
+                                    Minimum="0"
+                                    SmallChange="0.05"
+                                    TickFrequency="0.05"
+                                    Value="{Binding Settings.ItemOpacity}" />
+                            </w4bui:ThreeColumnControl.MainContent>
+                            <w4bui:ThreeColumnControl.OptionalContent>
+                                <TextBox Foreground="White" Text="{Binding Settings.ItemOpacity}" />
+                            </w4bui:ThreeColumnControl.OptionalContent>
+                        </w4bui:ThreeColumnControl>
+                        <w4bui:ThreeColumnControl LabelText="Popup Fade Delay (sec)">
+                            <w4bui:ThreeColumnControl.MainContent>
+                                <Slider
+                                    IsSnapToTickEnabled="True"
+                                    LargeChange="2"
+                                    Maximum="50"
+                                    Minimum="1"
+                                    SmallChange="1"
+                                    TickFrequency="1"
+                                    Value="{Binding Settings.ItemFadeDelay}" />
+                            </w4bui:ThreeColumnControl.MainContent>
+                            <w4bui:ThreeColumnControl.OptionalContent>
+                                <TextBox Foreground="White" Text="{Binding Settings.ItemFadeDelay}" />
+                            </w4bui:ThreeColumnControl.OptionalContent>
+                        </w4bui:ThreeColumnControl>
+                        <w4bui:ThreeColumnControl LabelText="Font Size">
+                            <w4bui:ThreeColumnControl.MainContent>
+                                <Slider
+                                    IsSnapToTickEnabled="True"
+                                    LargeChange="2"
+                                    Maximum="48"
+                                    Minimum="8"
+                                    SmallChange="1"
+                                    TickFrequency="1"
+                                    Value="{Binding Settings.FontSize}" />
+                            </w4bui:ThreeColumnControl.MainContent>
+                            <w4bui:ThreeColumnControl.OptionalContent>
+                                <TextBox Foreground="White" Text="{Binding Settings.FontSize}" />
+                            </w4bui:ThreeColumnControl.OptionalContent>
+                        </w4bui:ThreeColumnControl>
+                        <w4bui:ThreeColumnControl LabelText="Font Colour">
+                            <w4bui:ThreeColumnControl.MainContent>
+                                <ComboBox
+                                    ItemTemplate="{StaticResource ColourPickerTemplate}"
+                                    ItemsSource="{Binding AvailableColors}"
+                                    SelectedItem="{Binding FontColor}" />
+                            </w4bui:ThreeColumnControl.MainContent>
+                        </w4bui:ThreeColumnControl>
+                        <w4bui:ThreeColumnControl LabelText="Background Color">
+                            <w4bui:ThreeColumnControl.MainContent>
+                                <ComboBox
+                                    ItemTemplate="{StaticResource ColourPickerTemplate}"
+                                    ItemsSource="{Binding AvailableColors}"
+                                    SelectedItem="{Binding ItemBackgroundColor}" />
+                            </w4bui:ThreeColumnControl.MainContent>
+                        </w4bui:ThreeColumnControl>
+                        <w4bui:ThreeColumnControl LabelText="Shortcuts Only">
+                            <w4bui:ThreeColumnControl.MainContent>
+                                <CheckBox Content="Only show keys that are listed in keymaps folder" IsChecked="{Binding Settings.DetectShortcutsOnly}" />
+                            </w4bui:ThreeColumnControl.MainContent>
+                        </w4bui:ThreeColumnControl>
+                        <w4bui:ThreeColumnControl LabelText="Only keys with Modifiers">
+                            <w4bui:ThreeColumnControl.MainContent>
+                                <CheckBox Content="Only show keys that have ctrl, shift, alt or windows" IsChecked="{Binding Settings.ShowOnlyModifiers}" />
+                            </w4bui:ThreeColumnControl.MainContent>
+                        </w4bui:ThreeColumnControl>
+                        <w4bui:ThreeColumnControl LabelText="Show Space as ␣">
+                            <w4bui:ThreeColumnControl.MainContent>
+                                <CheckBox Content="Show Space as Unicode character '␣'" IsChecked="{Binding Settings.ShowSpaceAsUnicode}" />
+                            </w4bui:ThreeColumnControl.MainContent>
+                        </w4bui:ThreeColumnControl>
+                        <w4bui:ThreeColumnControl LabelText="Show Application Icon">
+                            <w4bui:ThreeColumnControl.MainContent>
+                                <CheckBox Content="Display the icon of the active application" IsChecked="{Binding Settings.ShowApplicationIcon}" />
+                            </w4bui:ThreeColumnControl.MainContent>
+                        </w4bui:ThreeColumnControl>
+                        <w4bui:ThreeColumnControl LabelText="Process Filter">
+                            <w4bui:ThreeColumnControl.MainContent>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBox Text="{Binding Settings.ProcessFilterExpression}" />
+                                    <TextBlock HorizontalAlignment="Left">Only show keys from processes matching this regular expression</TextBlock>
+                                </StackPanel>
+                            </w4bui:ThreeColumnControl.MainContent>
+                        </w4bui:ThreeColumnControl>
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="1"
+                        Margin="5"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <Button
+                            Width="150"
+                            Margin="0,0,5,0"
+                            Command="{Binding ResetToDefaultsCommand}"
+                            Content="Reset to Defaults" />
+                        <Button
+                            Width="50"
+                            Command="{Binding SaveCommand}"
+                            Content="Save" />
+                    </StackPanel>
+
                 </Grid>
 
             </TabItem>

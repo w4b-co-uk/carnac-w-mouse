@@ -7,6 +7,7 @@ using SettingsProviderNet;
 using System.Net;
 using System.Windows;
 using w4b.carnac;
+using w4b.carnac.UI;
 
 namespace Carnac {
     public partial class App: System.IDisposable {

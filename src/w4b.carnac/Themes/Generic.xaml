@@ -1,7 +1,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ui="clr-namespace:Carnac.UI">
+    xmlns:ui="clr-namespace:Carnac.UI"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style TargetType="{x:Type ui:PreferencesField}">
         <Setter Property="Template">
@@ -14,11 +14,11 @@
                             <ColumnDefinition Width="60" />
                         </Grid.ColumnDefinitions>
                         <TextBlock
-                            Margin="10,0,0,0"
-                            VerticalAlignment="Center"
                             FontWeight="Bold"
                             Foreground="White"
-                            Text="{TemplateBinding Header}" />
+                            Margin="10,0,0,0"
+                            Text="{TemplateBinding Header}"
+                            VerticalAlignment="Center" />
 
                         <ContentPresenter
                             Grid.Column="1"
@@ -26,10 +26,10 @@
                             VerticalAlignment="Center" />
 
                         <ContentPresenter
+                            Content="{TemplateBinding SecondaryControl}"
                             Grid.Column="2"
                             Margin="0,0,10,0"
-                            VerticalAlignment="Center"
-                            Content="{TemplateBinding SecondaryControl}" />
+                            VerticalAlignment="Center" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

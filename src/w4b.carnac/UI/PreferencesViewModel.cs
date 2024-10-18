@@ -2,7 +2,9 @@
 using Carnac.Logic.Enums;
 using Carnac.Logic.Models;
 using Carnac.Logic.Native;
+using Carnac.UI;
 using SettingsProviderNet;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -11,7 +13,7 @@ using System.Reflection;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace Carnac.UI {
+namespace w4b.carnac.UI {
     public class PreferencesViewModel: NotifyPropertyChanged {
         private readonly ISettingsProvider settingsProvider;
 
@@ -30,7 +32,7 @@ namespace Carnac.UI {
                 string name = prop.Name;
                 Color value = (Color)prop.GetValue(null, null);
 
-                AvailableColor availableColor = new AvailableColor(name, value);
+                AvailableColor availableColor = new(name, value);
                 if (Settings.FontColor == name) {
                     FontColor = availableColor;
                 }
@@ -62,21 +64,11 @@ namespace Carnac.UI {
                 AvailableColors.Add(availableColor);
             }
 
-            if (LeftClickColor == null) {
-                LeftClickColor = new AvailableColor("OrangeRed", Colors.OrangeRed);
-            }
-            if (RightClickColor == null) {
-                RightClickColor = new AvailableColor("RoyalBlue", Colors.RoyalBlue);
-            }
-            if (ScrollClickColor == null) {
-                ScrollClickColor = new AvailableColor("Gold", Colors.Gold);
-            }
-            if (XButton1ClickColor == null) {
-                XButton1ClickColor = new AvailableColor("Peru", Colors.Peru);
-            }
-            if (XButton2ClickColor == null) {
-                XButton2ClickColor = new AvailableColor("Plum", Colors.Plum);
-            }
+            LeftClickColor ??= new AvailableColor("OrangeRed", Colors.OrangeRed);
+            RightClickColor ??= new AvailableColor("RoyalBlue", Colors.RoyalBlue);
+            ScrollClickColor ??= new AvailableColor("Gold", Colors.Gold);
+            XButton1ClickColor ??= new AvailableColor("Peru", Colors.Peru);
+            XButton2ClickColor ??= new AvailableColor("Plum", Colors.Plum);
 
             SaveCommand = new DelegateCommand(SaveSettings);
             ResetToDefaultsCommand = new DelegateCommand(() => settingsProvider.ResetToDefaults<PopupSettings>());
@@ -99,28 +91,26 @@ namespace Carnac.UI {
 
         public string Version => Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-        private readonly List<string> authors = new List<string>
-                                                    {
-                                                         "Brendan Forster",
-                                                         "Alex Friedman",
-                                                         "Jon Galloway",
-                                                         "Jake Ginnivan",
-                                                         "Paul Jenkins",
-                                                         "Dmitry Pursanov",
-                                                         "Chris Sainty",
-                                                         "Andrew Tobin",
-                                                         "Henrik Andersson",
-                                                         "Boris Fritscher"
-                                                     };
-        private readonly List<string> components = new List<string>
-                                                       {
-                                                         "MahApps.Metro",
-                                                         "Fody",
-                                                         "NSubstitute",
-                                                         "Reactive Extensions",
-                                                         "Squirrel.Windows",
-                                                         "MouseKeyHook"
-                                                     };
+        private readonly List<string> authors = new() {
+            "Brendan Forster",
+            "Alex Friedman",
+            "Jon Galloway",
+            "Jake Ginnivan",
+            "Paul Jenkins",
+            "Dmitry Pursanov",
+            "Chris Sainty",
+            "Andrew Tobin",
+            "Henrik Andersson",
+            "Boris Fritscher"
+        };
+        private readonly List<string> components = new() {
+            "MahApps.Metro",
+            "Fody",
+            "NSubstitute",
+            "Reactive Extensions",
+            "Squirrel.Windows",
+            "MouseKeyHook"
+        };
         public string Authors => string.Join(", ", authors);
 
         public string Components => string.Join(", ", components);
@@ -141,9 +131,12 @@ namespace Carnac.UI {
 
         private void Visit() {
             try {
-                _ = Process.Start("http://code52.org/carnac/");
-            } catch {
-                //I forget what exceptions can be raised if the browser is crashed?
+                _ = Process.Start(new ProcessStartInfo {
+                    FileName = "http://code52.org/carnac/",
+                    UseShellExecute = true
+                });
+            } catch (Exception ex) {
+                Debug.WriteLine($"Failed to open URL: {ex.Message}");
             }
         }
 
@@ -152,9 +145,7 @@ namespace Carnac.UI {
                 return;
             }
 
-            if (SelectedScreen == null) {
-                SelectedScreen = Screens.First();
-            }
+            SelectedScreen ??= Screens.First();
 
             Settings.Screen = SelectedScreen.Index;
 

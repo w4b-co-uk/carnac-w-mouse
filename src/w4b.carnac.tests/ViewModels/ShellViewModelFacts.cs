@@ -1,8 +1,8 @@
 ﻿using Carnac.Logic;
 using Carnac.Logic.Models;
-using Carnac.UI;
 using NSubstitute;
 using SettingsProviderNet;
+using w4b.carnac.UI;
 using Xunit;
 
 namespace Carnac.Tests.ViewModels {

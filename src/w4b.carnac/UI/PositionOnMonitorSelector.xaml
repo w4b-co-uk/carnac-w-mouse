@@ -6,8 +6,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="clr-namespace:Carnac.UI"
     xmlns:utilities="clr-namespace:Carnac.Utilities"
+    xmlns:w4bui="clr-namespace:w4b.carnac.UI"
     x:Name="ScreenSelector"
-    d:DataContext="{d:DesignInstance ui:PreferencesViewModel}"
+    d:DataContext="{d:DesignInstance w4bui:PreferencesViewModel}"
     mc:Ignorable="d">
     <UserControl.Resources>
         <utilities:PlacementMarginConverter x:Key="PlacementMarginConverter" />

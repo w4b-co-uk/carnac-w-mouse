@@ -8,10 +8,10 @@
     xmlns:ui="clr-namespace:Carnac.UI"
     x:Name="This"
     Title="KeyShowView"
-    d:DataContext="{d:DesignInstance ui:KeyShowViewModel}"
     AllowsTransparency="True"
     Background="Transparent"
     BorderBrush="Transparent"
+    d:DataContext="{d:DesignInstance ui:KeyShowViewModel}"
     Focusable="False"
     FontSize="{Binding Settings.FontSize}"
     Loaded="WindowLoaded"
@@ -308,18 +308,18 @@
         </DrawingBrush>
         <Storyboard x:Key="clickHighlighterStoryboard">
             <DoubleAnimation
+                From="{Binding DataContext.Settings.ClickStartScale, Source={x:Reference This}}"
                 Storyboard.TargetName="clickHighlighter"
                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
-                From="{Binding DataContext.Settings.ClickStartScale, Source={x:Reference This}}"
                 To="{Binding DataContext.Settings.ClickStopScale, Source={x:Reference This}}">
                 <DoubleAnimation.EasingFunction>
                     <CircleEase EasingMode="EaseOut" />
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
             <DoubleAnimation
+                From="{Binding DataContext.Settings.ClickStartScale, Source={x:Reference This}}"
                 Storyboard.TargetName="clickHighlighter"
                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
-                From="{Binding DataContext.Settings.ClickStartScale, Source={x:Reference This}}"
                 To="{Binding DataContext.Settings.ClickStopScale, Source={x:Reference This}}">
                 <DoubleAnimation.EasingFunction>
                     <CircleEase EasingMode="EaseOut" />
@@ -327,18 +327,18 @@
             </DoubleAnimation>
             <DoubleAnimation
                 FillBehavior="Stop"
+                From="{Binding DataContext.Settings.ClickStartOpacity, Source={x:Reference This}}"
                 Storyboard.TargetName="clickHighlighter"
                 Storyboard.TargetProperty="Opacity"
-                From="{Binding DataContext.Settings.ClickStartOpacity, Source={x:Reference This}}"
                 To="{Binding DataContext.Settings.ClickStopOpacity, Source={x:Reference This}}">
                 <DoubleAnimation.EasingFunction>
                     <CircleEase EasingMode="EaseIn" />
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
             <DoubleAnimation
+                From="{Binding DataContext.Settings.ClickStartBorder, Source={x:Reference This}}"
                 Storyboard.TargetName="clickHighlighter"
                 Storyboard.TargetProperty="StrokeThickness"
-                From="{Binding DataContext.Settings.ClickStartBorder, Source={x:Reference This}}"
                 To="{Binding DataContext.Settings.ClickStopBorder, Source={x:Reference This}}">
                 <DoubleAnimation.EasingFunction>
                     <CircleEase EasingMode="EaseOut" />
@@ -349,17 +349,17 @@
 
     <Grid>
         <ListView
-            Margin="{Binding Settings.Margins}"
-            HorizontalAlignment="{Binding Settings.Alignment}"
-            VerticalAlignment="Stretch"
             Background="Transparent"
             BorderBrush="Transparent"
             BorderThickness="0"
             Focusable="False"
+            HorizontalAlignment="{Binding Settings.Alignment}"
             IsHitTestVisible="False"
             ItemsSource="{Binding Source={StaticResource KeysViewSource}}"
+            Margin="{Binding Settings.Margins}"
             ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-            ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            ScrollViewer.VerticalScrollBarVisibility="Hidden"
+            VerticalAlignment="Stretch">
             <ListView.LayoutTransform>
                 <ScaleTransform ScaleY="{Binding Settings.ScaleTransform}" />
             </ListView.LayoutTransform>
@@ -367,14 +367,14 @@
                 <DataTemplate>
                     <Border
                         x:Name="Border"
-                        Margin="0,0,0,3"
-                        Padding="3"
-                        HorizontalAlignment="Stretch"
                         BorderThickness="4"
                         CornerRadius="15"
                         Focusable="True"
+                        HorizontalAlignment="Stretch"
                         IsHitTestVisible="True"
-                        Opacity="{Binding DataContext.Settings.ItemOpacity, Source={x:Reference This}}">
+                        Margin="0,0,0,3"
+                        Opacity="{Binding DataContext.Settings.ItemOpacity, Source={x:Reference This}}"
+                        Padding="3">
                         <Border.Background>
                             <SolidColorBrush Color="{Binding DataContext.Settings.ItemBackgroundColor, Source={x:Reference This}}" />
                         </Border.Background>
@@ -401,21 +401,21 @@
                         </Border.LayoutTransform>
                         <StackPanel Orientation="Horizontal">
                             <Image
-                                Width="20"
                                 Height="20"
                                 Margin="3"
                                 Source="{Binding ProcessIcon, Mode=OneWay}"
-                                Visibility="{Binding DataContext.Settings.ShowApplicationIcon, Source={x:Reference This}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                Visibility="{Binding DataContext.Settings.ShowApplicationIcon, Source={x:Reference This}, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                Width="20" />
                             <ListBox
-                                MaxWidth="{Binding DataContext.Settings.ItemMaxWidth, Source={x:Reference This}}"
-                                HorizontalAlignment="Stretch"
-                                VerticalContentAlignment="Center"
                                 BorderBrush="{x:Null}"
                                 Focusable="False"
                                 FontWeight="Bold"
+                                HorizontalAlignment="Stretch"
                                 IsHitTestVisible="False"
                                 ItemsSource="{Binding Text, Mode=OneWay}"
-                                ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                MaxWidth="{Binding DataContext.Settings.ItemMaxWidth, Source={x:Reference This}}"
+                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                VerticalContentAlignment="Center">
                                 <ListBox.Background>
                                     <SolidColorBrush Color="{Binding DataContext.Settings.ItemBackgroundColor, Source={x:Reference This}}" />
                                 </ListBox.Background>
@@ -438,9 +438,9 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Border
                                                 x:Name="KeyCapBorder"
+                                                CornerRadius="5"
                                                 Margin="2"
                                                 Padding="2,5"
-                                                CornerRadius="5"
                                                 Visibility="Collapsed">
                                                 <Border.Background>
                                                     <SolidColorBrush Color="{Binding DataContext.Settings.FontColor, Source={x:Reference This}}" />
@@ -448,10 +448,10 @@
                                                 <StackPanel Orientation="Horizontal">
                                                     <Rectangle
                                                         x:Name="icon"
-                                                        Width="{Binding DataContext.Settings.MouseKeySize, Source={x:Reference This}}"
                                                         Height="{Binding DataContext.Settings.MouseKeySize, Source={x:Reference This}}"
                                                         Margin="2"
-                                                        VerticalAlignment="Center" />
+                                                        VerticalAlignment="Center"
+                                                        Width="{Binding DataContext.Settings.MouseKeySize, Source={x:Reference This}}" />
                                                     <TextBlock x:Name="KeyCap" Text="{Binding}">
                                                         <TextBlock.Foreground>
                                                             <SolidColorBrush Color="{Binding DataContext.Settings.ItemBackgroundColor, Source={x:Reference This}}" />
@@ -465,8 +465,8 @@
                                                 x:Name="regular"
                                                 Margin="0"
                                                 Padding="0"
-                                                VerticalAlignment="Center"
-                                                Text="{Binding}" />
+                                                Text="{Binding}"
+                                                VerticalAlignment="Center" />
                                         </StackPanel>
                                         <DataTemplate.Triggers>
                                             <MultiDataTrigger>
@@ -553,15 +553,15 @@
         </ListView>
         <Ellipse
             x:Name="clickHighlighter"
-            Width="20"
             Height="20"
-            Margin="{Binding CursorMargins}"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top"
+            Margin="{Binding CursorMargins}"
             Opacity="0"
             RenderTransformOrigin="0.5,0.5"
             Stroke="{Binding Settings.ClickColor}"
-            StrokeThickness="4">
+            StrokeThickness="4"
+            VerticalAlignment="Top"
+            Width="20">
             <Ellipse.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform />

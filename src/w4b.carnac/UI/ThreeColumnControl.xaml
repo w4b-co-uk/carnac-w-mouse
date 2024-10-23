@@ -18,18 +18,18 @@
         <Label
             x:Name="LabelControl"
             Grid.Column="0"
+            Content="{Binding LabelText, RelativeSource={RelativeSource AncestorType=UserControl}}"
             Margin="10,0,0,0"
-            VerticalAlignment="Center"
-            Content="{Binding LabelText, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            VerticalAlignment="Center" />
         <ContentPresenter
             x:Name="MainContentPresenter"
             Grid.Column="1"
-            Margin="10,0"
-            Content="{Binding MainContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            Content="{Binding MainContent, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            Margin="10,0" />
         <ContentPresenter
             x:Name="OptionalContentPresenter"
             Grid.Column="2"
-            Margin="0,0,10,0"
-            Content="{Binding OptionalContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            Content="{Binding OptionalContent, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            Margin="0,0,10,0" />
     </Grid>
 </UserControl>

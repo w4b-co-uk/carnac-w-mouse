@@ -19,24 +19,24 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RadioButton}">
                         <Border BorderThickness="0">
-                            <Grid Width="30" Height="30">
+                            <Grid Height="30" Width="30">
                                 <Rectangle
                                     x:Name="Border"
                                     Stroke="Black"
                                     StrokeThickness="2" />
                                 <Path
                                     x:Name="Check"
-                                    Margin="4"
-                                    Data="M0,1 22,1 22,5 0,5Z M0,7 20,7 20,11 0,11Z M0,13 18,13 18,16 0,16Z M0,18 16,18 16,21 0,21Z" />
+                                    Data="M0,1 22,1 22,5 0,5Z M0,7 20,7 20,11 0,11Z M0,13 18,13 18,16 0,16Z M0,18 16,18 16,21 0,21Z"
+                                    Margin="4" />
                                 <Rectangle
                                     x:Name="MouseOver"
-                                    Margin="2"
-                                    Fill="White" />
+                                    Fill="White"
+                                    Margin="2" />
                                 <ContentPresenter
-                                    Margin="4,0,0,0"
                                     HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    RecognizesAccessKey="True" />
+                                    Margin="4,0,0,0"
+                                    RecognizesAccessKey="True"
+                                    VerticalAlignment="Center" />
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -66,11 +66,11 @@
         </Style>
     </UserControl.Resources>
     <ItemsControl
-        VerticalAlignment="Top"
         Background="{x:Null}"
         BorderBrush="{x:Null}"
         Foreground="White"
-        ItemsSource="{Binding Screens}">
+        ItemsSource="{Binding Screens}"
+        VerticalAlignment="Top">
         <ItemsControl.Style>
             <Style>
                 <Style.Resources>
@@ -88,28 +88,28 @@
             <DataTemplate>
                 <StackPanel Margin="5,5,5,5" VerticalAlignment="Bottom">
                     <Grid
-                        Width="{Binding RelativeWidth}"
                         Height="{Binding RelativeHeight}"
+                        HorizontalAlignment="Left"
                         Margin="0"
-                        HorizontalAlignment="Left">
+                        Width="{Binding RelativeWidth}">
                         <Rectangle Fill="{DynamicResource AccentColorBrush}" />
                         <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
                             FontSize="96"
                             FontWeight="SemiBold"
+                            HorizontalAlignment="Center"
                             Text="{Binding Index}"
-                            TextWrapping="Wrap" />
+                            TextWrapping="Wrap"
+                            VerticalAlignment="Center" />
                         <RadioButton
                             x:Name="rbTL"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
                             Checked="RadioChecked"
                             Content=""
                             GroupName="Placement"
+                            HorizontalAlignment="Left"
                             IsChecked="{Binding NotificationPlacementTopLeft}"
                             Style="{StaticResource PlacementButton}"
-                            Tag="{Binding}">
+                            Tag="{Binding}"
+                            VerticalAlignment="Top">
                             <RadioButton.Margin>
                                 <MultiBinding Converter="{StaticResource PlacementMarginConverter}">
                                     <Binding Path="DataContext.Settings.Margins" Source="{x:Reference ScreenSelector}" />
@@ -120,14 +120,14 @@
                         </RadioButton>
                         <RadioButton
                             x:Name="rbBL"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Bottom"
                             Checked="RadioChecked"
                             Content=""
                             GroupName="Placement"
+                            HorizontalAlignment="Left"
                             IsChecked="{Binding NotificationPlacementBottomLeft}"
                             Style="{StaticResource PlacementButton}"
-                            Tag="{Binding}">
+                            Tag="{Binding}"
+                            VerticalAlignment="Bottom">
                             <RadioButton.Margin>
                                 <MultiBinding Converter="{StaticResource PlacementMarginConverter}">
                                     <Binding Path="DataContext.Settings.Margins" Source="{x:Reference ScreenSelector}" />
@@ -138,14 +138,14 @@
                         </RadioButton>
                         <RadioButton
                             x:Name="rbTR"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
                             Checked="RadioChecked"
                             Content=""
                             GroupName="Placement"
+                            HorizontalAlignment="Right"
                             IsChecked="{Binding NotificationPlacementTopRight}"
                             Style="{StaticResource PlacementButton}"
-                            Tag="{Binding}">
+                            Tag="{Binding}"
+                            VerticalAlignment="Top">
                             <RadioButton.Margin>
                                 <MultiBinding Converter="{StaticResource PlacementMarginConverter}">
                                     <Binding Path="DataContext.Settings.Margins" Source="{x:Reference ScreenSelector}" />
@@ -156,14 +156,14 @@
                         </RadioButton>
                         <RadioButton
                             x:Name="rbBR"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Bottom"
                             Checked="RadioChecked"
                             Content=""
                             GroupName="Placement"
+                            HorizontalAlignment="Right"
                             IsChecked="{Binding NotificationPlacementBottomRight}"
                             Style="{StaticResource PlacementButton}"
-                            Tag="{Binding}">
+                            Tag="{Binding}"
+                            VerticalAlignment="Bottom">
                             <RadioButton.Margin>
                                 <MultiBinding Converter="{StaticResource PlacementMarginConverter}">
                                     <Binding Path="DataContext.Settings.Margins" Source="{x:Reference ScreenSelector}" />
@@ -174,14 +174,14 @@
                         </RadioButton>
                     </Grid>
                     <TextBlock
-                        HorizontalAlignment="Left"
                         FontSize="18.667"
                         FontWeight="SemiBold"
+                        HorizontalAlignment="Left"
                         Text="{Binding FriendlyName}"
                         TextWrapping="Wrap" />
                     <TextBlock
-                        HorizontalAlignment="Left"
                         FontSize="14"
+                        HorizontalAlignment="Left"
                         TextWrapping="Wrap">
                         <Run Text="{Binding Width}" />
                         x<Run Text="{Binding Height}" />

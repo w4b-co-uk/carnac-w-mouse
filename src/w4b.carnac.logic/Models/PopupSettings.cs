@@ -1,9 +1,10 @@
-﻿using Carnac.Logic.Enums;
+﻿using Carnac.Logic;
+using Carnac.Logic.Enums;
 using System;
 using System.ComponentModel;
 using System.Windows;
 
-namespace Carnac.Logic.Models {
+namespace w4b.carnac.logic.Models {
     public class PopupSettings: NotifyPropertyChanged {
         [DefaultValue(350)]
         public int ItemMaxWidth { get; set; }
@@ -27,9 +28,6 @@ namespace Carnac.Logic.Models {
 
         [NotifyProperty(AlsoNotifyFor = new[] { "ScaleTransform", "Alignment" })]
         public NotificationPlacement Placement { get; set; }
-
-        [DefaultValue(false)]
-        public bool AutoUpdate { get; set; }
 
         //Used to determine which from it's leftmost co-ord
         private double left;
@@ -77,13 +75,13 @@ namespace Carnac.Logic.Models {
         [DefaultValue("")]
         public string ProcessFilterExpression { get; set; }
 
-        public double ScaleTransform => Placement == NotificationPlacement.TopLeft || Placement == NotificationPlacement.TopRight ? 1 : -1;
+        public double ScaleTransform => Placement is NotificationPlacement.TopLeft or NotificationPlacement.TopRight ? 1 : -1;
 
-        public string Alignment => Placement == NotificationPlacement.TopLeft || Placement == NotificationPlacement.BottomLeft ? "Left" : "Right";
+        public string Alignment => Placement is NotificationPlacement.TopLeft or NotificationPlacement.BottomLeft ? "Left" : "Right";
 
-        public Thickness Margins => new Thickness(LeftOffset, TopOffset, RightOffset, BottomOffset);
+        public Thickness Margins => new(LeftOffset, TopOffset, RightOffset, BottomOffset);
 
-        public string SortDescription => Placement == NotificationPlacement.TopLeft || Placement == NotificationPlacement.TopRight ? "Ascending" : "Descending";
+        public string SortDescription => Placement is NotificationPlacement.TopLeft or NotificationPlacement.TopRight ? "Ascending" : "Descending";
 
         public bool DetectShortcutsOnly { get; set; }
         public bool ShowApplicationIcon { get; set; }

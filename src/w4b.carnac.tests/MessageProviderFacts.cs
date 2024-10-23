@@ -1,6 +1,7 @@
 ﻿using Carnac.Logic;
 using Carnac.Logic.KeyMonitor;
 using Carnac.Logic.Models;
+using Carnac.Tests;
 using Microsoft.Win32;
 using NSubstitute;
 using SettingsProviderNet;
@@ -10,9 +11,11 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using w4b.carnac.logic;
+using w4b.carnac.logic.Models;
 using Xunit;
 
-namespace Carnac.Tests {
+namespace w4b.carnac.tests {
     public class MessageProviderFacts {
         private readonly IShortcutProvider shortcutProvider;
 
@@ -28,7 +31,7 @@ namespace Carnac.Tests {
             IDesktopLockEventService desktopLockEventService = Substitute.For<IDesktopLockEventService>();
             ISettingsProvider settingsProvider = Substitute.For<ISettingsProvider>();
             _ = desktopLockEventService.GetSessionSwitchStream().Returns(Observable.Never<SessionSwitchEventArgs>());
-            KeyProvider keyProvider = new KeyProvider(source, new PasswordModeService(), desktopLockEventService, settingsProvider);
+            KeyProvider keyProvider = new(source, new PasswordModeService(), desktopLockEventService, settingsProvider);
             return new MessageProvider(shortcutProvider, keyProvider, new PopupSettings());
         }
 
@@ -41,7 +44,7 @@ namespace Carnac.Tests {
             MessageProvider sut = CreateMessageProvider(keySequence);
 
             // act
-            IList<Logic.Models.Message> messages = await sut.GetMessageStream().ToList();
+            IList<Carnac.Logic.Models.Message> messages = await sut.GetMessageStream().ToList();
 
             // assert
             Assert.Equal(2, messages.Count);
@@ -53,10 +56,10 @@ namespace Carnac.Tests {
             IObservable<InterceptKeyEventArgs> keySequence = KeyStreams.CtrlShiftL().ToObservable();
             MessageProvider sut = CreateMessageProvider(keySequence);
             _ = shortcutProvider.GetShortcutsStartingWith(Arg.Any<KeyPress>())
-                .Returns(new List<KeyShortcut> { new KeyShortcut("MyShortcut", new KeyPressDefinition(Keys.L, shiftPressed: true, controlPressed: true)) });
+                .Returns(new List<KeyShortcut> { new("MyShortcut", new KeyPressDefinition(Keys.L, shiftPressed: true, controlPressed: true)) });
 
             // act
-            IList<Logic.Models.Message> messages = await sut.GetMessageStream().ToList();
+            IList<Carnac.Logic.Models.Message> messages = await sut.GetMessageStream().ToList();
 
             // assert
             Assert.Equal(1, messages.Count);
@@ -69,12 +72,12 @@ namespace Carnac.Tests {
             IObservable<InterceptKeyEventArgs> keySequence = KeyStreams.CtrlU().ToObservable();
             MessageProvider sut = CreateMessageProvider(keySequence);
             _ = shortcutProvider.GetShortcutsStartingWith(Arg.Any<KeyPress>())
-                .Returns(new List<KeyShortcut> { new KeyShortcut("SomeShortcut",
+                .Returns(new List<KeyShortcut> { new("SomeShortcut",
                     new KeyPressDefinition(Keys.U, controlPressed: true),
                     new KeyPressDefinition(Keys.L)) });
 
             // act
-            IList<Logic.Models.Message> messages = await sut.GetMessageStream().ToList();
+            IList<Carnac.Logic.Models.Message> messages = await sut.GetMessageStream().ToList();
 
             // assert
             Assert.Equal(0, messages.Count);
@@ -88,12 +91,12 @@ namespace Carnac.Tests {
                 .ToObservable();
             MessageProvider sut = CreateMessageProvider(keySequence);
             _ = shortcutProvider.GetShortcutsStartingWith(Arg.Any<KeyPress>())
-                .Returns(new List<KeyShortcut> { new KeyShortcut("SomeShortcut",
+                .Returns(new List<KeyShortcut> { new("SomeShortcut",
                     new KeyPressDefinition(Keys.U, controlPressed: true),
                     new KeyPressDefinition(Keys.L)) });
 
             // act
-            IList<Logic.Models.Message> messages = await sut.GetMessageStream().ToList();
+            IList<Carnac.Logic.Models.Message> messages = await sut.GetMessageStream().ToList();
 
             // assert
             Assert.Equal(2, messages.Count);
@@ -109,12 +112,12 @@ namespace Carnac.Tests {
                 .ToObservable();
             MessageProvider sut = CreateMessageProvider(keySequence);
             _ = shortcutProvider.GetShortcutsStartingWith(Arg.Any<KeyPress>())
-                .Returns(new List<KeyShortcut> { new KeyShortcut("SomeShortcut",
+                .Returns(new List<KeyShortcut> { new("SomeShortcut",
                     new KeyPressDefinition(Keys.U, controlPressed: true),
                     new KeyPressDefinition(Keys.L)) });
 
             // act
-            IList<Logic.Models.Message> messages = await sut.GetMessageStream().ToList();
+            IList<Carnac.Logic.Models.Message> messages = await sut.GetMessageStream().ToList();
 
             // assert
             Assert.Equal(1, messages.Count);
@@ -132,12 +135,12 @@ namespace Carnac.Tests {
             MessageProvider sut = CreateMessageProvider(keySequence);
             _ = shortcutProvider
                 .GetShortcutsStartingWith(Arg.Any<KeyPress>())
-                .Returns(new List<KeyShortcut> { new KeyShortcut("SomeShortcut",
+                .Returns(new List<KeyShortcut> { new("SomeShortcut",
                     new KeyPressDefinition(Keys.U, controlPressed: true),
                     new KeyPressDefinition(Keys.L)) });
 
             // act
-            IList<Logic.Models.Message> messages = await sut.GetMessageStream().ToList();
+            IList<Carnac.Logic.Models.Message> messages = await sut.GetMessageStream().ToList();
 
             // assert
             Assert.Equal(3, messages.Count);

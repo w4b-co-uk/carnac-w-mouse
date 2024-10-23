@@ -1,6 +1,5 @@
 ﻿using Carnac.Logic;
 using Carnac.Logic.Enums;
-using Carnac.Logic.Models;
 using Carnac.Logic.Native;
 using Carnac.UI;
 using SettingsProviderNet;
@@ -12,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
 using System.Windows.Media;
+using w4b.carnac.logic.Models;
 
 namespace w4b.carnac.UI {
     public class PreferencesViewModel: NotifyPropertyChanged {
@@ -156,6 +156,7 @@ namespace w4b.carnac.UI {
                     : SelectedScreen.NotificationPlacementTopRight
                                     ? NotificationPlacement.TopRight
                                     : SelectedScreen.NotificationPlacementBottomRight ? NotificationPlacement.BottomRight : NotificationPlacement.BottomLeft;
+
             PlaceScreen();
 
             Settings.SettingsConfigured = true;

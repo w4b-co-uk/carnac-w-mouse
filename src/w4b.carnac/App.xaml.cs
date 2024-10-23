@@ -1,12 +1,13 @@
 ﻿using Carnac.Logic;
 using Carnac.Logic.KeyMonitor;
-using Carnac.Logic.Models;
 using Carnac.UI;
 using Carnac.Utilities;
 using SettingsProviderNet;
 using System.Net;
 using System.Windows;
 using w4b.carnac;
+using w4b.carnac.logic;
+using w4b.carnac.logic.Models;
 using w4b.carnac.UI;
 
 namespace Carnac {
@@ -46,28 +47,6 @@ namespace Carnac {
 
             carnac = new KeysController(keyShowViewModel.Messages, messageProvider, new ConcurrencyService(), settingsProvider);
             carnac.Start();
-
-#if !DEBUG
-            if (settings.AutoUpdate)
-            {
-                Observable
-                    .Timer(TimeSpan.FromMinutes(5))
-                    .Subscribe(async x =>
-                    {
-                        try
-                        {
-                            using (var mgr = UpdateManager.GitHubUpdateManager(carnacUpdateUrl))
-                            {
-                                await mgr.Result.UpdateApp();
-                            }
-                        }
-                        catch
-                        {
-                            // Do something useful with the exception
-                        }
-                    });
-            }
-#endif
 
             base.OnStartup(e);
         }

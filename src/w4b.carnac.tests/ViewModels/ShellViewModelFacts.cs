@@ -1,11 +1,12 @@
 ﻿using Carnac.Logic;
-using Carnac.Logic.Models;
+using Carnac.Tests;
 using NSubstitute;
 using SettingsProviderNet;
+using w4b.carnac.logic.Models;
 using w4b.carnac.UI;
 using Xunit;
 
-namespace Carnac.Tests.ViewModels {
+namespace w4b.carnac.tests.ViewModels {
     public class ShellViewModelFacts {
         public class when_creating_the_new_viewmodel: SpecificationFor<PreferencesViewModel> {
             private readonly ISettingsProvider settingsService = Substitute.For<ISettingsProvider>();
@@ -34,7 +35,7 @@ namespace Carnac.Tests.ViewModels {
         public class when_the_settings_file_is_defined: SpecificationFor<PreferencesViewModel> {
             private readonly ISettingsProvider settingsService = Substitute.For<ISettingsProvider>();
             private readonly IScreenManager screenManager = Substitute.For<IScreenManager>();
-            private readonly PopupSettings popupSettings = new PopupSettings();
+            private readonly PopupSettings popupSettings = new();
 
             public override PreferencesViewModel Given() {
                 _ = settingsService.GetSettings<PopupSettings>().Returns(popupSettings);

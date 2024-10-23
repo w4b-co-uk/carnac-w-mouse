@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
+using w4b.carnac.logic.Models;
 using Xunit;
 using Message = Carnac.Logic.Models.Message;
 

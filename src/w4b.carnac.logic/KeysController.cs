@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using w4b.carnac.logic.Models;
 
 namespace Carnac.Logic {
     public class KeysController: IDisposable {

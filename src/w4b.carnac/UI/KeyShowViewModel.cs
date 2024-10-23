@@ -2,6 +2,7 @@
 using Carnac.Logic.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
+using w4b.carnac.logic.Models;
 
 namespace Carnac.UI {
     public class KeyShowViewModel: NotifyPropertyChanged {

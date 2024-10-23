@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Media;
+using w4b.carnac.logic;
 
 namespace Carnac.Logic.Models {
     public sealed class Message {

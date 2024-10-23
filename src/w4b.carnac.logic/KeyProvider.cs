@@ -1,4 +1,5 @@
-﻿using Carnac.Logic.KeyMonitor;
+﻿using Carnac.Logic;
+using Carnac.Logic.KeyMonitor;
 using Carnac.Logic.Models;
 using Carnac.Logic.MouseMonitor;
 using Microsoft.Win32;
@@ -12,8 +13,9 @@ using System.Reactive.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Media;
+using w4b.carnac.logic.Models;
 
-namespace Carnac.Logic {
+namespace w4b.carnac.logic {
     public class KeyProvider: IKeyProvider {
         private readonly IInterceptKeys interceptKeysSource;
         private readonly IPasswordModeService passwordModeService;
@@ -98,7 +100,7 @@ namespace Carnac.Logic {
         }
 
         private InterceptKeyEventArgs DetectWindowsKey(InterceptKeyEventArgs interceptKeyEventArgs) {
-            if (interceptKeyEventArgs.Key == Keys.LWin || interceptKeyEventArgs.Key == Keys.RWin) {
+            if (interceptKeyEventArgs.Key is Keys.LWin or Keys.RWin) {
                 if (interceptKeyEventArgs.KeyDirection == KeyDirection.Up) {
                     winKeyPressed = false;
                 } else if (interceptKeyEventArgs.KeyDirection == KeyDirection.Down) {

@@ -1,6 +1,7 @@
 ﻿using Carnac.Logic.Models;
 using System;
 using System.Reactive.Linq;
+using w4b.carnac.logic.Models;
 
 namespace Carnac.Logic {
     public class MessageProvider: IMessageProvider {

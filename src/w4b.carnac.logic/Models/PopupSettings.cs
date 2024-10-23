@@ -81,12 +81,14 @@ namespace w4b.carnac.logic.Models {
 
         public Thickness Margins => new(LeftOffset, TopOffset, RightOffset, BottomOffset);
 
-        public string SortDescription => Placement is NotificationPlacement.TopLeft or NotificationPlacement.TopRight ? "Ascending" : "Descending";
-
         public bool DetectShortcutsOnly { get; set; }
+
         public bool ShowApplicationIcon { get; set; }
+
         public bool SettingsConfigured { get; set; }
+
         public bool ShowOnlyModifiers { get; set; }
+
         public bool ShowSpaceAsUnicode { get; set; }
 
         [DefaultValue(true)]

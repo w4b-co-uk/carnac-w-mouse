@@ -1,3 +1,13 @@
+﻿## This fork ([w4b-co-uk/carnac-w-mouse](https://github.com/w4b-co-uk/carnac-w-mouse))
+I have attempted to update Boris Fritscher's version of Carnac to .NET 8. This is a work in progress and the namespaces are a combination of the original and my own. I have been working on this because I would like to introduce better multi-monitor support and a few other features and this project seems to be the best open source project to use as a base for what I'd like to achieve.
+
+> I have made changes to the code to make it work with .NET 8 and to match my coding style.
+
+> ⚠ None of the changes I have made are an attempt to pass off the work of others as my own. ⚠
+
+
+I am now working on porting the code into new projects so I don't expect I'll do much more work in this fork but, if I manage to succeed with what I am attempting I will update this readme with the new project names and links.
+
 ## Carnac the Magnificent Keyboard Utility & Mouse Highlighter*
 
 This is a Fork of Carnac which adds mouse click highlights with circles, as well as key icons. The current version can be manually downloaded and tested from the [release page](https://github.com/bfritscher/carnac/releases). This project is not actively maintained, but patched together in my spare time and based on my needs when giving tutorials.

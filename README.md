@@ -5,7 +5,7 @@ I have attempted to update Boris Fritscher's version of Carnac to .NET 8. This i
 
 > ⚠ None of the changes I have made are an attempt to pass off the work of others as my own. ⚠
 
-The work to of updating the code to .NET 8 is incomplete but this project does compile and run without any new problems that I have found. That isn't to say I haven't introduced bugs - I just haven't found any yet.
+The work of updating the code to .NET 8 is incomplete but this project does compile and run without any new problems that I have found. That isn't to say I haven't introduced bugs - I just haven't noticed any new ones.
 
 ---
 

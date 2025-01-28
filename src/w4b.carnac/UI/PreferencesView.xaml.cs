@@ -1,4 +1,4 @@
-﻿using w4b.carnac.UI;
+﻿using Carnac.UI;
 
 namespace Carnac.UI {
     public partial class PreferencesView {

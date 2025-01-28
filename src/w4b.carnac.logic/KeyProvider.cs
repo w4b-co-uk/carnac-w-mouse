@@ -13,9 +13,9 @@ using System.Reactive.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Media;
-using w4b.carnac.logic.Models;
+using Carnac.logic.Models;
 
-namespace w4b.carnac.logic {
+namespace Carnac.logic {
     public class KeyProvider: IKeyProvider {
         private readonly IInterceptKeys interceptKeysSource;
         private readonly IPasswordModeService passwordModeService;

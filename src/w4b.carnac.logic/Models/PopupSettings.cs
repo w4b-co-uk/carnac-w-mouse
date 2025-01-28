@@ -4,7 +4,7 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 
-namespace w4b.carnac.logic.Models {
+namespace Carnac.logic.Models {
     public class PopupSettings: NotifyPropertyChanged {
         [DefaultValue(350)]
         public int ItemMaxWidth { get; set; }
@@ -138,6 +138,7 @@ namespace w4b.carnac.logic.Models {
 
         [DefaultValue(0)]
         public double ClickStopOpacity { get; set; }
+
         public string ClickColor { get; set; }
     }
 }

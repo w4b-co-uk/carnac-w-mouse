@@ -11,9 +11,9 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
 using System.Windows.Media;
-using w4b.carnac.logic.Models;
+using Carnac.logic.Models;
 
-namespace w4b.carnac.UI {
+namespace Carnac.UI {
     public class PreferencesViewModel: NotifyPropertyChanged {
         private readonly ISettingsProvider settingsProvider;
 

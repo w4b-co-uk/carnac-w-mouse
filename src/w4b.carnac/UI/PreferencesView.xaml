@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="clr-namespace:Carnac.UI"
     xmlns:utilities="clr-namespace:Carnac.Utilities"
-    xmlns:w4bui="clr-namespace:w4b.carnac.UI"
+    xmlns:w4bui="clr-namespace:Carnac.UI"
     Name="PreferencesViewWindow"
     utilities:DesignTimeHelper.Background="Black"
     d:DataContext="{d:DesignInstance w4bui:PreferencesViewModel}"
@@ -545,7 +545,7 @@
                                 <Image
                                     Height="200"
                                     HorizontalAlignment="Center"
-                                    Source="/w4b.carnac;component/carnac_2.png"
+                                    Source="/Carnac;component/carnac_2.png"
                                     Stretch="UniformToFill"
                                     VerticalAlignment="Top"
                                     Width="200" />

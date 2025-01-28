@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="clr-namespace:Carnac.UI"
     xmlns:utilities="clr-namespace:Carnac.Utilities"
-    xmlns:w4bui="clr-namespace:w4b.carnac.UI"
+    xmlns:w4bui="clr-namespace:Carnac.UI"
     x:Name="ScreenSelector"
     d:DataContext="{d:DesignInstance w4bui:PreferencesViewModel}"
     mc:Ignorable="d">

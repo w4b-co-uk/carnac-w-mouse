@@ -8,11 +8,11 @@ using SettingsProviderNet;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using w4b.carnac.logic;
-using w4b.carnac.logic.Models;
+using Carnac.logic;
+using Carnac.logic.Models;
 using Xunit;
 
-namespace w4b.carnac.tests {
+namespace Carnac.tests {
     public class KeyProviderTests {
         private readonly IPasswordModeService passwordModeService;
         private readonly IDesktopLockEventService desktopLockEventService;

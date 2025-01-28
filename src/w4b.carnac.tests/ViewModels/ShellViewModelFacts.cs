@@ -2,11 +2,11 @@
 using Carnac.Tests;
 using NSubstitute;
 using SettingsProviderNet;
-using w4b.carnac.logic.Models;
-using w4b.carnac.UI;
+using Carnac.logic.Models;
+using Carnac.UI;
 using Xunit;
 
-namespace w4b.carnac.tests.ViewModels {
+namespace Carnac.tests.ViewModels {
     public class ShellViewModelFacts {
         public class when_creating_the_new_viewmodel: SpecificationFor<PreferencesViewModel> {
             private readonly ISettingsProvider settingsService = Substitute.For<ISettingsProvider>();

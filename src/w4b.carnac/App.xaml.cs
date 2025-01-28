@@ -5,10 +5,10 @@ using Carnac.Utilities;
 using SettingsProviderNet;
 using System.Net;
 using System.Windows;
-using w4b.carnac;
-using w4b.carnac.logic;
-using w4b.carnac.logic.Models;
-using w4b.carnac.UI;
+using Carnac;
+using Carnac.logic;
+using Carnac.logic.Models;
+using Carnac.UI;
 
 namespace Carnac {
     public partial class App: System.IDisposable {

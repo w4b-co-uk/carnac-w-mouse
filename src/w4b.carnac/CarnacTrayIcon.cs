@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Forms;
 using Application = System.Windows.Application;
 
-namespace w4b.carnac {
+namespace Carnac {
     public class CarnacTrayIcon: IDisposable {
         private readonly NotifyIcon trayIcon;
 

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace w4b.carnac.UI {
+namespace Carnac.UI {
     /// <summary>
     /// Interaction logic for ThreeColumnControl.xaml
     /// </summary>

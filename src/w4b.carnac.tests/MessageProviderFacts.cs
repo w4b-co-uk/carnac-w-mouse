@@ -11,11 +11,11 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using w4b.carnac.logic;
-using w4b.carnac.logic.Models;
+using Carnac.logic;
+using Carnac.logic.Models;
 using Xunit;
 
-namespace w4b.carnac.tests {
+namespace Carnac.tests {
     public class MessageProviderFacts {
         private readonly IShortcutProvider shortcutProvider;
 

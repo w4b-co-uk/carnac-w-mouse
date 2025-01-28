@@ -1,12 +1,22 @@
 ﻿## This fork ([w4b-co-uk/carnac-w-mouse](https://github.com/w4b-co-uk/carnac-w-mouse))
 I have attempted to update Boris Fritscher's version of Carnac to .NET 8. This is a work in progress and the namespaces are a combination of the original and my own. I have been working on this because I would like to introduce better multi-monitor support and a few other features and this project seems to be the best open source project to use as a base for what I'd like to achieve.
 
-> I have made changes to the code to make it work with .NET 8 and to match my coding style.
+> I have made changes to the code to get it working with .NET 8 and, when saving files, some of my coding preferences have been auto-applied.
 
 > ⚠ None of the changes I have made are an attempt to pass off the work of others as my own. ⚠
 
+The work to of updating the code to .NET 8 is incomplete but this project does compile and run without any new problems that I have found. That isn't to say I haven't introduced bugs - I just haven't found any yet.
 
-I am now working on porting the code into new projects so I don't expect I'll do much more work in this fork but, if I manage to succeed with what I am attempting I will update this readme with the new project names and links.
+---
+
+### What I am working on now:
+
+I am now working on porting the code into new projects so I don't expect I'll do much more work in this fork but, if I manage to succeed with what I am attempting, I will update this readme with the new project names and links.
+
+---
+
+
+> 🛑 The rest of this readme is the original readme from the [bfritscher/carnac](https://github.com/bfritscher/carnac) that is, in its turn, a fork of the [Code52/carnac](https://github.com/Code52/carnac) project.🛑
 
 ## Carnac the Magnificent Keyboard Utility & Mouse Highlighter*
 

@@ -2,50 +2,81 @@
 using Carnac.Logic.KeyMonitor;
 using Carnac.UI;
 using Carnac.Utilities;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Serilog;
 using SettingsProviderNet;
-using System.Net;
+using System;
+using System.IO;
 using System.Windows;
-using Carnac;
 using Carnac.logic;
 using Carnac.logic.Models;
-using Carnac.UI;
 
 namespace Carnac {
-    public partial class App: System.IDisposable {
-        private readonly SettingsProvider settingsProvider;
-        private readonly IMessageProvider messageProvider;
-        private readonly PopupSettings settings;
+    public partial class App : IDisposable {
+        private IHost host;
         private KeyShowView keyShowView;
         private CarnacTrayIcon trayIcon;
         private KeysController carnac;
 
-#if !DEBUG
-        readonly string carnacUpdateUrl = "https://github.com/Code52/carnac";
-#endif
-
         public App() {
-            settingsProvider = new SettingsProvider(new RoamingAppDataStorage("Carnac"));
-            settings = settingsProvider.GetSettings<PopupSettings>();
-            KeyProvider keyProvider = new(InterceptKeys.Current, new PasswordModeService(), new DesktopLockEventService(), settingsProvider);
-            messageProvider = new MessageProvider(new ShortcutProvider(), keyProvider, settings);
+            var logPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "Carnac", "logs", "carnac-.log");
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.File(logPath, rollingInterval: RollingInterval.Day, retainedFileCountLimit: 7)
+                .CreateLogger();
+
+            host = Host.CreateDefaultBuilder()
+                .UseSerilog()
+                .ConfigureServices(services => {
+                    // Settings infrastructure
+                    services.AddSingleton<ISettingsProvider>(
+                        new SettingsProvider(new RoamingAppDataStorage("Carnac")));
+                    services.AddSingleton(sp =>
+                        sp.GetRequiredService<ISettingsProvider>().GetSettings<PopupSettings>());
+
+                    // Core services (logic layer)
+                    services.AddSingleton<IInterceptKeys>(InterceptKeys.Current);
+                    services.AddSingleton<IPasswordModeService, PasswordModeService>();
+                    services.AddSingleton<IDesktopLockEventService, DesktopLockEventService>();
+                    services.AddSingleton<IKeyProvider, KeyProvider>();
+                    services.AddSingleton<IShortcutProvider, ShortcutProvider>();
+                    services.AddSingleton<IMessageProvider, MessageProvider>();
+                    services.AddSingleton<IScreenManager, ScreenManager>();
+                    services.AddSingleton<IConcurrencyService, ConcurrencyService>();
+
+                    // UI layer
+                    services.AddSingleton<KeyShowViewModel>();
+                    services.AddTransient<PreferencesViewModel>();
+                })
+                .Build();
         }
 
         protected override void OnStartup(StartupEventArgs e) {
-            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
-            // Check if there was instance before this. If there was-close the current one.  
             if (ProcessUtilities.ThisProcessIsAlreadyRunning()) {
                 ProcessUtilities.SetFocusToPreviousInstance("Carnac");
                 Shutdown();
                 return;
             }
 
+            var services = host.Services;
+
+            Log.Information("Carnac starting up");
+
             trayIcon = new CarnacTrayIcon();
             trayIcon.OpenPreferences += TrayIconOnOpenPreferences;
-            KeyShowViewModel keyShowViewModel = new(settings);
+
+            var keyShowViewModel = services.GetRequiredService<KeyShowViewModel>();
             keyShowView = new KeyShowView(keyShowViewModel);
             keyShowView.Show();
 
-            carnac = new KeysController(keyShowViewModel.Messages, messageProvider, new ConcurrencyService(), settingsProvider);
+            var messageProvider = services.GetRequiredService<IMessageProvider>();
+            var concurrencyService = services.GetRequiredService<IConcurrencyService>();
+            var settingsProvider = services.GetRequiredService<ISettingsProvider>();
+            carnac = new KeysController(keyShowViewModel.Messages, messageProvider, concurrencyService, settingsProvider);
             carnac.Start();
 
             base.OnStartup(e);
@@ -56,18 +87,20 @@ namespace Carnac {
             carnac.Dispose();
             keyShowView.Dispose();
             ProcessUtilities.DestroyMutex();
+            host.Dispose();
+            Log.CloseAndFlush();
 
             base.OnExit(e);
         }
 
         private void TrayIconOnOpenPreferences() {
-            PreferencesViewModel preferencesViewModel = new(settingsProvider, new ScreenManager());
+            var preferencesViewModel = host.Services.GetRequiredService<PreferencesViewModel>();
             PreferencesView preferencesView = new(preferencesViewModel);
             preferencesView.Show();
         }
 
         public void Dispose() {
-            throw new System.NotImplementedException();
+            host?.Dispose();
         }
     }
 }

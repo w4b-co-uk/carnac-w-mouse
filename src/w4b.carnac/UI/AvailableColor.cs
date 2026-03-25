@@ -1,15 +1,18 @@
 using Carnac.Logic;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Windows.Media;
 
 namespace Carnac.UI {
-    public class AvailableColor: NotifyPropertyChanged {
+    public partial class AvailableColor : NotifyPropertyChanged {
         public AvailableColor(string name, Color color) {
             Name = name;
             Brush = new SolidColorBrush(color);
         }
 
-        public string Name { get; private set; }
+        [ObservableProperty]
+        private string name;
 
-        public SolidColorBrush Brush { get; private set; }
+        [ObservableProperty]
+        private SolidColorBrush brush;
     }
 }

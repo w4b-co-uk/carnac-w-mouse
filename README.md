@@ -1,78 +1,104 @@
-﻿## This fork ([w4b-co-uk/carnac-w-mouse](https://github.com/w4b-co-uk/carnac-w-mouse))
-I have attempted to update Boris Fritscher's version of Carnac to .NET 8. This is a work in progress and the namespaces are a combination of the original and my own. I have been working on this because I would like to introduce better multi-monitor support and a few other features and this project seems to be the best open source project to use as a base for what I'd like to achieve.
+﻿# Carnac w/ Mouse
 
-> I have made changes to the code to get it working with .NET 8 and, when saving files, some of my coding preferences have been auto-applied.
+**A real-time keystroke and mouse click visualizer for Windows.**
 
-> ⚠ None of the changes I have made are an attempt to pass off the work of others as my own. ⚠
+> 🌐 [Leer en español](README_ES.md)
 
-The work of updating the code to .NET 8 is incomplete but this project does compile and run without any new problems that I have found. That isn't to say I haven't introduced bugs - I just haven't noticed any new ones.
+Carnac w/ Mouse displays an always-on-top transparent overlay showing every key press and mouse click as it happens. It is ideal for **live presentations**, **screencasts**, **tutorials**, and **demos** where your audience needs to see what you are typing or clicking.
 
----
+![Windows](https://img.shields.io/badge/platform-Windows-blue)
+![.NET 10](https://img.shields.io/badge/.NET-10.0-purple)
+![WPF](https://img.shields.io/badge/UI-WPF-green)
+![License](https://img.shields.io/badge/license-MS--PL-orange)
 
-### What I am working on now:
+## Features
 
-I am now working on porting the code into new projects so I don't expect I'll do much more work in this fork but, if I manage to succeed with what I am attempting, I will update this readme with the new project names and links.
+- **Keystroke visualization** — Every key press appears in a floating overlay with configurable size, color, opacity, and fade delay.
+- **Mouse click indicators** — Animated expanding circles for left, right, middle, and extra buttons, each with its own color.
+- **Scroll wheel display** — Optionally shows scroll up/down events.
+- **Multi-monitor support** — Choose which screen displays the overlay and position it in any corner with pixel-level offsets.
+- **Shortcut detection** — Recognizes keyboard shortcuts from built-in keymaps (VS Code, Visual Studio, Chrome, ReSharper, NCrunch) and displays their names.
+- **International keyboard support** — Automatically detects your Windows keyboard layout and displays the correct characters, including accented characters (á, é, ñ, ü, etc.) and dead key sequences.
+- **Password / silent mode** — Press `Ctrl+Alt+P` to temporarily hide all keystrokes (for entering passwords or sensitive data). Press again to resume.
+- **Process filtering** — Optionally limit visualization to specific applications using regex patterns.
+- **Application icon display** — Show the icon of the active application next to keystrokes.
+- **Fully customizable** — 26+ settings for colors, sizes, positions, animations, and behavior.
 
----
+## Requirements
 
+- Windows 10 or later
+- [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0) (or .NET 10 SDK for building from source)
 
-> 🛑 The rest of this readme is the original readme from the [bfritscher/carnac](https://github.com/bfritscher/carnac) that is, in its turn, a fork of the [Code52/carnac](https://github.com/Code52/carnac) project.🛑
+## Quick Start
 
-## Carnac the Magnificent Keyboard Utility & Mouse Highlighter*
+### Option A: Run from published binary
 
-This is a Fork of Carnac which adds mouse click highlights with circles, as well as key icons. The current version can be manually downloaded and tested from the [release page](https://github.com/bfritscher/carnac/releases). This project is not actively maintained, but patched together in my spare time and based on my needs when giving tutorials.
+1. Download the latest release (or build it yourself — see below).
+2. Run `w4b.carnac.exe`.
+3. An icon appears in the system tray — left-click it to open preferences.
+4. Start typing or clicking anywhere; the overlay shows your keystrokes in real time.
 
+### Option B: Build from source
 
-## Original Readme
+```powershell
+# Ensure .NET 10 SDK is first in PATH
+$env:PATH = "C:\Program Files\dotnet;" + $env:PATH
 
+# Restore NuGet packages
+dotnet restore src/w4b-carnac.sln -p:RestoreConfigFile="NuGet.Config"
 
-[![Join the chat at https://gitter.im/Code52/carnac](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Code52/carnac?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# Build in Debug mode
+dotnet build src/w4b-carnac.sln --no-restore
 
-A keyboard logging and presentation utility for presentations, screencasts, and to help you become a better keyboard user.
+# Run the application
+dotnet run --project src/w4b.carnac/w4b.carnac.csproj
 
-### Build Status
-[![Build status](https://ci.appveyor.com/api/projects/status/qorhqwc2favf18r4?svg=true)](https://ci.appveyor.com/project/shiftkey/carnac)
-
-### Installation
-
-You can install the latest version of Carnac via [Chocolatey](https://chocolatey.org/):
-
-```ps
-cinst carnac
+# Or publish a single-file Release executable
+dotnet publish src/w4b.carnac/w4b.carnac.csproj -c Release
 ```
 
-Alternatively, you can grab the latest zip file from [here](https://github.com/Code52/carnac/releases/latest), unpack it and run `Setup.exe`.
+The published binary is at `src/w4b.carnac/bin/Release/net10.0-windows/publish/w4b.carnac.exe`.
 
-**Note:** Carnac requires .NET 4.5.2 to work - you can install that from [here](https://www.microsoft.com/en-au/download/details.aspx?id=42643) if you don't have it already.
+## Usage
 
-### Updating
+| Action | How |
+|--------|-----|
+| Open preferences | Left-click the tray icon |
+| Exit | Right-click the tray icon → **Exit** |
+| Toggle silent mode | `Ctrl+Alt+P` |
 
-We use `Squirrel.Windows` to update your `carnac` application.
+For a full walkthrough, see the **[User Manual (English)](docs/USER_MANUAL.md)** or the **[Manual de Usuario (Español)](docs/MANUAL_USUARIO.md)**.
 
-The application will check for updates in the background, if a new version has been released, it will automatically install the new version and once you restart `carnac` you will be up-to-date.
+## Configuration
 
-### Usage
+All settings are accessible from the **Preferences** window (left-click the tray icon):
 
-**Enabling silent mode**
+| Tab | Settings |
+|-----|----------|
+| **General** | Screen selection, overlay position (corner + offsets) |
+| **Keyboard** | Font size, color, background, opacity, fade delay, shortcuts-only mode, modifier-only mode, process filter |
+| **Mouse** | Click colors (per button), indicator size, animation scale, border, opacity, fade delay, show/hide clicks and scroll |
 
-If you want to stop `Carnac` from recording certain key strokes, you can enter _silent mode_ by pressing `Ctrl+Alt+P`. To exit _silent mode_ you simply press `Ctrl+Alt+P` again.
+## Project Structure
 
-### Contributing
+| Project | Description |
+|---------|-------------|
+| `w4b.carnac` | WPF application — UI, dependency injection, tray icon |
+| `w4b.carnac.logic` | Domain layer — keyboard/mouse hooks, message pipeline, models |
+| `w4b.carnac.tests` | Unit tests (xUnit + NSubstitute + Shouldly) |
 
-**Getting started with Git and GitHub**
+For architecture details, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
- * [Setting up Git for Windows and connecting to GitHub](http://help.github.com/win-set-up-git/)
- * [Forking a GitHub repository](http://help.github.com/fork-a-repo/)
- * [The simple guide to GIT guide](http://rogerdudler.github.com/git-guide/)
- * [Open an issue](https://github.com/Code52/carnac/issues) if you encounter a bug or have a suggestion for improvements/features
+## History & Acknowledgments
 
-Once you're familiar with Git and GitHub, clone the repository and run the `.\build.cmd` script to compile the code and run all the unit tests. You can use this script to test your changes quickly.
+This project is a fork chain preserving the work of the original authors:
 
-### Resources
-This blog series covers a series of refactorings which have recently happened in Carnac to make better use of Rx.
-If you are learning Rx and want to be shown through Carnac's codebase then this blog series may help you.
+1. **[Code52/carnac](https://github.com/Code52/carnac)** — Original Carnac keystroke utility.
+2. **[bfritscher/carnac](https://github.com/bfritscher/carnac)** — Boris Fritscher's fork adding mouse click highlights.
+3. **[w4b-co-uk/carnac-w-mouse](https://github.com/w4b-co-uk/carnac-w-mouse)** — Updated to .NET 8 with namespace cleanup and multi-monitor work.
+4. **Current** — Modernized to .NET 10, CommunityToolkit.Mvvm source generators, Serilog structured logging, improved international keyboard support, and comprehensive documentation.
 
-[Part 1 - Refactoring the InterceptKeys class ](http://jake.ginnivan.net/blog/carnac-improvements/part-1/)
-[Part 2 - Refactoring the MessageProvider class](http://jake.ginnivan.net/blog/carnac-improvements/part-2/)
-[Part 3 - Introducing the MessageController class](http://jake.ginnivan.net/blog/carnac-improvements/part-3/)
+## License
+
+[Microsoft Public License (MS-PL)](LICENSE.md)
 

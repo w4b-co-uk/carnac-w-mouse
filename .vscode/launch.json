@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug w4b.carnac",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/w4b.carnac/bin/Debug/net10.0-windows/w4b.carnac.exe",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "console": "internalConsole",
+      "env": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  ]
+}

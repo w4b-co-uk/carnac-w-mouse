@@ -95,8 +95,8 @@ This project is a fork chain preserving the work of the original authors:
 
 1. **[Code52/carnac](https://github.com/Code52/carnac)** — Original Carnac keystroke utility.
 2. **[bfritscher/carnac](https://github.com/bfritscher/carnac)** — Boris Fritscher's fork adding mouse click highlights.
-3. **[w4b-co-uk/carnac-w-mouse](https://github.com/w4b-co-uk/carnac-w-mouse)** — Updated to .NET 8 with namespace cleanup and multi-monitor work.
-4. **Current** — Modernized to .NET 10, CommunityToolkit.Mvvm source generators, Serilog structured logging, improved international keyboard support, and comprehensive documentation.
+3. **[w4b-co-uk/carnac-w-mouse](https://github.com/w4b-co-uk/carnac-w-mouse)** — Updated to .NET 8 with namespace cleanup and multi-monitor work. *(credits to the w4b team)*
+4. **[OscarTinajero117/carnac-w-mouse](https://github.com/OscarTinajero117/carnac-w-mouse)** — Modernized to .NET 10, CommunityToolkit.Mvvm source generators, Serilog structured logging, improved international keyboard support (dead key fix), and comprehensive bilingual documentation.
 
 ## License
 

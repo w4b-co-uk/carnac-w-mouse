@@ -95,8 +95,8 @@ Este proyecto es una cadena de forks que preserva el trabajo de los autores orig
 
 1. **[Code52/carnac](https://github.com/Code52/carnac)** — Utilidad original Carnac para visualización de teclas.
 2. **[bfritscher/carnac](https://github.com/bfritscher/carnac)** — Fork de Boris Fritscher que agrega resaltado de clics del mouse.
-3. **[w4b-co-uk/carnac-w-mouse](https://github.com/w4b-co-uk/carnac-w-mouse)** — Actualizado a .NET 8 con limpieza de namespaces y trabajo multi-monitor.
-4. **Actual** — Modernizado a .NET 10, source generators de CommunityToolkit.Mvvm, logging estructurado con Serilog, soporte mejorado de teclados internacionales y documentación completa.
+3. **[w4b-co-uk/carnac-w-mouse](https://github.com/w4b-co-uk/carnac-w-mouse)** — Actualizado a .NET 8 con limpieza de namespaces y trabajo multi-monitor. *(créditos al equipo de w4b)*
+4. **[OscarTinajero117/carnac-w-mouse](https://github.com/OscarTinajero117/carnac-w-mouse)** — Modernizado a .NET 10, source generators de CommunityToolkit.Mvvm, logging estructurado con Serilog, soporte mejorado de teclados internacionales (corrección de teclas muertas) y documentación bilingüe completa.
 
 ## Licencia
 

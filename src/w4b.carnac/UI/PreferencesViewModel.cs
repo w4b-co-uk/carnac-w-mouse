@@ -2,6 +2,7 @@
 using Carnac.Logic.Enums;
 using Carnac.Logic.Native;
 using Carnac.UI;
+using CommunityToolkit.Mvvm.ComponentModel;
 using SettingsProviderNet;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ using System.Windows.Media;
 using Carnac.logic.Models;
 
 namespace Carnac.UI {
-    public class PreferencesViewModel: NotifyPropertyChanged {
+    public partial class PreferencesViewModel : NotifyPropertyChanged {
         private readonly ISettingsProvider settingsProvider;
 
         public PreferencesViewModel(ISettingsProvider settingsProvider, IScreenManager screenManager) {
@@ -83,11 +84,14 @@ namespace Carnac.UI {
 
         public ObservableCollection<AvailableColor> AvailableColors { get; private set; }
 
-        public ObservableCollection<DetailedScreen> Screens { get; set; }
+        [ObservableProperty]
+        private ObservableCollection<DetailedScreen> screens;
 
-        public DetailedScreen SelectedScreen { get; set; }
+        [ObservableProperty]
+        private DetailedScreen selectedScreen;
 
-        public PopupSettings Settings { get; set; }
+        [ObservableProperty]
+        private PopupSettings settings;
 
         public string Version => Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
@@ -105,29 +109,35 @@ namespace Carnac.UI {
         };
         private readonly List<string> components = new() {
             "MahApps.Metro",
-            "Fody",
+            "CommunityToolkit.Mvvm",
             "NSubstitute",
             "Reactive Extensions",
-            "Squirrel.Windows",
             "MouseKeyHook"
         };
         public string Authors => string.Join(", ", authors);
 
         public string Components => string.Join(", ", components);
 
-        public AvailableColor FontColor { get; set; }
+        [ObservableProperty]
+        private AvailableColor fontColor;
 
-        public AvailableColor ItemBackgroundColor { get; set; }
+        [ObservableProperty]
+        private AvailableColor itemBackgroundColor;
 
-        public AvailableColor LeftClickColor { get; set; }
+        [ObservableProperty]
+        private AvailableColor leftClickColor;
 
-        public AvailableColor RightClickColor { get; set; }
+        [ObservableProperty]
+        private AvailableColor rightClickColor;
 
-        public AvailableColor ScrollClickColor { get; set; }
+        [ObservableProperty]
+        private AvailableColor scrollClickColor;
 
-        public AvailableColor XButton1ClickColor { get; set; }
+        [ObservableProperty]
+        private AvailableColor xButton1ClickColor;
 
-        public AvailableColor XButton2ClickColor { get; set; }
+        [ObservableProperty]
+        private AvailableColor xButton2ClickColor;
 
         private void Visit() {
             try {

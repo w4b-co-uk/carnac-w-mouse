@@ -1,0 +1,43 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/src/w4b-carnac.sln",
+        "--no-restore",
+        "--nologo",
+        "/property:GenerateFullPaths=true"
+      ],
+      "options": {
+        "env": {
+          "PATH": "C:\\Program Files\\dotnet;${env:PATH}"
+        }
+      },
+      "problemMatcher": "$msCompile",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "restore",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "restore",
+        "${workspaceFolder}/src/w4b-carnac.sln",
+        "-p:RestoreConfigFile=${workspaceFolder}/NuGet.Config"
+      ],
+      "options": {
+        "env": {
+          "PATH": "C:\\Program Files\\dotnet;${env:PATH}"
+        }
+      },
+      "problemMatcher": "$msCompile"
+    }
+  ]
+}

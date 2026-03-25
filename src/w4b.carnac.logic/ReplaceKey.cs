@@ -121,8 +121,12 @@ namespace Carnac.Logic {
             return null;
         }
 
-        // new implementation of sanitize to support locals
-        // https://stackoverflow.com/questions/318777/c-sharp-how-to-translate-virtual-keycode-to-char
+        // Translate a virtual key code to its Unicode character using the active keyboard layout.
+        // Flag 0x4 (available since Windows 10 1607) prevents ToUnicodeEx from modifying the
+        // internal dead key state, so accented characters (á, é, ñ, etc.) still reach the
+        // target application correctly.
+        private const uint TOUC_DO_NOT_CHANGE_KEYBOARD_STATE = 0x4;
+
         public static string KeyCodeToUnicode(Keys key, bool lowerOnly = false) {
             byte[] keyboardState = new byte[255];
             if (!lowerOnly) {
@@ -136,10 +140,17 @@ namespace Carnac.Logic {
             uint scanCode = MapVirtualKey(virtualKeyCode, 0);
             IntPtr inputLocaleIdentifier = GetKeyboardLayout(0);
 
-            StringBuilder result = new StringBuilder();
-            _ = ToUnicodeEx(virtualKeyCode, scanCode, keyboardState, result, 5, 0, inputLocaleIdentifier);
+            StringBuilder result = new StringBuilder(5);
+            int returnValue = ToUnicodeEx(virtualKeyCode, scanCode, keyboardState, result, 5,
+                TOUC_DO_NOT_CHANGE_KEYBOARD_STATE, inputLocaleIdentifier);
 
-            return result.ToString();
+            if (returnValue == -1) {
+                // Dead key (e.g. accent marks on Spanish/French keyboards).
+                // Thanks to flag 0x4 the dead key state is preserved for the target app.
+                return result.ToString();
+            }
+
+            return returnValue > 0 ? result.ToString() : "";
         }
 
         [DllImport("user32.dll")]

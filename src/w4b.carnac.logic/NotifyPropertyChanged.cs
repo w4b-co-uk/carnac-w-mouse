@@ -1,15 +1,9 @@
-﻿using System.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Carnac.Logic {
-    public class NotifyPropertyChanged: INotifyPropertyChanged {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(PropertyChangedEventArgs e) {
-            PropertyChanged?.Invoke(this, e);
-        }
-
-        protected void OnPropertyChanged(string propertyName) {
-            OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
-        }
+    /// <summary>
+    /// Base class for observable objects. Thin wrapper over CommunityToolkit.Mvvm's ObservableObject.
+    /// </summary>
+    public class NotifyPropertyChanged : ObservableObject {
     }
 }

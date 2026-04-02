@@ -19,6 +19,13 @@ namespace Carnac.logic.Models {
         [property: DefaultValue(5)]
         private double itemFadeDelay;
 
+        /// <summary>
+        /// Maximum number of messages visible on screen. 0 = unlimited.
+        /// </summary>
+        [ObservableProperty]
+        [property: DefaultValue(5)]
+        private int maxMessages;
+
         [ObservableProperty]
         [property: DefaultValue("Black")]
         private string itemBackgroundColor;
@@ -171,5 +178,12 @@ namespace Carnac.logic.Models {
 
         [ObservableProperty]
         private string clickColor;
+
+        /// <summary>
+        /// Optional folder path for additional user-supplied keymap YAML files.
+        /// </summary>
+        [ObservableProperty]
+        [property: DefaultValue("")]
+        private string customKeymapsFolder;
     }
 }

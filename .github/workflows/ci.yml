@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [beta, main]
+  pull_request:
+    branches: [beta, main]
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+          dotnet-quality: 'preview'
+
+      - name: Restore
+        run: dotnet restore src/w4b-carnac.sln
+
+      - name: Build
+        run: dotnet build src/w4b-carnac.sln --no-restore --configuration Release
+
+      - name: Test
+        run: dotnet test src/w4b.carnac.tests/w4b.carnac.tests.csproj --no-build --configuration Release --logger "trx;LogFileName=test-results.trx"
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: src/w4b.carnac.tests/TestResults/*.trx
+
+      - name: Publish
+        if: github.event_name == 'push'
+        run: dotnet publish src/w4b.carnac/w4b.carnac.csproj -c Release --no-build -o publish
+
+      - name: Upload build artifact
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: carnac-win-x64
+          path: publish/

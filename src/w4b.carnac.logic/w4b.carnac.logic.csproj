@@ -30,8 +30,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.1" />
-    <PackageReference Include="MouseKeyHook" Version="5.7.1" />
-    <PackageReference Include="SettingsProviderNet" Version="2.1.1" />
     <PackageReference Include="System.Interactive" Version="6.0.1" />
     <PackageReference Include="System.Reactive" Version="6.0.0" />
     <PackageReference Include="YamlDotNet" Version="13.1.1" />

@@ -59,11 +59,10 @@
     <PackageReference Include="MahApps.Metro.Resources" Version="0.6.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.5" />
-    <PackageReference Include="MouseKeyHook" Version="5.7.1" />
     <PackageReference Include="Serilog.Extensions.Hosting" Version="10.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-    <PackageReference Include="SettingsProviderNet" Version="2.1.1" />
     <PackageReference Include="System.Reactive" Version="6.0.0" />
+    <PackageReference Include="Velopack" Version="0.0.1298" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\w4b.carnac.logic\w4b.carnac.logic.csproj" />

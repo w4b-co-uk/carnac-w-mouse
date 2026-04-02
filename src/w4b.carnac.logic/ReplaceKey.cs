@@ -165,20 +165,38 @@ namespace Carnac.Logic {
         [DllImport("user32.dll")]
         private static extern int ToUnicodeEx(uint wVirtKey, uint wScanCode, byte[] lpKeyState, [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pwszBuff, int cchBuff, uint wFlags, IntPtr dwhkl);
 
-        public static string Sanitise(this Keys key) {
-            if (SpecialCases.ContainsKey(key)) {
-                return SpecialCases[key];
+        public static string Sanitise(this Keys key, bool shiftPressed = false, bool forceUpperCase = false) {
+            if (SpecialCases.TryGetValue(key, out string special)) {
+                return special;
             }
-            string result = KeyCodeToUnicode(key);
-            return result.Length > 0 ? result : key.ToString();
+
+            // For shortcut display (Ctrl+Shift+L), show the key name in uppercase
+            if (forceUpperCase) {
+                if (Replacements.TryGetValue(key, out string replacement)) {
+                    return replacement;
+                }
+                return key.ToString();
+            }
+
+            // Use shift replacements when shift is held (e.g., Shift+1 = "!")
+            if (shiftPressed && ShiftReplacements.TryGetValue(key, out string shiftResult)) {
+                return shiftResult;
+            }
+
+            // Letters: shift → uppercase, else lowercase
+            if (key >= Keys.A && key <= Keys.Z) {
+                return shiftPressed ? key.ToString() : key.ToString().ToLowerInvariant();
+            }
+
+            if (Replacements.TryGetValue(key, out string rep)) {
+                return rep;
+            }
+
+            return key.ToString();
         }
 
         public static string SanitiseLower(this Keys key) {
-            if (SpecialCases.ContainsKey(key)) {
-                return SpecialCases[key];
-            }
-            string result = KeyCodeToUnicode(key, true);
-            return result.Length > 0 ? result : key.ToString();
+            return Sanitise(key, shiftPressed: false, forceUpperCase: false);
         }
     }
 }

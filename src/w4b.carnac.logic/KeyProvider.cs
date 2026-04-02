@@ -92,6 +92,7 @@ namespace Carnac.logic {
                         interceptMouseSource.GetKeyStream() })
                     .Select(DetectWindowsKey)
                     .Where(k => k.KeyDirection == KeyDirection.Down)
+                    .Where(k => !IsModifierKeyPress(k))
                     .Select(ToCarnacKeyPress)
                     .Where(keypress => keypress != null)
                     .Where(k => !passwordModeService.CheckPasswordMode(k.InterceptKeyEventArgs))
@@ -179,9 +180,9 @@ namespace Carnac.logic {
                     yield return "Shift";
                 }
 
-                yield return interceptKeyEventArgs.Key.SanitiseLower();
+                yield return interceptKeyEventArgs.Key.Sanitise(forceUpperCase: true);
             } else {
-                yield return interceptKeyEventArgs.Key.Sanitise();
+                yield return interceptKeyEventArgs.Key.Sanitise(shiftPressed: shiftPressed);
             }
         }
     }

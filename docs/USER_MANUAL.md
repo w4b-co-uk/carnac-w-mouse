@@ -87,6 +87,7 @@ Controls **where** the overlay appears.
 | **Bottom Offset** | Distance in pixels from the bottom edge of the screen. |
 | **Left Offset** | Distance in pixels from the left edge of the screen. |
 | **Right Offset** | Distance in pixels from the right edge of the screen. |
+| **Language** | Select the UI language: English (default), Español, or Português (Brasil). Changes apply immediately to the Preferences window. |
 
 ### Keyboard Tab
 
@@ -101,6 +102,7 @@ Controls how **keystrokes** appear in the overlay.
 | **Font Colour** | Text color (any Windows color name, e.g., "White", "Cyan", "Yellow"). | White |
 | **Background Color** | Background color behind the text. | Black |
 | **Shortcuts Only** | When enabled, only displays key combinations found in the built-in keymap files. Regular typing is hidden. | Off |
+| **Custom Keymaps** | Path to an optional folder containing additional `.yml` keymap files. Use the Browse button to select a folder. Applied on restart. | Empty |
 | **Only Keys with Modifiers** | When enabled, only shows key combos that include Ctrl, Alt, Shift, or Win. Regular typing is hidden. | Off |
 | **Show Space as ␣** | Displays the space key as the Unicode open-box symbol instead of a blank space. | Off |
 | **Show Application Icon** | Displays the icon of the currently active application next to the keystroke. | Off |
@@ -236,9 +238,35 @@ dotnet run --project src/w4b.carnac/w4b.carnac.csproj
 
 ## Release
 
+To build a release version of Carnac:
+
 ```powershell
+# 1. Ensure .NET 10 SDK is first in PATH
 $env:PATH = "C:\Program Files\dotnet;" + $env:PATH
+
+# 2. Restore NuGet packages (uses local NuGet.Config to bypass VS offline config)
 dotnet restore src/w4b-carnac.sln -p:RestoreConfigFile="NuGet.Config"
 
-dotnet publish src/w4b.carnac/w4b.carnac.csproj -c Release
+# 3. Build in Release mode
+dotnet build src/w4b-carnac.sln -c Release --no-restore
+
+# 4. Run tests to verify everything passes
+dotnet test src/w4b.carnac.tests/w4b.carnac.tests.csproj -c Release --no-build --nologo
+
+# 5. Publish single-file executable
+dotnet publish src/w4b.carnac/w4b.carnac.csproj -c Release --no-restore
 ```
+
+The output is a single-file executable at:
+
+```
+src/w4b.carnac/bin/Release/net10.0-windows/publish/w4b.carnac.exe
+```
+
+This file is framework-dependent (requires .NET 10 Desktop Runtime on the target machine). To create a fully self-contained executable:
+
+```powershell
+dotnet publish src/w4b.carnac/w4b.carnac.csproj -c Release --self-contained true -r win-x64
+```
+
+The self-contained output is at `src/w4b.carnac/bin/Release/net10.0-windows/win-x64/publish/w4b.carnac.exe`.

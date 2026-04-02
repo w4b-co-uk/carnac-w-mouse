@@ -87,6 +87,7 @@ Controla **dónde** aparece la capa.
 | **Bottom Offset** | Distancia en píxeles desde el borde inferior de la pantalla. |
 | **Left Offset** | Distancia en píxeles desde el borde izquierdo de la pantalla. |
 | **Right Offset** | Distancia en píxeles desde el borde derecho de la pantalla. |
+| **Language** (Idioma) | Selecciona el idioma de la interfaz: English (por defecto), Español o Português (Brasil). Los cambios se aplican inmediatamente en la ventana de Preferencias. |
 
 ### Pestaña Keyboard (Teclado)
 
@@ -101,6 +102,7 @@ Controla cómo aparecen las **teclas** en la capa.
 | **Font Colour** | Color del texto (cualquier nombre de color de Windows, ej: "White", "Cyan", "Yellow"). | White |
 | **Background Color** | Color de fondo detrás del texto. | Black |
 | **Shortcuts Only** | Cuando está activado, solo muestra combinaciones de teclas encontradas en los archivos de keymaps. La escritura normal se oculta. | Desactivado |
+| **Custom Keymaps** | Ruta a una carpeta opcional con archivos `.yml` de keymaps adicionales. Usa el botón Browse para seleccionar la carpeta. Se aplica al reiniciar. | Vacío |
 | **Only Keys with Modifiers** | Cuando está activado, solo muestra combinaciones que incluyen Ctrl, Alt, Shift o Win. La escritura normal se oculta. | Desactivado |
 | **Show Space as ␣** | Muestra la tecla de espacio como el símbolo Unicode de caja abierta en lugar de un espacio en blanco. | Desactivado |
 | **Show Application Icon** | Muestra el icono de la aplicación activa junto a la tecla presionada. | Desactivado |
@@ -265,11 +267,37 @@ $env:PATH = "C:\Program Files\dotnet;" + $env:PATH
 dotnet run --project src/w4b.carnac/w4b.carnac.csproj
 ```
 
-## Release
+## Compilar para Release
+
+Para compilar una versión de release de Carnac:
 
 ```powershell
+# 1. Asegúrate de que .NET 10 SDK esté primero en PATH
 $env:PATH = "C:\Program Files\dotnet;" + $env:PATH
+
+# 2. Restaurar paquetes NuGet (usa NuGet.Config local para evitar config offline de VS)
 dotnet restore src/w4b-carnac.sln -p:RestoreConfigFile="NuGet.Config"
 
-dotnet publish src/w4b.carnac/w4b.carnac.csproj -c Release
+# 3. Compilar en modo Release
+dotnet build src/w4b-carnac.sln -c Release --no-restore
+
+# 4. Ejecutar pruebas para verificar que todo pase
+dotnet test src/w4b.carnac.tests/w4b.carnac.tests.csproj -c Release --no-build --nologo
+
+# 5. Publicar ejecutable único
+dotnet publish src/w4b.carnac/w4b.carnac.csproj -c Release --no-restore
 ```
+
+El resultado es un ejecutable único en:
+
+```
+src/w4b.carnac/bin/Release/net10.0-windows/publish/w4b.carnac.exe
+```
+
+Este archivo depende del framework (requiere .NET 10 Desktop Runtime en la máquina destino). Para crear un ejecutable completamente autocontenido:
+
+```powershell
+dotnet publish src/w4b.carnac/w4b.carnac.csproj -c Release --self-contained true -r win-x64
+```
+
+El ejecutable autocontenido queda en `src/w4b.carnac/bin/Release/net10.0-windows/win-x64/publish/w4b.carnac.exe`.

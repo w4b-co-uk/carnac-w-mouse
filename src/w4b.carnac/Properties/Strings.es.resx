@@ -200,19 +200,19 @@
     <value>Color de clic XButton2</value>
   </data>
   <data name="AboutCode52" xml:space="preserve">
-    <value>un proyecto de code52</value>
+    <value>Visualizador de teclas y clics del mouse en tiempo real</value>
   </data>
   <data name="AboutProjectBy" xml:space="preserve">
-    <value>un proyecto de</value>
+    <value>Colaboradores</value>
   </data>
   <data name="AboutUses" xml:space="preserve">
-    <value>Carnac utiliza</value>
+    <value>Construido con</value>
   </data>
   <data name="AboutVersion" xml:space="preserve">
     <value>versión </value>
   </data>
   <data name="VisitWebsite" xml:space="preserve">
-    <value>Visitar sitio web de Carnac</value>
+    <value>Visitar en GitHub</value>
   </data>
   <data name="SelectKeymapsFolder" xml:space="preserve">
     <value>Seleccionar carpeta de keymaps personalizados</value>

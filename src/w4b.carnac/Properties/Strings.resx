@@ -206,19 +206,19 @@
   </data>
   <!-- About Tab -->
   <data name="AboutCode52" xml:space="preserve">
-    <value>a code52 project</value>
+    <value>Real-time keystroke &amp; mouse click visualizer</value>
   </data>
   <data name="AboutProjectBy" xml:space="preserve">
-    <value>a project by</value>
+    <value>Contributors</value>
   </data>
   <data name="AboutUses" xml:space="preserve">
-    <value>Carnac uses</value>
+    <value>Built with</value>
   </data>
   <data name="AboutVersion" xml:space="preserve">
     <value>version </value>
   </data>
   <data name="VisitWebsite" xml:space="preserve">
-    <value>Visit Carnac Website</value>
+    <value>Visit on GitHub</value>
   </data>
   <!-- Dialog -->
   <data name="SelectKeymapsFolder" xml:space="preserve">

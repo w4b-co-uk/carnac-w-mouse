@@ -59,7 +59,7 @@ dotnet run --project src/w4b.carnac/w4b.carnac.csproj
 dotnet publish src/w4b.carnac/w4b.carnac.csproj -c Release
 ```
 
-El binario publicado queda en `src/w4b.carnac/bin/Release/net10.0-windows/publish/w4b.carnac.exe`.
+El binario publicado queda en `src/w4b.carnac/bin/Release/net10.0-windows/win-x64/publish/w4b.carnac.exe`.
 
 ## Uso
 

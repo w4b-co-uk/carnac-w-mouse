@@ -37,7 +37,7 @@ jobs:
 
       - name: Publish
         if: github.event_name == 'push'
-        run: dotnet publish src/w4b.carnac/w4b.carnac.csproj -c Release --no-build -o publish
+        run: dotnet publish src/w4b.carnac/w4b.carnac.csproj -c Release -o publish
 
       - name: Upload build artifact
         if: github.event_name == 'push'

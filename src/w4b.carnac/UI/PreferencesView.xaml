@@ -205,6 +205,21 @@
                                 <TextBox Foreground="White" Text="{Binding Settings.ItemFadeDelay}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
+                        <w4bui:ThreeColumnControl LabelText="Max Messages (0 = unlimited)">
+                            <w4bui:ThreeColumnControl.MainContent>
+                                <Slider
+                                    IsSnapToTickEnabled="True"
+                                    LargeChange="5"
+                                    Maximum="50"
+                                    Minimum="0"
+                                    SmallChange="1"
+                                    TickFrequency="1"
+                                    Value="{Binding Settings.MaxMessages}" />
+                            </w4bui:ThreeColumnControl.MainContent>
+                            <w4bui:ThreeColumnControl.OptionalContent>
+                                <TextBox Foreground="White" Text="{Binding Settings.MaxMessages}" />
+                            </w4bui:ThreeColumnControl.OptionalContent>
+                        </w4bui:ThreeColumnControl>
                         <w4bui:ThreeColumnControl LabelText="Font Size">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <Slider
@@ -239,6 +254,17 @@
                         <w4bui:ThreeColumnControl LabelText="Shortcuts Only">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <CheckBox Content="Only show keys that are listed in keymaps folder" IsChecked="{Binding Settings.DetectShortcutsOnly}" />
+                            </w4bui:ThreeColumnControl.MainContent>
+                        </w4bui:ThreeColumnControl>
+                        <w4bui:ThreeColumnControl LabelText="Custom Keymaps">
+                            <w4bui:ThreeColumnControl.MainContent>
+                                <StackPanel Orientation="Vertical">
+                                    <DockPanel>
+                                        <Button Content="Browse..." Command="{Binding BrowseKeymapsFolderCommand}" DockPanel.Dock="Right" Margin="5,0,0,0" Width="70" />
+                                        <TextBox Text="{Binding Settings.CustomKeymapsFolder}" />
+                                    </DockPanel>
+                                    <TextBlock HorizontalAlignment="Left">Optional folder with additional .yml keymap files (applied on restart)</TextBlock>
+                                </StackPanel>
                             </w4bui:ThreeColumnControl.MainContent>
                         </w4bui:ThreeColumnControl>
                         <w4bui:ThreeColumnControl LabelText="Only keys with Modifiers">

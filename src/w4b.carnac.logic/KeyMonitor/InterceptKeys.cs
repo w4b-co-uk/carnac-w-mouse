@@ -4,6 +4,9 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
+using System.Threading;
+using System.Threading.Channels;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Carnac.Logic.KeyMonitor {
@@ -13,31 +16,47 @@ namespace Carnac.Logic.KeyMonitor {
         public static readonly InterceptKeys Current = new InterceptKeys();
         private readonly IObservable<InterceptKeyEventArgs> keyStream;
 
+        private readonly Channel<InterceptKeyEventArgs> channel =
+            Channel.CreateBounded<InterceptKeyEventArgs>(
+                new BoundedChannelOptions(128) {
+                    FullMode = BoundedChannelFullMode.DropOldest,
+                    SingleWriter = true,
+                    SingleReader = true
+                });
+
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private Win32Methods.LowLevelKeyboardProc callback;
 
         private InterceptKeys() {
             keyStream = Observable.Create<InterceptKeyEventArgs>(observer => {
                 Debug.Write("Subscribed to keys");
+
+                CancellationTokenSource cts = new();
+                Task readerTask = Task.Run(async () => {
+                    await foreach (InterceptKeyEventArgs item in channel.Reader.ReadAllAsync(cts.Token)) {
+                        observer.OnNext(item);
+                    }
+                }, cts.Token);
+
                 IntPtr hookId = IntPtr.Zero;
-                // Need to hold onto this callback, otherwise it will get GC'd as it is an unmanged callback
                 callback = (nCode, wParam, lParam) => {
                     if (nCode >= 0) {
                         InterceptKeyEventArgs eventArgs = CreateEventArgs(wParam, lParam);
-                        observer.OnNext(eventArgs);
+                        channel.Writer.TryWrite(eventArgs);
                         if (eventArgs.Handled) {
                             return (IntPtr)1;
                         }
                     }
-
-                    // ReSharper disable once AccessToModifiedClosure
                     return Win32Methods.CallNextHookEx(hookId, nCode, wParam, lParam);
                 };
                 hookId = SetHook(callback);
+
                 return Disposable.Create(() => {
                     Debug.Write("Unsubscribed from keys");
                     _ = Win32Methods.UnhookWindowsHookEx(hookId);
                     callback = null;
+                    cts.Cancel();
+                    cts.Dispose();
                 });
             })
             .Publish().RefCount();

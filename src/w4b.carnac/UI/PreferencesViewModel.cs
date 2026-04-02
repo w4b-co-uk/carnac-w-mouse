@@ -2,6 +2,7 @@
 using Carnac.Logic.Enums;
 using Carnac.Logic.Native;
 using Carnac.UI;
+using Carnac.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Carnac.Logic.Settings;
 using System;
@@ -15,6 +16,11 @@ using System.Windows.Media;
 using Carnac.logic.Models;
 
 namespace Carnac.UI {
+    public class LanguageOption {
+        public string Name { get; set; }
+        public string Code { get; set; }
+    }
+
     public partial class PreferencesViewModel : NotifyPropertyChanged {
         private readonly ISettingsProvider settingsProvider;
 
@@ -75,6 +81,8 @@ namespace Carnac.UI {
             ResetToDefaultsCommand = new DelegateCommand(async () => await settingsProvider.ResetToDefaultsAsync<PopupSettings>());
             BrowseKeymapsFolderCommand = new DelegateCommand(BrowseKeymapsFolder);
             VisitCommand = new DelegateCommand(Visit);
+
+            SelectedLanguage = Settings.Language ?? "";
         }
 
         public ICommand VisitCommand { get; private set; }
@@ -86,6 +94,20 @@ namespace Carnac.UI {
         public ICommand BrowseKeymapsFolderCommand { get; private set; }
 
         public ObservableCollection<AvailableColor> AvailableColors { get; private set; }
+
+        public List<LanguageOption> AvailableLanguages { get; } = new() {
+            new LanguageOption { Name = "English", Code = "" },
+            new LanguageOption { Name = "Español", Code = "es" },
+            new LanguageOption { Name = "Português (Brasil)", Code = "pt-BR" }
+        };
+
+        [ObservableProperty]
+        private string selectedLanguage;
+
+        partial void OnSelectedLanguageChanged(string value) {
+            Settings.Language = value;
+            Loc.Instance.SwitchCulture(value);
+        }
 
         [ObservableProperty]
         private ObservableCollection<DetailedScreen> screens;
@@ -154,7 +176,7 @@ namespace Carnac.UI {
 
         private void BrowseKeymapsFolder() {
             Microsoft.Win32.OpenFolderDialog dialog = new() {
-                Title = "Select Custom Keymaps Folder"
+                Title = Loc.Instance.SelectKeymapsFolder
             };
             if (!string.IsNullOrWhiteSpace(Settings.CustomKeymapsFolder)
                 && System.IO.Directory.Exists(Settings.CustomKeymapsFolder)) {

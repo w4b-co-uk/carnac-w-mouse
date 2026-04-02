@@ -8,7 +8,7 @@ namespace Carnac.Utilities {
         public static Loc Instance => instance;
 
         private static readonly ResourceManager rm =
-            new("Carnac.Properties.Strings",
+            new("w4b.carnac.Properties.Strings",
                 typeof(Loc).Assembly);
 
         public event PropertyChangedEventHandler PropertyChanged;

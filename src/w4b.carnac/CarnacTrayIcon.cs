@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Forms;
+using Carnac.Utilities;
 using Application = System.Windows.Application;
 
 namespace Carnac {
@@ -13,7 +14,7 @@ namespace Carnac {
 
         public CarnacTrayIcon() {
             ToolStripMenuItem exitMenuItem = new() {
-                Text = "Exit" //Properties.Resources.ShellView_Exit
+                Text = Loc.Instance.TrayExit
             };
 
             Stream iconStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("w4b.carnac.icon.embedded.ico");

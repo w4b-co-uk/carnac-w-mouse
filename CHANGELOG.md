@@ -8,6 +8,10 @@ Major modernization release: .NET 10, new architecture, multi-language UI, and n
 
 ### Added
 
+- **Updated About tab** — Refreshed project description, contributors (including all fork authors), current component list, and GitHub link. Title now shows "Carnac w/ Mouse".
+- **Responsive buttons** — All preference window buttons now auto-size to fit localized text instead of using fixed widths.
+- **Minimum window size** — Preferences window enforces a minimum size of 610×875 to prevent layout issues.
+
 - **Multi-language UI** — Interface available in English (default), Spanish, and Portuguese (Brazil). Language selector in General tab; changes apply live.
 - **Custom keymaps folder** — Load additional YAML keymap files from a user-specified folder (Keyboard tab → Custom Keymaps).
 - **Native mouse hook** — Replaced `MouseKeyHook` library with native Win32 `WH_MOUSE_LL` P/Invoke via `InterceptMouse`.

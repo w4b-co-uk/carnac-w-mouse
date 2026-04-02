@@ -17,7 +17,9 @@ Carnac w/ Mouse muestra una capa transparente siempre visible que muestra cada t
 - **Indicadores de clic del mouse** — Círculos animados que se expanden para botón izquierdo, derecho, central y botones extra, cada uno con su propio color.
 - **Visualización de scroll** — Opcionalmente muestra eventos de la rueda del mouse.
 - **Soporte multi-monitor** — Elige en qué pantalla se muestra la capa y posiciónala en cualquier esquina con desplazamientos a nivel de píxel.
+- **Interfaz multi-idioma** — UI disponible en inglés, español y portugués (Brasil). Cambia de idioma en vivo desde Preferencias.
 - **Detección de atajos** — Reconoce atajos de teclado de los keymaps incluidos (VS Code, Visual Studio, Chrome, ReSharper, NCrunch) y muestra sus nombres.
+- **Keymaps personalizados** — Carga archivos YAML de keymaps adicionales desde una carpeta especificada por el usuario.
 - **Soporte internacional de teclado** — Detecta automáticamente la distribución de teclado de Windows y muestra los caracteres correctos, incluyendo caracteres acentuados (á, é, í, ó, ú, ñ, ü, etc.) y secuencias de teclas muertas.
 - **Modo contraseña / silencioso** — Presiona `Ctrl+Alt+P` para ocultar temporalmente todas las teclas (para ingresar contraseñas o datos sensibles). Presiona de nuevo para reanudar.
 - **Filtrado por proceso** — Opcionalmente limita la visualización a aplicaciones específicas usando patrones regex.
@@ -74,9 +76,9 @@ Para una guía completa, consulta el **[Manual de Usuario (Español)](docs/MANUA
 Todas las configuraciones son accesibles desde la ventana de **Preferencias** (clic izquierdo en el icono de la bandeja):
 
 | Pestaña | Configuraciones |
-|---------|-----------------|
-| **General** | Selección de pantalla, posición de la capa (esquina + desplazamientos) |
-| **Keyboard** | Tamaño de fuente, color, fondo, opacidad, tiempo de desvanecimiento, modo solo atajos, modo solo modificadores, filtro de proceso |
+|---------|------------------|
+| **General** | Selección de pantalla, posición de la capa (esquina + desplazamientos), idioma |
+| **Keyboard** | Tamaño de fuente, color, fondo, opacidad, tiempo de desvanecimiento, modo solo atajos, modo solo modificadores, carpeta de keymaps personalizados, filtro de proceso |
 | **Mouse** | Colores de clic (por botón), tamaño del indicador, escala de animación, borde, opacidad, tiempo de desvanecimiento, mostrar/ocultar clics y scroll |
 
 ## Estructura del Proyecto
@@ -89,6 +91,8 @@ Todas las configuraciones son accesibles desde la ventana de **Preferencias** (c
 
 Para detalles de arquitectura, consulta [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
+Para una lista completa de cambios, consulta el [Changelog](CHANGELOG.md).
+
 ## Historia y Reconocimientos
 
 Este proyecto es una cadena de forks que preserva el trabajo de los autores originales:
@@ -96,7 +100,7 @@ Este proyecto es una cadena de forks que preserva el trabajo de los autores orig
 1. **[Code52/carnac](https://github.com/Code52/carnac)** — Utilidad original Carnac para visualización de teclas.
 2. **[bfritscher/carnac](https://github.com/bfritscher/carnac)** — Fork de Boris Fritscher que agrega resaltado de clics del mouse.
 3. **[w4b-co-uk/carnac-w-mouse](https://github.com/w4b-co-uk/carnac-w-mouse)** — Actualizado a .NET 8 con limpieza de namespaces y trabajo multi-monitor. *(créditos al equipo de w4b)*
-4. **[OscarTinajero117/carnac-w-mouse](https://github.com/OscarTinajero117/carnac-w-mouse)** — Modernizado a .NET 10, source generators de CommunityToolkit.Mvvm, logging estructurado con Serilog, soporte mejorado de teclados internacionales (corrección de teclas muertas) y documentación bilingüe completa.
+4. **[OscarTinajero117/carnac-w-mouse](https://github.com/OscarTinajero117/carnac-w-mouse)** — Modernizado a .NET 10, source generators de CommunityToolkit.Mvvm, logging estructurado con Serilog, hooks nativos de mouse Win32, UI multi-idioma (EN/ES/PT-BR), configuración JSON, instalador Velopack, pipeline CI/CD, soporte mejorado de teclados internacionales y documentación bilingüe completa.
 
 ## Licencia
 

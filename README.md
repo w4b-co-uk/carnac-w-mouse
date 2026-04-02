@@ -17,7 +17,9 @@ Carnac w/ Mouse displays an always-on-top transparent overlay showing every key 
 - **Mouse click indicators** — Animated expanding circles for left, right, middle, and extra buttons, each with its own color.
 - **Scroll wheel display** — Optionally shows scroll up/down events.
 - **Multi-monitor support** — Choose which screen displays the overlay and position it in any corner with pixel-level offsets.
+- **Multi-language interface** — UI available in English, Spanish, and Portuguese (Brazil). Switch languages live from Preferences.
 - **Shortcut detection** — Recognizes keyboard shortcuts from built-in keymaps (VS Code, Visual Studio, Chrome, ReSharper, NCrunch) and displays their names.
+- **Custom keymaps** — Load additional YAML keymap files from a user-specified folder.
 - **International keyboard support** — Automatically detects your Windows keyboard layout and displays the correct characters, including accented characters (á, é, ñ, ü, etc.) and dead key sequences.
 - **Password / silent mode** — Press `Ctrl+Alt+P` to temporarily hide all keystrokes (for entering passwords or sensitive data). Press again to resume.
 - **Process filtering** — Optionally limit visualization to specific applications using regex patterns.
@@ -75,8 +77,8 @@ All settings are accessible from the **Preferences** window (left-click the tray
 
 | Tab | Settings |
 |-----|----------|
-| **General** | Screen selection, overlay position (corner + offsets) |
-| **Keyboard** | Font size, color, background, opacity, fade delay, shortcuts-only mode, modifier-only mode, process filter |
+| **General** | Screen selection, overlay position (corner + offsets), language |
+| **Keyboard** | Font size, color, background, opacity, fade delay, shortcuts-only mode, modifier-only mode, custom keymaps folder, process filter |
 | **Mouse** | Click colors (per button), indicator size, animation scale, border, opacity, fade delay, show/hide clicks and scroll |
 
 ## Project Structure
@@ -89,6 +91,8 @@ All settings are accessible from the **Preferences** window (left-click the tray
 
 For architecture details, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
+For a complete list of changes, see the [Changelog](CHANGELOG.md).
+
 ## History & Acknowledgments
 
 This project is a fork chain preserving the work of the original authors:
@@ -96,7 +100,7 @@ This project is a fork chain preserving the work of the original authors:
 1. **[Code52/carnac](https://github.com/Code52/carnac)** — Original Carnac keystroke utility.
 2. **[bfritscher/carnac](https://github.com/bfritscher/carnac)** — Boris Fritscher's fork adding mouse click highlights.
 3. **[w4b-co-uk/carnac-w-mouse](https://github.com/w4b-co-uk/carnac-w-mouse)** — Updated to .NET 8 with namespace cleanup and multi-monitor work. *(credits to the w4b team)*
-4. **[OscarTinajero117/carnac-w-mouse](https://github.com/OscarTinajero117/carnac-w-mouse)** — Modernized to .NET 10, CommunityToolkit.Mvvm source generators, Serilog structured logging, improved international keyboard support (dead key fix), and comprehensive bilingual documentation.
+4. **[OscarTinajero117/carnac-w-mouse](https://github.com/OscarTinajero117/carnac-w-mouse)** — Modernized to .NET 10, CommunityToolkit.Mvvm source generators, Serilog structured logging, native Win32 mouse hooks, multi-language UI (EN/ES/PT-BR), JSON settings, Velopack installer, CI/CD pipeline, improved international keyboard support, and comprehensive bilingual documentation.
 
 ## License
 

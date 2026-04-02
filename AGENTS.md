@@ -65,6 +65,8 @@ See `docs/ARCHITECTURE.md` for the full data flow diagram and dependency map.
 
 6. **Channel-Based Decoupling** — `System.Threading.Channels` in both `InterceptKeys` and `InterceptMouse` decouple Win32 hook callbacks from the Rx observable pipeline, preventing hook-timeout issues under load.
 
+7. **Localization (i18n)** — `.resx` resource files in `Properties/` (Strings.resx for English, Strings.es.resx for Spanish, Strings.pt-BR.resx for Portuguese Brazil). `Loc` singleton in `Utilities/Loc.cs` wraps `ResourceManager` and implements `INotifyPropertyChanged` for live XAML binding updates. Language is stored in `PopupSettings.Language` and applied on startup via `CultureInfo.CurrentUICulture`.
+
 ### Service Registration (DI)
 
 All services are registered as **singletons** in `App.xaml.cs`, except:
@@ -114,3 +116,4 @@ All services are registered as **singletons** in `App.xaml.cs`, except:
 | 7 | Plugin system — custom keymaps folder in preferences | ✅ Done |
 | 8 | Velopack installer integration | ✅ Done |
 | 9 | CI/CD pipeline (GitHub Actions) | ✅ Done |
+| 10 | Multi-language UI (English, Spanish, Portuguese) | ✅ Done |

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="TrayExit" xml:space="preserve">
+    <value>Sair</value>
+  </data>
+  <data name="TabGeneral" xml:space="preserve">
+    <value>Geral</value>
+  </data>
+  <data name="TabKeyboard" xml:space="preserve">
+    <value>Teclado</value>
+  </data>
+  <data name="TabMouse" xml:space="preserve">
+    <value>Mouse</value>
+  </data>
+  <data name="TabAbout" xml:space="preserve">
+    <value>Sobre</value>
+  </data>
+  <data name="TopOffset" xml:space="preserve">
+    <value>Margem superior</value>
+  </data>
+  <data name="BottomOffset" xml:space="preserve">
+    <value>Margem inferior</value>
+  </data>
+  <data name="LeftOffset" xml:space="preserve">
+    <value>Margem esquerda</value>
+  </data>
+  <data name="RightOffset" xml:space="preserve">
+    <value>Margem direita</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="ResetToDefaults" xml:space="preserve">
+    <value>Restaurar padrões</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salvar</value>
+  </data>
+  <data name="PopupTextWidth" xml:space="preserve">
+    <value>Largura do texto popup</value>
+  </data>
+  <data name="PopupOpacity" xml:space="preserve">
+    <value>Opacidade do popup</value>
+  </data>
+  <data name="PopupFadeDelay" xml:space="preserve">
+    <value>Atraso de esmaecimento (seg)</value>
+  </data>
+  <data name="MaxMessages" xml:space="preserve">
+    <value>Máx. mensagens (0 = ilimitado)</value>
+  </data>
+  <data name="FontSize" xml:space="preserve">
+    <value>Tamanho da fonte</value>
+  </data>
+  <data name="FontColour" xml:space="preserve">
+    <value>Cor da fonte</value>
+  </data>
+  <data name="BackgroundColor" xml:space="preserve">
+    <value>Cor de fundo</value>
+  </data>
+  <data name="ShortcutsOnly" xml:space="preserve">
+    <value>Somente atalhos</value>
+  </data>
+  <data name="ShortcutsOnlyDesc" xml:space="preserve">
+    <value>Mostrar apenas teclas definidas na pasta de keymaps</value>
+  </data>
+  <data name="CustomKeymaps" xml:space="preserve">
+    <value>Keymaps personalizados</value>
+  </data>
+  <data name="CustomKeymapsDesc" xml:space="preserve">
+    <value>Pasta opcional com arquivos .yml de keymaps adicionais (aplicado ao reiniciar)</value>
+  </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Procurar...</value>
+  </data>
+  <data name="OnlyModifiers" xml:space="preserve">
+    <value>Somente teclas com modificadores</value>
+  </data>
+  <data name="OnlyModifiersDesc" xml:space="preserve">
+    <value>Mostrar apenas teclas que incluam ctrl, shift, alt ou windows</value>
+  </data>
+  <data name="ShowSpaceAsUnicode" xml:space="preserve">
+    <value>Mostrar espaço como ␣</value>
+  </data>
+  <data name="ShowSpaceAsUnicodeDesc" xml:space="preserve">
+    <value>Mostrar a barra de espaço como caractere Unicode '␣'</value>
+  </data>
+  <data name="ShowApplicationIcon" xml:space="preserve">
+    <value>Mostrar ícone do aplicativo</value>
+  </data>
+  <data name="ShowApplicationIconDesc" xml:space="preserve">
+    <value>Exibir o ícone do aplicativo ativo</value>
+  </data>
+  <data name="ProcessFilter" xml:space="preserve">
+    <value>Filtro de processos</value>
+  </data>
+  <data name="ProcessFilterDesc" xml:space="preserve">
+    <value>Mostrar apenas teclas de processos que correspondam a esta expressão regular</value>
+  </data>
+  <data name="ShowMouseClicks" xml:space="preserve">
+    <value>Mostrar cliques do mouse</value>
+  </data>
+  <data name="ShowClicksAsKeys" xml:space="preserve">
+    <value>Mostrar cliques como teclas</value>
+  </data>
+  <data name="ShowScrollAsKeys" xml:space="preserve">
+    <value>Mostrar scroll como teclas</value>
+  </data>
+  <data name="MouseKeySize" xml:space="preserve">
+    <value>Tamanho da tecla do mouse</value>
+  </data>
+  <data name="StartScale" xml:space="preserve">
+    <value>Escala inicial</value>
+  </data>
+  <data name="StartBorder" xml:space="preserve">
+    <value>Borda inicial</value>
+  </data>
+  <data name="StartOpacity" xml:space="preserve">
+    <value>Opacidade inicial</value>
+  </data>
+  <data name="StopScale" xml:space="preserve">
+    <value>Escala final</value>
+  </data>
+  <data name="StopBorder" xml:space="preserve">
+    <value>Borda final</value>
+  </data>
+  <data name="StopOpacity" xml:space="preserve">
+    <value>Opacidade final</value>
+  </data>
+  <data name="CircleFadeDelay" xml:space="preserve">
+    <value>Atraso de esmaecimento do círculo (ms)</value>
+  </data>
+  <data name="LeftClickColor" xml:space="preserve">
+    <value>Cor do clique esquerdo</value>
+  </data>
+  <data name="RightClickColor" xml:space="preserve">
+    <value>Cor do clique direito</value>
+  </data>
+  <data name="ScrollClickColor" xml:space="preserve">
+    <value>Cor do clique de scroll</value>
+  </data>
+  <data name="XButton1ClickColor" xml:space="preserve">
+    <value>Cor do clique XButton1</value>
+  </data>
+  <data name="XButton2ClickColor" xml:space="preserve">
+    <value>Cor do clique XButton2</value>
+  </data>
+  <data name="AboutCode52" xml:space="preserve">
+    <value>um projeto code52</value>
+  </data>
+  <data name="AboutProjectBy" xml:space="preserve">
+    <value>um projeto de</value>
+  </data>
+  <data name="AboutUses" xml:space="preserve">
+    <value>Carnac utiliza</value>
+  </data>
+  <data name="AboutVersion" xml:space="preserve">
+    <value>versão </value>
+  </data>
+  <data name="VisitWebsite" xml:space="preserve">
+    <value>Visitar site do Carnac</value>
+  </data>
+  <data name="SelectKeymapsFolder" xml:space="preserve">
+    <value>Selecionar pasta de keymaps personalizados</value>
+  </data>
+  <data name="LanguageRestart" xml:space="preserve">
+    <value>(aplicado ao reiniciar)</value>
+  </data>
+</root>

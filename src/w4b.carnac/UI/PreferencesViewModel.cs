@@ -3,7 +3,7 @@ using Carnac.Logic.Enums;
 using Carnac.Logic.Native;
 using Carnac.UI;
 using CommunityToolkit.Mvvm.ComponentModel;
-using SettingsProviderNet;
+using Carnac.Logic.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -71,8 +71,9 @@ namespace Carnac.UI {
             XButton1ClickColor ??= new AvailableColor("Peru", Colors.Peru);
             XButton2ClickColor ??= new AvailableColor("Plum", Colors.Plum);
 
-            SaveCommand = new DelegateCommand(SaveSettings);
-            ResetToDefaultsCommand = new DelegateCommand(() => settingsProvider.ResetToDefaults<PopupSettings>());
+            SaveCommand = new DelegateCommand(async () => await SaveSettingsAsync());
+            ResetToDefaultsCommand = new DelegateCommand(async () => await settingsProvider.ResetToDefaultsAsync<PopupSettings>());
+            BrowseKeymapsFolderCommand = new DelegateCommand(BrowseKeymapsFolder);
             VisitCommand = new DelegateCommand(Visit);
         }
 
@@ -81,6 +82,8 @@ namespace Carnac.UI {
         public ICommand ResetToDefaultsCommand { get; private set; }
 
         public ICommand SaveCommand { get; private set; }
+
+        public ICommand BrowseKeymapsFolderCommand { get; private set; }
 
         public ObservableCollection<AvailableColor> AvailableColors { get; private set; }
 
@@ -111,8 +114,7 @@ namespace Carnac.UI {
             "MahApps.Metro",
             "CommunityToolkit.Mvvm",
             "NSubstitute",
-            "Reactive Extensions",
-            "MouseKeyHook"
+            "Reactive Extensions"
         };
         public string Authors => string.Join(", ", authors);
 
@@ -150,7 +152,20 @@ namespace Carnac.UI {
             }
         }
 
-        private void SaveSettings() {
+        private void BrowseKeymapsFolder() {
+            Microsoft.Win32.OpenFolderDialog dialog = new() {
+                Title = "Select Custom Keymaps Folder"
+            };
+            if (!string.IsNullOrWhiteSpace(Settings.CustomKeymapsFolder)
+                && System.IO.Directory.Exists(Settings.CustomKeymapsFolder)) {
+                dialog.InitialDirectory = Settings.CustomKeymapsFolder;
+            }
+            if (dialog.ShowDialog() == true) {
+                Settings.CustomKeymapsFolder = dialog.FolderName;
+            }
+        }
+
+        private async System.Threading.Tasks.Task SaveSettingsAsync() {
             if (Screens.Count < 1) {
                 return;
             }
@@ -177,7 +192,7 @@ namespace Carnac.UI {
             Settings.ScrollClickColor = ScrollClickColor.Name;
             Settings.XButton1ClickColor = XButton1ClickColor.Name;
             Settings.XButton2ClickColor = XButton2ClickColor.Name;
-            settingsProvider.SaveSettings(Settings);
+            await settingsProvider.SaveSettingsAsync(Settings);
         }
 
         private void PlaceScreen() {

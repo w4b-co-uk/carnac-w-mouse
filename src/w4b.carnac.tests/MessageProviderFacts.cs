@@ -1,10 +1,11 @@
 ﻿using Carnac.Logic;
 using Carnac.Logic.KeyMonitor;
 using Carnac.Logic.Models;
+using Carnac.Logic.MouseMonitor;
 using Carnac.Tests;
 using Microsoft.Win32;
 using NSubstitute;
-using SettingsProviderNet;
+using Carnac.Logic.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,10 +29,13 @@ namespace Carnac.tests {
         private MessageProvider CreateMessageProvider(IObservable<InterceptKeyEventArgs> keysStreamSource) {
             IInterceptKeys source = Substitute.For<IInterceptKeys>();
             _ = source.GetKeyStream().Returns(keysStreamSource);
+            IInterceptMouse mouseSource = Substitute.For<IInterceptMouse>();
+            _ = mouseSource.GetKeyStream().Returns(Observable.Empty<InterceptKeyEventArgs>());
             IDesktopLockEventService desktopLockEventService = Substitute.For<IDesktopLockEventService>();
             ISettingsProvider settingsProvider = Substitute.For<ISettingsProvider>();
+            _ = settingsProvider.GetSettings<PopupSettings>().Returns(new PopupSettings());
             _ = desktopLockEventService.GetSessionSwitchStream().Returns(Observable.Never<SessionSwitchEventArgs>());
-            KeyProvider keyProvider = new(source, new PasswordModeService(), desktopLockEventService, settingsProvider);
+            KeyProvider keyProvider = new(source, mouseSource, new PasswordModeService(), desktopLockEventService, settingsProvider);
             return new MessageProvider(shortcutProvider, keyProvider, new PopupSettings());
         }
 

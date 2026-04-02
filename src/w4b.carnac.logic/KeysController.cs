@@ -1,7 +1,8 @@
 using Carnac.Logic.Models;
-using SettingsProviderNet;
+using Carnac.Logic.Settings;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Carnac.logic.Models;
@@ -10,6 +11,7 @@ namespace Carnac.Logic {
     public class KeysController: IDisposable {
         private static readonly TimeSpan OneSecond = TimeSpan.FromSeconds(1);
         private readonly TimeSpan fadeOutDelay;
+        private readonly int maxMessages;
         private readonly ObservableCollection<Message> messages;
         private readonly IMessageProvider messageProvider;
         private readonly IConcurrencyService concurrencyService;
@@ -22,6 +24,7 @@ namespace Carnac.Logic {
 
             PopupSettings settings = settingsProvider.GetSettings<PopupSettings>();
             fadeOutDelay = TimeSpan.FromSeconds(settings.ItemFadeDelay);
+            maxMessages = settings.MaxMessages;
         }
 
         public void Start() {
@@ -34,6 +37,7 @@ namespace Carnac.Logic {
                         _ = messages.Remove(newMessage.Previous);
                     }
                     messages.Add(newMessage);
+                    EnforceMaxMessages();
                 });
 
             System.Reactive.Subjects.IConnectableObservable<Message> fadeOutMessageSeq = messageStream
@@ -62,6 +66,14 @@ namespace Carnac.Logic {
                 removeMessageSubscription,
                 fadeOutMessageSeq.Connect(),
                 messageStream.Connect());
+        }
+
+        private void EnforceMaxMessages() {
+            if (maxMessages <= 0) return;
+            while (messages.Count > maxMessages) {
+                Message oldest = messages.OrderBy(m => m.LastMessage).First();
+                messages.Remove(oldest);
+            }
         }
 
         public void Dispose() {

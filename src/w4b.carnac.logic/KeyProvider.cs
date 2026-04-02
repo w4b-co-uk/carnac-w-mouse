@@ -3,7 +3,7 @@ using Carnac.Logic.KeyMonitor;
 using Carnac.Logic.Models;
 using Carnac.Logic.MouseMonitor;
 using Microsoft.Win32;
-using SettingsProviderNet;
+using Carnac.Logic.Settings;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,6 +18,7 @@ using Carnac.logic.Models;
 namespace Carnac.logic {
     public class KeyProvider: IKeyProvider {
         private readonly IInterceptKeys interceptKeysSource;
+        private readonly IInterceptMouse interceptMouseSource;
         private readonly IPasswordModeService passwordModeService;
         private readonly IDesktopLockEventService desktopLockEventService;
         private readonly PopupSettings settings;
@@ -41,12 +42,13 @@ namespace Carnac.logic {
 
         private bool winKeyPressed;
 
-        public KeyProvider(IInterceptKeys interceptKeysSource, IPasswordModeService passwordModeService, IDesktopLockEventService desktopLockEventService, ISettingsProvider settingsProvider) {
+        public KeyProvider(IInterceptKeys interceptKeysSource, IInterceptMouse interceptMouseSource, IPasswordModeService passwordModeService, IDesktopLockEventService desktopLockEventService, ISettingsProvider settingsProvider) {
             if (settingsProvider == null) {
                 throw new ArgumentNullException(nameof(settingsProvider));
             }
 
             this.interceptKeysSource = interceptKeysSource;
+            this.interceptMouseSource = interceptMouseSource;
             this.passwordModeService = passwordModeService;
             this.desktopLockEventService = desktopLockEventService;
 
@@ -87,7 +89,7 @@ namespace Carnac.logic {
                 IDisposable keyStreamSubsription = Observable.Merge(
                     new IObservable<InterceptKeyEventArgs>[2] {
                         interceptKeysSource.GetKeyStream(),
-                        InterceptMouse.Current.GetKeyStream() })
+                        interceptMouseSource.GetKeyStream() })
                     .Select(DetectWindowsKey)
                     .Where(k => k.KeyDirection == KeyDirection.Down)
                     .Select(ToCarnacKeyPress)

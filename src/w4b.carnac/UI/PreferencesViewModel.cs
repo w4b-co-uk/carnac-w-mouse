@@ -130,13 +130,18 @@ namespace Carnac.UI {
             "Chris Sainty",
             "Andrew Tobin",
             "Henrik Andersson",
-            "Boris Fritscher"
+            "Boris Fritscher",
+            "w4b team",
+            "Oscar Tinajero"
         };
         private readonly List<string> components = new() {
             "MahApps.Metro",
             "CommunityToolkit.Mvvm",
-            "NSubstitute",
-            "Reactive Extensions"
+            "System.Reactive",
+            "Serilog",
+            "Velopack",
+            "YamlDotNet",
+            "Microsoft.Extensions.Hosting"
         };
         public string Authors => string.Join(", ", authors);
 
@@ -166,7 +171,7 @@ namespace Carnac.UI {
         private void Visit() {
             try {
                 _ = Process.Start(new ProcessStartInfo {
-                    FileName = "http://code52.org/carnac/",
+                    FileName = "https://github.com/OscarTinajero117/carnac-w-mouse",
                     UseShellExecute = true
                 });
             } catch (Exception ex) {

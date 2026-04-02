@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using Carnac.Logic.Settings;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Windows;
 using Carnac.logic;
@@ -71,6 +72,12 @@ namespace Carnac {
             }
 
             var services = host.Services;
+
+            // Apply saved language preference
+            var settings = services.GetRequiredService<PopupSettings>();
+            if (!string.IsNullOrEmpty(settings.Language)) {
+                CultureInfo.CurrentUICulture = new CultureInfo(settings.Language);
+            }
 
             Log.Information("Carnac starting up");
 

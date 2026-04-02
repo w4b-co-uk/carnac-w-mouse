@@ -10,8 +10,10 @@
 ```
 ┌─────────────────────────────────────────────────────┐
 │                   Win32 Layer                       │
-│  SetWindowsHookEx (keyboard)  ·  MouseKeyHook (mouse)│
+│  SetWindowsHookEx (WH_KEYBOARD_LL) · WH_MOUSE_LL     │
 └──────────────┬──────────────────────┬───────────────┘
+               │     Channel<T>      │
+               │   (bounded queue)   │
                ▼                      ▼
 ┌──────────────────────┐  ┌───────────────────────┐
 │   InterceptKeys      │  │   InterceptMouse      │
@@ -67,16 +69,20 @@ src/
 │
 ├── w4b.carnac.logic/         # Domain + Infrastructure
 │   ├── KeyMonitor/
-│   │   ├── InterceptKeys     # Win32 keyboard hook → Observable
+│   │   ├── InterceptKeys     # Win32 keyboard hook → Channel → Observable
 │   │   ├── InterceptKeyEventArgs  # Raw event data
 │   │   └── DesktopLockEventService
 │   ├── MouseMonitor/
-│   │   └── InterceptMouse    # Mouse hook → Observable
+│   │   ├── InterceptMouse    # Native WH_MOUSE_LL hook → Channel → Observable
+│   │   └── IInterceptMouse   # DI interface for mouse hook
 │   ├── Models/
 │   │   ├── KeyPress          # Enriched key event (process, icon, inputs)
 │   │   ├── Message           # Display unit (merging, formatting)
 │   │   └── PopupSettings     # All user preferences (~40 properties)
-│   ├── Keymaps/              # YAML shortcut definitions
+│   ├── Settings/
+│   │   ├── ISettingsProvider  # Settings interface (sync + async)
+│   │   └── JsonSettingsProvider # JSON-backed persistence (System.Text.Json)
+│   ├── Keymaps/              # YAML shortcut definitions (built-in)
 │   │   ├── visual-studio.yml
 │   │   ├── vscode.yml
 │   │   ├── chrome.yml
@@ -162,13 +168,13 @@ Structured logging to rolling files in `%LOCALAPPDATA%/Carnac/logs/`:
 | Package | Purpose | Status |
 |---------|---------|--------|
 | System.Reactive 6.0 | Event stream processing | ✅ Keep |
+| System.Threading.Channels | Hook callback decoupling | ✅ Added (Phase 5) |
 | MahApps.Metro 2.4.10 | Modern WPF controls | ✅ Keep |
-| MouseKeyHook 5.7.1 | Global mouse hook | ⚠️ Evaluate |
 | YamlDotNet 13.1.1 | YAML keymap parser | ✅ Update to 16.x |
 | CommunityToolkit.Mvvm 8.4.1 | MVVM source generators | ✅ Added (Phase 3) |
 | Microsoft.Extensions.Hosting 10.0.5 | DI + Host | ✅ Added (Phase 3) |
 | Serilog.Extensions.Hosting 10.0.0 | Structured logging | ✅ Added (Phase 3) |
-| SettingsProviderNet 2.1.1 | Settings storage | ❌ Replace (Phase 4) |
+| Velopack 0.0.1298 | Installer framework (update hooks) | ✅ Added (Phase 8) |
 | xUnit + NSubstitute + Shouldly | Unit testing | ✅ Keep, updated |
 
 ### Removed in Phase 2
@@ -182,6 +188,12 @@ Structured logging to rolling files in `%LOCALAPPDATA%/Carnac/logs/`:
 - ~~Fody~~ → CommunityToolkit.Mvvm source generators
 - ~~PropertyChanged.Fody~~ → `[ObservableProperty]` attribute
 - ~~Microsoft.CSharp~~ → included in .NET 10 SDK
+
+### Removed in Phase 4
+- ~~SettingsProviderNet~~ → `JsonSettingsProvider` (System.Text.Json)
+
+### Removed in Phase 6
+- ~~MouseKeyHook~~ → Native Win32 `WH_MOUSE_LL` P/Invoke in `InterceptMouse`
 
 ---
 

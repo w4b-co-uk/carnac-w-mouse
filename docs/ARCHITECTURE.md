@@ -62,8 +62,10 @@ src/
 │   │   └── PreferencesViewModel
 │   ├── Utilities/
 │   │   ├── ConcurrencyService  # Rx schedulers
+│   │   ├── Loc                 # i18n singleton (ResourceManager + INotifyPropertyChanged)
 │   │   ├── ProcessUtilities    # Single-instance mutex
 │   │   └── PlacementMarginConverter
+│   ├── Properties/           # .resx resource files (Strings.resx, Strings.es.resx, Strings.pt-BR.resx)
 │   ├── Resources/            # Icons, fonts (Entypo)
 │   └── Themes/               # WPF control templates
 │
@@ -160,6 +162,14 @@ Structured logging to rolling files in `%LOCALAPPDATA%/Carnac/logs/`:
 - `Log.Information("message")` for info-level events
 - `ILogger<T>` can be injected via DI for class-specific logging
 - Rolling daily files, 7-day retention
+
+### Localization (i18n)
+Multi-language UI via `.resx` resource files + a `Loc` singleton:
+- `Properties/Strings.resx` — English (default)
+- `Properties/Strings.es.resx` — Spanish
+- `Properties/Strings.pt-BR.resx` — Portuguese (Brazil)
+- `Utilities/Loc.cs` — Wraps `ResourceManager`, exposes string properties, implements `INotifyPropertyChanged` so XAML bindings update live when `SwitchCulture()` is called.
+- Language preference stored in `PopupSettings.Language` and applied on startup via `CultureInfo.CurrentUICulture`.
 
 ---
 

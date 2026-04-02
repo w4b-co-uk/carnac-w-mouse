@@ -3,15 +3,12 @@ using System.Diagnostics;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Carnac.Logic.KeyMonitor {
-    [PermissionSet(SecurityAction.LinkDemand, Name = "FullTrust")]
-    [PermissionSet(SecurityAction.InheritanceDemand, Name = "FullTrust")]
     public class InterceptKeys: IInterceptKeys {
         public static readonly InterceptKeys Current = new InterceptKeys();
         private readonly IObservable<InterceptKeyEventArgs> keyStream;

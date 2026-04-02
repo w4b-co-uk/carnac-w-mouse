@@ -56,12 +56,12 @@ namespace Carnac.Utilities {
             // Look for previous instance of this program.
             //IntPtr  = FindWindow(null, windowCaption);
             // If a previous instance of this program was found...
-            if (hWnd != null) {
+            if (hWnd != IntPtr.Zero) {
                 // Is it displaying a popup window?
                 IntPtr hPopupWnd = GetLastActivePopup(hWnd);
                 // If so, set focus to the popup window. Otherwise set focus
                 // to the program's main window.
-                if (hPopupWnd != null && IsWindowEnabled(hPopupWnd)) {
+                if (hPopupWnd != IntPtr.Zero && IsWindowEnabled(hPopupWnd)) {
                     hWnd = hPopupWnd;
                 }
 

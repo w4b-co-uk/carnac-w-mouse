@@ -185,5 +185,12 @@ namespace Carnac.logic.Models {
         [ObservableProperty]
         [property: DefaultValue("")]
         private string customKeymapsFolder;
+
+        /// <summary>
+        /// UI language code: "" (English), "es" (Spanish), "pt-BR" (Portuguese Brazil).
+        /// </summary>
+        [ObservableProperty]
+        [property: DefaultValue("")]
+        private string language;
     }
 }

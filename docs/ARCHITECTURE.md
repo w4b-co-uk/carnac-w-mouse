@@ -8,12 +8,12 @@
 ## High-Level Data Flow
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                   Win32 Layer                       │
+┌──────────────────────────────────────────────────────┐
+│                   Win32 Layer                        │
 │  SetWindowsHookEx (WH_KEYBOARD_LL) · WH_MOUSE_LL     │
-└──────────────┬──────────────────────┬───────────────┘
-               │     Channel<T>      │
-               │   (bounded queue)   │
+└──────────────┬──────────────────────┬────────────────┘
+               │     Channel<T>       │
+               │   (bounded queue)    │
                ▼                      ▼
 ┌──────────────────────┐  ┌───────────────────────┐
 │   InterceptKeys      │  │   InterceptMouse      │
@@ -21,17 +21,17 @@
 └──────────────┬───────┘  └──────────┬────────────┘
                └──────────┬──────────┘
                           ▼
-              ┌───────────────────────┐
-              │     KeyProvider       │
-              │  Merge · Filter · Map │
-              │  → IObservable<KeyPress>
-              └───────────┬───────────┘
+              ┌─────────────────────────┐
+              │     KeyProvider         │
+              │  Merge · Filter · Map   │
+              │  → IObservable<KeyPress>|
+              └───────────┬─────────────┘
                           ▼
-              ┌───────────────────────┐
-              │   MessageProvider     │
-              │  Scan(ShortcutAccum.) │
-              │  → IObservable<Message>
-              └───────────┬───────────┘
+              ┌────────────────────────┐
+              │   MessageProvider      │
+              │  Scan(ShortcutAccum.)  │
+              │  → IObservable<Message>|
+              └───────────┬────────────┘
                           ▼
               ┌───────────────────────┐
               │    KeysController     │
@@ -178,31 +178,25 @@ Multi-language UI via `.resx` resource files + a `Loc` singleton:
 | Package | Purpose | Status |
 |---------|---------|--------|
 | System.Reactive 6.0 | Event stream processing | ✅ Keep |
-| System.Threading.Channels | Hook callback decoupling | ✅ Added (Phase 5) |
+| System.Threading.Channels | Hook callback decoupling | ✅ Added |
 | MahApps.Metro 2.4.10 | Modern WPF controls | ✅ Keep |
 | YamlDotNet 13.1.1 | YAML keymap parser | ✅ Update to 16.x |
-| CommunityToolkit.Mvvm 8.4.1 | MVVM source generators | ✅ Added (Phase 3) |
-| Microsoft.Extensions.Hosting 10.0.5 | DI + Host | ✅ Added (Phase 3) |
-| Serilog.Extensions.Hosting 10.0.0 | Structured logging | ✅ Added (Phase 3) |
-| Velopack 0.0.1298 | Installer framework (update hooks) | ✅ Added (Phase 8) |
+| CommunityToolkit.Mvvm 8.4.1 | MVVM source generators | ✅ Added |
+| Microsoft.Extensions.Hosting 10.0.5 | DI + Host | ✅ Added |
+| Serilog.Extensions.Hosting 10.0.0 | Structured logging | ✅ Added |
+| Velopack 0.0.1298 | Installer framework (update hooks) | ✅ Added |
 | xUnit + NSubstitute + Shouldly | Unit testing | ✅ Keep, updated |
 
-### Removed in Phase 2
+### Removed
 - ~~Costura.Fody~~ → `PublishSingleFile` native .NET
-- ~~Squirrel.Windows~~ → Velopack (Phase 8)
+- ~~Squirrel.Windows~~ → Velopack
 - ~~DeltaCompressionDotNet~~ → Squirrel dependency
 - ~~Mono.Cecil~~ → Squirrel dependency
 - ~~Splat~~ → Squirrel dependency
-
-### Removed in Phase 3
 - ~~Fody~~ → CommunityToolkit.Mvvm source generators
 - ~~PropertyChanged.Fody~~ → `[ObservableProperty]` attribute
 - ~~Microsoft.CSharp~~ → included in .NET 10 SDK
-
-### Removed in Phase 4
 - ~~SettingsProviderNet~~ → `JsonSettingsProvider` (System.Text.Json)
-
-### Removed in Phase 6
 - ~~MouseKeyHook~~ → Native Win32 `WH_MOUSE_LL` P/Invoke in `InterceptMouse`
 
 ---

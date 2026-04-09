@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <OutputType>Library</OutputType>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -9,9 +9,6 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="FodyWeavers.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Keymaps\visual-studio.yml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -32,13 +29,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Fody" Version="6.8.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="MouseKeyHook" Version="5.7.1" />
-    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
-    <PackageReference Include="SettingsProviderNet" Version="2.1.1" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.1" />
     <PackageReference Include="System.Interactive" Version="6.0.1" />
     <PackageReference Include="System.Reactive" Version="6.0.0" />
     <PackageReference Include="YamlDotNet" Version="13.1.1" />

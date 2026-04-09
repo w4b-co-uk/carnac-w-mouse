@@ -2,7 +2,9 @@
 using Carnac.Logic.Enums;
 using Carnac.Logic.Native;
 using Carnac.UI;
-using SettingsProviderNet;
+using Carnac.Utilities;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Carnac.Logic.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,7 +16,12 @@ using System.Windows.Media;
 using Carnac.logic.Models;
 
 namespace Carnac.UI {
-    public class PreferencesViewModel: NotifyPropertyChanged {
+    public class LanguageOption {
+        public string Name { get; set; }
+        public string Code { get; set; }
+    }
+
+    public partial class PreferencesViewModel : NotifyPropertyChanged {
         private readonly ISettingsProvider settingsProvider;
 
         public PreferencesViewModel(ISettingsProvider settingsProvider, IScreenManager screenManager) {
@@ -70,9 +77,12 @@ namespace Carnac.UI {
             XButton1ClickColor ??= new AvailableColor("Peru", Colors.Peru);
             XButton2ClickColor ??= new AvailableColor("Plum", Colors.Plum);
 
-            SaveCommand = new DelegateCommand(SaveSettings);
-            ResetToDefaultsCommand = new DelegateCommand(() => settingsProvider.ResetToDefaults<PopupSettings>());
+            SaveCommand = new DelegateCommand(async () => await SaveSettingsAsync());
+            ResetToDefaultsCommand = new DelegateCommand(async () => await settingsProvider.ResetToDefaultsAsync<PopupSettings>());
+            BrowseKeymapsFolderCommand = new DelegateCommand(BrowseKeymapsFolder);
             VisitCommand = new DelegateCommand(Visit);
+
+            SelectedLanguage = Settings.Language ?? "";
         }
 
         public ICommand VisitCommand { get; private set; }
@@ -81,13 +91,32 @@ namespace Carnac.UI {
 
         public ICommand SaveCommand { get; private set; }
 
+        public ICommand BrowseKeymapsFolderCommand { get; private set; }
+
         public ObservableCollection<AvailableColor> AvailableColors { get; private set; }
 
-        public ObservableCollection<DetailedScreen> Screens { get; set; }
+        public List<LanguageOption> AvailableLanguages { get; } = new() {
+            new LanguageOption { Name = "English", Code = "" },
+            new LanguageOption { Name = "Español", Code = "es" },
+            new LanguageOption { Name = "Português (Brasil)", Code = "pt-BR" }
+        };
 
-        public DetailedScreen SelectedScreen { get; set; }
+        [ObservableProperty]
+        private string selectedLanguage;
 
-        public PopupSettings Settings { get; set; }
+        partial void OnSelectedLanguageChanged(string value) {
+            Settings.Language = value;
+            Loc.Instance.SwitchCulture(value);
+        }
+
+        [ObservableProperty]
+        private ObservableCollection<DetailedScreen> screens;
+
+        [ObservableProperty]
+        private DetailedScreen selectedScreen;
+
+        [ObservableProperty]
+        private PopupSettings settings;
 
         public string Version => Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
@@ -101,38 +130,48 @@ namespace Carnac.UI {
             "Chris Sainty",
             "Andrew Tobin",
             "Henrik Andersson",
-            "Boris Fritscher"
+            "Boris Fritscher",
+            "w4b team",
+            "Oscar Tinajero"
         };
         private readonly List<string> components = new() {
             "MahApps.Metro",
-            "Fody",
-            "NSubstitute",
-            "Reactive Extensions",
-            "Squirrel.Windows",
-            "MouseKeyHook"
+            "CommunityToolkit.Mvvm",
+            "System.Reactive",
+            "Serilog",
+            "Velopack",
+            "YamlDotNet",
+            "Microsoft.Extensions.Hosting"
         };
         public string Authors => string.Join(", ", authors);
 
         public string Components => string.Join(", ", components);
 
-        public AvailableColor FontColor { get; set; }
+        [ObservableProperty]
+        private AvailableColor fontColor;
 
-        public AvailableColor ItemBackgroundColor { get; set; }
+        [ObservableProperty]
+        private AvailableColor itemBackgroundColor;
 
-        public AvailableColor LeftClickColor { get; set; }
+        [ObservableProperty]
+        private AvailableColor leftClickColor;
 
-        public AvailableColor RightClickColor { get; set; }
+        [ObservableProperty]
+        private AvailableColor rightClickColor;
 
-        public AvailableColor ScrollClickColor { get; set; }
+        [ObservableProperty]
+        private AvailableColor scrollClickColor;
 
-        public AvailableColor XButton1ClickColor { get; set; }
+        [ObservableProperty]
+        private AvailableColor xButton1ClickColor;
 
-        public AvailableColor XButton2ClickColor { get; set; }
+        [ObservableProperty]
+        private AvailableColor xButton2ClickColor;
 
         private void Visit() {
             try {
                 _ = Process.Start(new ProcessStartInfo {
-                    FileName = "http://code52.org/carnac/",
+                    FileName = "https://github.com/OscarTinajero117/carnac-w-mouse",
                     UseShellExecute = true
                 });
             } catch (Exception ex) {
@@ -140,7 +179,20 @@ namespace Carnac.UI {
             }
         }
 
-        private void SaveSettings() {
+        private void BrowseKeymapsFolder() {
+            Microsoft.Win32.OpenFolderDialog dialog = new() {
+                Title = Loc.Instance.SelectKeymapsFolder
+            };
+            if (!string.IsNullOrWhiteSpace(Settings.CustomKeymapsFolder)
+                && System.IO.Directory.Exists(Settings.CustomKeymapsFolder)) {
+                dialog.InitialDirectory = Settings.CustomKeymapsFolder;
+            }
+            if (dialog.ShowDialog() == true) {
+                Settings.CustomKeymapsFolder = dialog.FolderName;
+            }
+        }
+
+        private async System.Threading.Tasks.Task SaveSettingsAsync() {
             if (Screens.Count < 1) {
                 return;
             }
@@ -167,7 +219,7 @@ namespace Carnac.UI {
             Settings.ScrollClickColor = ScrollClickColor.Name;
             Settings.XButton1ClickColor = XButton1ClickColor.Name;
             Settings.XButton2ClickColor = XButton2ClickColor.Name;
-            settingsProvider.SaveSettings(Settings);
+            await settingsProvider.SaveSettingsAsync(Settings);
         }
 
         private void PlaceScreen() {

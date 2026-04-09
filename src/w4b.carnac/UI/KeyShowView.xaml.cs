@@ -1,6 +1,6 @@
 ﻿using Carnac.Logic;
-using Gma.System.MouseKeyHook;
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Timers;
 using System.Windows;
@@ -10,7 +10,8 @@ using System.Windows.Media.Animation;
 namespace Carnac.UI {
     public partial class KeyShowView: IDisposable {
         private Storyboard sb;
-        private IKeyboardMouseEvents m_GlobalHook = null;
+        private IntPtr mouseHookId = IntPtr.Zero;
+        private Win32Methods.LowLevelMouseProc mouseHookCallback;
 
         public KeyShowView(KeyShowViewModel keyShowViewModel) {
             DataContext = keyShowViewModel;
@@ -44,7 +45,7 @@ namespace Carnac.UI {
         }
 
         public void Dispose() {
-            m_GlobalHook?.Dispose();
+            DestroyMouseEvents();
         }
 
         [DllImport("user32.dll", SetLastError = true)]
@@ -122,39 +123,61 @@ namespace Carnac.UI {
         }
 
         private void SetupMouseEvents() {
-            m_GlobalHook ??= Hook.GlobalEvents();
-            m_GlobalHook.MouseDown += OnMouseDown;
-            m_GlobalHook.MouseMove += OnMouseMove;
+            if (mouseHookId != IntPtr.Zero) return;
+
+            mouseHookCallback = (nCode, wParam, lParam) => {
+                if (nCode >= 0) {
+                    int msg = (int)wParam;
+                    Win32Methods.MSLLHOOKSTRUCT hookStruct =
+                        Marshal.PtrToStructure<Win32Methods.MSLLHOOKSTRUCT>(lParam);
+
+                    switch (msg) {
+                        case Win32Methods.WM_LBUTTONDOWN:
+                        case Win32Methods.WM_RBUTTONDOWN:
+                        case Win32Methods.WM_MBUTTONDOWN:
+                        case Win32Methods.WM_XBUTTONDOWN:
+                            Dispatcher.BeginInvoke(() => OnMouseDown(msg, hookStruct));
+                            break;
+                        case Win32Methods.WM_MOUSEMOVE:
+                            Dispatcher.BeginInvoke(() => OnMouseMove(hookStruct));
+                            break;
+                    }
+                }
+                return Win32Methods.CallNextHookEx(mouseHookId, nCode, wParam, lParam);
+            };
+
+            using Process curProcess = Process.GetCurrentProcess();
+            using ProcessModule curModule = curProcess.MainModule;
+            mouseHookId = Win32Methods.SetWindowsHookExMouse(
+                Win32Methods.WH_MOUSE_LL,
+                mouseHookCallback,
+                Win32Methods.GetModuleHandle(curModule.ModuleName),
+                0);
         }
 
         private void DestroyMouseEvents() {
-            if (m_GlobalHook == null) {
-                return;
-            }
-            m_GlobalHook.MouseDown -= OnMouseDown;
-            m_GlobalHook.MouseMove -= OnMouseMove;
-            m_GlobalHook.Dispose();
-            m_GlobalHook = null;
+            if (mouseHookId == IntPtr.Zero) return;
+            Win32Methods.UnhookWindowsHookEx(mouseHookId);
+            mouseHookId = IntPtr.Zero;
+            mouseHookCallback = null;
         }
 
-        private void OnMouseDown(object sender, System.Windows.Forms.MouseEventArgs e) {
+        private void OnMouseDown(int msg, Win32Methods.MSLLHOOKSTRUCT hookStruct) {
             KeyShowViewModel vm = (KeyShowViewModel)DataContext;
-            vm.Settings.ClickColor = vm.Settings.LeftClickColor;
-            if (e.Button == System.Windows.Forms.MouseButtons.Right) {
-                vm.Settings.ClickColor = vm.Settings.RightClickColor;
-            } else if (e.Button == System.Windows.Forms.MouseButtons.Middle) {
-                vm.Settings.ClickColor = vm.Settings.ScrollClickColor;
-            } else if (e.Button == System.Windows.Forms.MouseButtons.XButton1) {
-                vm.Settings.ClickColor = vm.Settings.XButton1ClickColor;
-            } else if (e.Button == System.Windows.Forms.MouseButtons.XButton2) {
-                vm.Settings.ClickColor = vm.Settings.XButton2ClickColor;
-            }
+            vm.Settings.ClickColor = msg switch {
+                Win32Methods.WM_RBUTTONDOWN => vm.Settings.RightClickColor,
+                Win32Methods.WM_MBUTTONDOWN => vm.Settings.ScrollClickColor,
+                Win32Methods.WM_XBUTTONDOWN => ((hookStruct.mouseData >> 16) & 0xFFFF) == 1
+                    ? vm.Settings.XButton1ClickColor
+                    : vm.Settings.XButton2ClickColor,
+                _ => vm.Settings.LeftClickColor
+            };
             sb.Begin();
         }
 
-        private void OnMouseMove(object sender, System.Windows.Forms.MouseEventArgs e) {
+        private void OnMouseMove(Win32Methods.MSLLHOOKSTRUCT hookStruct) {
             KeyShowViewModel vm = (KeyShowViewModel)DataContext;
-            vm.CursorPosition = PointFromScreen(new Point(e.X, e.Y));
+            vm.CursorPosition = PointFromScreen(new Point(hookStruct.x, hookStruct.y));
         }
     }
 }

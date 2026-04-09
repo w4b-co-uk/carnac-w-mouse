@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace Carnac.Logic {
     public static class AssociatedProcessUtilities {
-        private static readonly Dictionary<int, Process> processes = new Dictionary<int, Process>();
+        private static readonly ConcurrentDictionary<int, Process> processes = new();
 
         [DllImport("User32.dll")]
         private static extern int GetForegroundWindow();
@@ -16,14 +16,14 @@ namespace Carnac.Logic {
         public static Process GetAssociatedProcess() {
             int handle = GetForegroundWindow();
 
-            if (processes.ContainsKey(handle)) {
-                return processes[handle];
+            if (processes.TryGetValue(handle, out Process cached)) {
+                return cached;
             }
 
             _ = GetWindowThreadProcessId(new IntPtr(handle), out uint processId);
             try {
                 Process p = Process.GetProcessById(Convert.ToInt32(processId));
-                processes.Add(handle, p);
+                processes.TryAdd(handle, p);
                 return p;
             } catch (ArgumentException) {
                 return null;

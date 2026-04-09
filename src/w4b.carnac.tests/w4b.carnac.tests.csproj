@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <OutputType>Library</OutputType>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\src\</SolutionDir>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -13,16 +13,18 @@
     <FileVersion>2.3.0.0</FileVersion>
     <InformationalVersion>2.3.0-ci.32+Branch.master.Sha.69515520313d5c26261a8b05660255cd9da08bfa</InformationalVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.Reactive.Testing" Version="6.0.0" />
-    <PackageReference Include="NSubstitute" Version="5.0.0" />
-    <PackageReference Include="SettingsProviderNet" Version="2.1.1" />
+    <PackageReference Include="NSubstitute" Version="5.1.0" />
     <PackageReference Include="Shouldly" Version="4.2.1" />
     <PackageReference Include="System.Reactive" Version="6.0.0" />
-    <PackageReference Include="xunit" Version="2.5.0" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\w4b.carnac.logic\w4b.carnac.logic.csproj" />

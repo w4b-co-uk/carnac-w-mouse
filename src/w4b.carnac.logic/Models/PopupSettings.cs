@@ -1,79 +1,95 @@
 ﻿using Carnac.Logic;
 using Carnac.Logic.Enums;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.ComponentModel;
 using System.Windows;
 
 namespace Carnac.logic.Models {
-    public class PopupSettings: NotifyPropertyChanged {
-        [DefaultValue(350)]
-        public int ItemMaxWidth { get; set; }
+    public partial class PopupSettings : NotifyPropertyChanged {
+        [ObservableProperty]
+        [property: DefaultValue(350)]
+        private int itemMaxWidth;
 
-        [DefaultValue(0.5)]
-        public double ItemOpacity { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue(0.5)]
+        private double itemOpacity;
 
-        [DefaultValue(5)]
-        public double ItemFadeDelay { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue(5)]
+        private double itemFadeDelay;
 
-        [DefaultValue("Black")]
-        public string ItemBackgroundColor { get; set; }
+        /// <summary>
+        /// Maximum number of messages visible on screen. 0 = unlimited.
+        /// </summary>
+        [ObservableProperty]
+        [property: DefaultValue(5)]
+        private int maxMessages;
 
-        [DefaultValue("White")]
-        public string FontColor { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue("Black")]
+        private string itemBackgroundColor;
 
-        [DefaultValue(40)]
-        public int FontSize { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue("White")]
+        private string fontColor;
 
-        public int Screen { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue(40)]
+        private int fontSize;
 
-        [NotifyProperty(AlsoNotifyFor = new[] { "ScaleTransform", "Alignment" })]
-        public NotificationPlacement Placement { get; set; }
+        [ObservableProperty]
+        private int screen;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(ScaleTransform))]
+        [NotifyPropertyChangedFor(nameof(Alignment))]
+        private NotificationPlacement placement;
 
         //Used to determine which from it's leftmost co-ord
         private double left;
         public double Left {
             get => left;
             set {
-                left = value;
-                OnLeftChanged(EventArgs.Empty);
+                if (SetProperty(ref left, value)) {
+                    LeftChanged?.Invoke(this, EventArgs.Empty);
+                }
             }
         }
 
         public event EventHandler LeftChanged;
 
-        protected void OnLeftChanged(EventArgs e) {
-            LeftChanged?.Invoke(this, e);
-        }
-
         private double top;
         public double Top {
             get => top;
             set {
-                top = value;
-                OnTopChanged(EventArgs.Empty);
+                if (SetProperty(ref top, value)) {
+                    TopChanged?.Invoke(this, EventArgs.Empty);
+                }
             }
         }
 
         public event EventHandler TopChanged;
 
-        protected void OnTopChanged(EventArgs e) {
-            TopChanged?.Invoke(this, e);
-        }
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(Margins))]
+        private int topOffset;
 
-        [NotifyProperty(AlsoNotifyFor = new[] { "Margins" })]
-        public int TopOffset { get; set; }
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(Margins))]
+        private int bottomOffset;
 
-        [NotifyProperty(AlsoNotifyFor = new[] { "Margins" })]
-        public int BottomOffset { get; set; }
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(Margins))]
+        private int leftOffset;
 
-        [NotifyProperty(AlsoNotifyFor = new[] { "Margins" })]
-        public int LeftOffset { get; set; }
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(Margins))]
+        private int rightOffset;
 
-        [NotifyProperty(AlsoNotifyFor = new[] { "Margins" })]
-        public int RightOffset { get; set; }
-
-        [DefaultValue("")]
-        public string ProcessFilterExpression { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue("")]
+        private string processFilterExpression;
 
         public double ScaleTransform => Placement is NotificationPlacement.TopLeft or NotificationPlacement.TopRight ? 1 : -1;
 
@@ -81,64 +97,100 @@ namespace Carnac.logic.Models {
 
         public Thickness Margins => new(LeftOffset, TopOffset, RightOffset, BottomOffset);
 
-        public bool DetectShortcutsOnly { get; set; }
+        [ObservableProperty]
+        private bool detectShortcutsOnly;
 
-        public bool ShowApplicationIcon { get; set; }
+        [ObservableProperty]
+        private bool showApplicationIcon;
 
-        public bool SettingsConfigured { get; set; }
+        [ObservableProperty]
+        private bool settingsConfigured;
 
-        public bool ShowOnlyModifiers { get; set; }
+        [ObservableProperty]
+        private bool showOnlyModifiers;
 
-        public bool ShowSpaceAsUnicode { get; set; }
+        [ObservableProperty]
+        private bool showSpaceAsUnicode;
 
-        [DefaultValue(true)]
-        public bool ShowMouseClicks { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue(true)]
+        private bool showMouseClicks;
 
-        [DefaultValue(true)]
-        public bool ShowMouseClickKeys { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue(true)]
+        private bool showMouseClickKeys;
 
-        [DefaultValue(true)]
-        public bool ShowMouseScrollKeys { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue(true)]
+        private bool showMouseScrollKeys;
 
-        [DefaultValue(40)]
-        public int MouseKeySize { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue(40)]
+        private int mouseKeySize;
 
-        [DefaultValue("OrangeRed")]
-        public string LeftClickColor { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue("OrangeRed")]
+        private string leftClickColor;
 
-        [DefaultValue("RoyalBlue")]
-        public string RightClickColor { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue("RoyalBlue")]
+        private string rightClickColor;
 
-        [DefaultValue("Gold")]
-        public string ScrollClickColor { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue("Gold")]
+        private string scrollClickColor;
 
-        [DefaultValue("Peru")]
-        public string XButton1ClickColor { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue("Peru")]
+        private string xButton1ClickColor;
 
-        [DefaultValue("Plum")]
-        public string XButton2ClickColor { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue("Plum")]
+        private string xButton2ClickColor;
 
-        [DefaultValue(1)]
-        public double ClickStartScale { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue(1)]
+        private double clickStartScale;
 
-        [DefaultValue(4)]
-        public double ClickStopScale { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue(4)]
+        private double clickStopScale;
 
-        [DefaultValue(3700)]
-        public int ClickFadeDelay { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue(3700)]
+        private int clickFadeDelay;
 
-        [DefaultValue(1)]
-        public double ClickStartBorder { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue(1)]
+        private double clickStartBorder;
 
-        [DefaultValue(0.8)]
-        public double ClickStartOpacity { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue(0.8)]
+        private double clickStartOpacity;
 
-        [DefaultValue(2)]
-        public double ClickStopBorder { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue(2)]
+        private double clickStopBorder;
 
-        [DefaultValue(0)]
-        public double ClickStopOpacity { get; set; }
+        [ObservableProperty]
+        [property: DefaultValue(0)]
+        private double clickStopOpacity;
 
-        public string ClickColor { get; set; }
+        [ObservableProperty]
+        private string clickColor;
+
+        /// <summary>
+        /// Optional folder path for additional user-supplied keymap YAML files.
+        /// </summary>
+        [ObservableProperty]
+        [property: DefaultValue("")]
+        private string customKeymapsFolder;
+
+        /// <summary>
+        /// UI language code: "" (English), "es" (Spanish), "pt-BR" (Portuguese Brazil).
+        /// </summary>
+        [ObservableProperty]
+        [property: DefaultValue("")]
+        private string language;
     }
 }

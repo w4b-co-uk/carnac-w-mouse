@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -13,7 +13,7 @@ namespace Carnac.Logic {
         [DllImport("gdi32.dll", SetLastError = true)]
         private static extern bool DeleteObject(IntPtr hObject);
 
-        private static readonly Dictionary<string, ImageSource> icons = new Dictionary<string, ImageSource>();
+        private static readonly ConcurrentDictionary<string, ImageSource> icons = new();
 
         private static Icon GetProcessIcon(string processFileName) {
             Icon icon = Icon.ExtractAssociatedIcon(processFileName);
@@ -30,18 +30,16 @@ namespace Carnac.Logic {
                 Int32Rect.Empty,
                 BitmapSizeOptions.FromEmptyOptions());
 
-            return !DeleteObject(hBitmap) ? throw new Win32Exception() : wpfBitmap;
+            if (!DeleteObject(hBitmap)) throw new Win32Exception();
+            wpfBitmap.Freeze();
+            return wpfBitmap;
         }
 
         public static ImageSource GetProcessIconAsImageSource(string processFileName) {
-            if (icons.ContainsKey(processFileName)) {
-                return icons[processFileName];
-            } else {
-                Icon icon = GetProcessIcon(processFileName);
-                ImageSource image = IconToImageSource(icon);
-                icons.Add(processFileName, image);
-                return image;
-            }
+            return icons.GetOrAdd(processFileName, key => {
+                Icon icon = GetProcessIcon(key);
+                return IconToImageSource(icon);
+            });
         }
     }
 }

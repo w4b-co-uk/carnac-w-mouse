@@ -1,10 +1,11 @@
-﻿using Carnac.Logic;
+using Carnac.Logic;
 using Carnac.Logic.KeyMonitor;
 using Carnac.Logic.Models;
+using Carnac.Logic.MouseMonitor;
 using Carnac.Tests;
 using Microsoft.Win32;
 using NSubstitute;
-using SettingsProviderNet;
+using Carnac.Logic.Settings;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -17,19 +18,23 @@ namespace Carnac.tests {
         private readonly IPasswordModeService passwordModeService;
         private readonly IDesktopLockEventService desktopLockEventService;
         private readonly ISettingsProvider settingsProvider;
+        private readonly IInterceptMouse interceptMouse;
 
         public KeyProviderTests() {
             passwordModeService = new PasswordModeService();
             desktopLockEventService = Substitute.For<IDesktopLockEventService>();
             _ = desktopLockEventService.GetSessionSwitchStream().Returns(Observable.Never<SessionSwitchEventArgs>());
             settingsProvider = Substitute.For<ISettingsProvider>();
+            _ = settingsProvider.GetSettings<PopupSettings>().Returns(new PopupSettings());
+            interceptMouse = Substitute.For<IInterceptMouse>();
+            _ = interceptMouse.GetKeyStream().Returns(Observable.Empty<InterceptKeyEventArgs>());
         }
 
         [Fact]
         public async Task ctrlshiftl_is_processed_correctly() {
             // arrange
             KeyPlayer player = KeyStreams.CtrlShiftL();
-            KeyProvider provider = new(player, passwordModeService, desktopLockEventService, settingsProvider);
+            KeyProvider provider = new(player, interceptMouse, passwordModeService, desktopLockEventService, settingsProvider);
 
             // act
             System.Collections.Generic.IList<KeyPress> processedKeys = await provider.GetKeyStream().ToList();
@@ -42,7 +47,7 @@ namespace Carnac.tests {
         public async Task shift_is_not_outputted_when_is_being_used_as_a_modifier_key() {
             // arrange
             KeyPlayer player = KeyStreams.ShiftL();
-            KeyProvider provider = new(player, passwordModeService, desktopLockEventService, settingsProvider);
+            KeyProvider provider = new(player, interceptMouse, passwordModeService, desktopLockEventService, settingsProvider);
 
             // act
             System.Collections.Generic.IList<KeyPress> processedKeys = await provider.GetKeyStream().ToList();
@@ -56,7 +61,7 @@ namespace Carnac.tests {
         public async Task key_without_shift_is_lowercase() {
             // arrange
             KeyPlayer player = KeyStreams.LetterL();
-            KeyProvider provider = new(player, passwordModeService, desktopLockEventService, settingsProvider);
+            KeyProvider provider = new(player, interceptMouse, passwordModeService, desktopLockEventService, settingsProvider);
 
             // act
             System.Collections.Generic.IList<KeyPress> processedKeys = await provider.GetKeyStream().ToList();
@@ -69,7 +74,7 @@ namespace Carnac.tests {
         public async Task verify_number() {
             // arrange
             KeyPlayer player = KeyStreams.Number1();
-            KeyProvider provider = new(player, passwordModeService, desktopLockEventService, settingsProvider);
+            KeyProvider provider = new(player, interceptMouse, passwordModeService, desktopLockEventService, settingsProvider);
 
             // act
             System.Collections.Generic.IList<KeyPress> processedKeys = await provider.GetKeyStream().ToList();
@@ -82,7 +87,7 @@ namespace Carnac.tests {
         public async Task verify_shift_number() {
             // arrange
             KeyPlayer player = KeyStreams.ExclaimationMark();
-            KeyProvider provider = new(player, passwordModeService, desktopLockEventService, settingsProvider);
+            KeyProvider provider = new(player, interceptMouse, passwordModeService, desktopLockEventService, settingsProvider);
 
             // act
             System.Collections.Generic.IList<KeyPress> processedKeys = await provider.GetKeyStream().ToList();
@@ -95,7 +100,7 @@ namespace Carnac.tests {
         public async Task keyprovider_detects_windows_key_presses() {
             // arrange
             KeyPlayer player = KeyStreams.WinkeyE();
-            KeyProvider provider = new(player, passwordModeService, desktopLockEventService, settingsProvider);
+            KeyProvider provider = new(player, interceptMouse, passwordModeService, desktopLockEventService, settingsProvider);
 
             // act
             System.Collections.Generic.IList<KeyPress> processedKeys = await provider.GetKeyStream().ToList();
@@ -110,7 +115,7 @@ namespace Carnac.tests {
             string currentProcessName = AssociatedProcessUtilities.GetAssociatedProcess().ProcessName;
             _ = settingsProvider.GetSettings<PopupSettings>().Returns(new PopupSettings() { ProcessFilterExpression = currentProcessName });
             KeyPlayer player = KeyStreams.LetterL();
-            KeyProvider provider = new(player, passwordModeService, desktopLockEventService, settingsProvider);
+            KeyProvider provider = new(player, interceptMouse, passwordModeService, desktopLockEventService, settingsProvider);
 
             // act
             System.Collections.Generic.IList<KeyPress> processedKeys = await provider.GetKeyStream().ToList();
@@ -124,7 +129,7 @@ namespace Carnac.tests {
             // arrange
             _ = settingsProvider.GetSettings<PopupSettings>().Returns(new PopupSettings() { ProcessFilterExpression = "notepad" });
             KeyPlayer player = KeyStreams.LetterL();
-            KeyProvider provider = new(player, passwordModeService, desktopLockEventService, settingsProvider);
+            KeyProvider provider = new(player, interceptMouse, passwordModeService, desktopLockEventService, settingsProvider);
 
             // act
             System.Collections.Generic.IList<KeyPress> processedKeys = await provider.GetKeyStream().ToList();

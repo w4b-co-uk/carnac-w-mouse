@@ -1,4 +1,6 @@
 using Carnac.Logic.Models;
+using Carnac.Logic.Settings;
+using Carnac.logic.Models;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -9,16 +11,26 @@ namespace Carnac.Logic {
     public class ShortcutProvider: IShortcutProvider {
         private readonly List<ShortcutCollection> shortcuts;
 
-        public ShortcutProvider() {
-            string folder = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName) + @"\Keymaps\";
-            string filter = "*.yml";
-            if (!Directory.Exists(folder)) {
-                shortcuts = new List<ShortcutCollection>();
-                return;
-            }
-            string[] files = Directory.GetFiles(folder, filter);
+        public ShortcutProvider(ISettingsProvider settingsProvider) {
+            List<string> allFiles = new();
 
-            shortcuts = GetYamlMappings(files).Select(GetShortcuts).ToList();
+            // Built-in keymaps shipped with the app
+            string builtInFolder = Path.Combine(
+                Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), "Keymaps");
+            if (Directory.Exists(builtInFolder)) {
+                allFiles.AddRange(Directory.GetFiles(builtInFolder, "*.yml"));
+            }
+
+            // User-supplied keymaps from custom folder
+            PopupSettings settings = settingsProvider.GetSettings<PopupSettings>();
+            if (!string.IsNullOrWhiteSpace(settings.CustomKeymapsFolder)
+                && Directory.Exists(settings.CustomKeymapsFolder)) {
+                allFiles.AddRange(Directory.GetFiles(settings.CustomKeymapsFolder, "*.yml"));
+            }
+
+            shortcuts = allFiles.Count > 0
+                ? GetYamlMappings(allFiles).Select(GetShortcuts).ToList()
+                : new List<ShortcutCollection>();
         }
 
         public List<KeyShortcut> GetShortcutsStartingWith(KeyPress keys) {

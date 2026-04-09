@@ -3,7 +3,7 @@ using Carnac.Logic.KeyMonitor;
 using Carnac.Logic.Models;
 using Microsoft.Reactive.Testing;
 using NSubstitute;
-using SettingsProviderNet;
+using Carnac.Logic.Settings;
 using Shouldly;
 using System;
 using System.Collections.ObjectModel;

@@ -1,7 +1,7 @@
 ﻿using Carnac.Logic;
 using Carnac.Tests;
 using NSubstitute;
-using SettingsProviderNet;
+using Carnac.Logic.Settings;
 using Carnac.logic.Models;
 using Carnac.UI;
 using Xunit;

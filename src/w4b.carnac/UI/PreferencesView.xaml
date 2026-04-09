@@ -15,6 +15,8 @@
     Foreground="{DynamicResource BlackBrush}"
     Height="875"
     Icon="../icon.ico"
+    MinHeight="875"
+    MinWidth="610"
     SaveWindowPosition="True"
     ShowMaxRestoreButton="False"
     ShowMinButton="False"
@@ -50,7 +52,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <TabControl>
-        <TabItem Header="General">
+        <TabItem Header="{Binding TabGeneral, Source={x:Static utilities:Loc.Instance}}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="274*" />
@@ -68,7 +70,7 @@
                     VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Vertical">
                         <ui:PositionOnMonitorSelector />
-                        <w4bui:ThreeColumnControl LabelText="Top Offset">
+                        <w4bui:ThreeColumnControl LabelText="{Binding TopOffset, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <Slider
                                     IsSnapToTickEnabled="True"
@@ -83,7 +85,7 @@
                                 <TextBox Foreground="White" Text="{Binding Settings.TopOffset}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Bottom Offset">
+                        <w4bui:ThreeColumnControl LabelText="{Binding BottomOffset, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <Slider
                                     IsSnapToTickEnabled="True"
@@ -98,7 +100,7 @@
                                 <TextBox Foreground="White" Text="{Binding Settings.BottomOffset}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Left Offset">
+                        <w4bui:ThreeColumnControl LabelText="{Binding LeftOffset, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <Slider
                                     IsSnapToTickEnabled="True"
@@ -113,7 +115,7 @@
                                 <TextBox Foreground="White" Text="{Binding Settings.LeftOffset}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Right Offset">
+                        <w4bui:ThreeColumnControl LabelText="{Binding RightOffset, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <Slider
                                     IsSnapToTickEnabled="True"
@@ -128,6 +130,15 @@
                                 <TextBox Foreground="White" Text="{Binding Settings.RightOffset}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
+                        <w4bui:ThreeColumnControl LabelText="{Binding Language, Source={x:Static utilities:Loc.Instance}}">
+                            <w4bui:ThreeColumnControl.MainContent>
+                                <ComboBox
+                                    ItemsSource="{Binding AvailableLanguages}"
+                                    DisplayMemberPath="Name"
+                                    SelectedValue="{Binding SelectedLanguage}"
+                                    SelectedValuePath="Code" />
+                            </w4bui:ThreeColumnControl.MainContent>
+                        </w4bui:ThreeColumnControl>
                         <Separator Height="10" Margin="0" />
                     </StackPanel>
                 </ScrollViewer>
@@ -139,17 +150,17 @@
                     Orientation="Horizontal">
                     <Button
                         Command="{Binding ResetToDefaultsCommand}"
-                        Content="Reset to Defaults"
+                        Content="{Binding ResetToDefaults, Source={x:Static utilities:Loc.Instance}}"
                         Margin="0,0,5,0"
-                        Width="150" />
+                        Padding="10,2" />
                     <Button
                         Command="{Binding SaveCommand}"
-                        Content="Save"
-                        Width="50" />
+                        Content="{Binding Save, Source={x:Static utilities:Loc.Instance}}"
+                        Padding="10,2" />
                 </StackPanel>
             </Grid>
         </TabItem>
-        <TabItem Header="Keyboard">
+        <TabItem Header="{Binding TabKeyboard, Source={x:Static utilities:Loc.Instance}}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -160,7 +171,7 @@
                     Margin="10,0,10,0"
                     VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Vertical">
-                        <w4bui:ThreeColumnControl LabelText="Popup Text Width">
+                        <w4bui:ThreeColumnControl LabelText="{Binding PopupTextWidth, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <Slider
                                     IsSnapToTickEnabled="True"
@@ -175,7 +186,7 @@
                                 <TextBox Foreground="White" Text="{Binding Settings.ItemMaxWidth}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Popup Opacity">
+                        <w4bui:ThreeColumnControl LabelText="{Binding PopupOpacity, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <Slider
                                     IsSnapToTickEnabled="True"
@@ -190,7 +201,7 @@
                                 <TextBox Foreground="White" Text="{Binding Settings.ItemOpacity}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Popup Fade Delay (sec)">
+                        <w4bui:ThreeColumnControl LabelText="{Binding PopupFadeDelay, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <Slider
                                     IsSnapToTickEnabled="True"
@@ -205,7 +216,22 @@
                                 <TextBox Foreground="White" Text="{Binding Settings.ItemFadeDelay}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Font Size">
+                        <w4bui:ThreeColumnControl LabelText="{Binding MaxMessages, Source={x:Static utilities:Loc.Instance}}">
+                            <w4bui:ThreeColumnControl.MainContent>
+                                <Slider
+                                    IsSnapToTickEnabled="True"
+                                    LargeChange="5"
+                                    Maximum="50"
+                                    Minimum="0"
+                                    SmallChange="1"
+                                    TickFrequency="1"
+                                    Value="{Binding Settings.MaxMessages}" />
+                            </w4bui:ThreeColumnControl.MainContent>
+                            <w4bui:ThreeColumnControl.OptionalContent>
+                                <TextBox Foreground="White" Text="{Binding Settings.MaxMessages}" />
+                            </w4bui:ThreeColumnControl.OptionalContent>
+                        </w4bui:ThreeColumnControl>
+                        <w4bui:ThreeColumnControl LabelText="{Binding FontSize, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <Slider
                                     IsSnapToTickEnabled="True"
@@ -220,7 +246,7 @@
                                 <TextBox Foreground="White" Text="{Binding Settings.FontSize}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Font Colour">
+                        <w4bui:ThreeColumnControl LabelText="{Binding FontColour, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <ComboBox
                                     ItemTemplate="{StaticResource ColourPickerTemplate}"
@@ -228,7 +254,7 @@
                                     SelectedItem="{Binding FontColor}" />
                             </w4bui:ThreeColumnControl.MainContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Background Color">
+                        <w4bui:ThreeColumnControl LabelText="{Binding BackgroundColor, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <ComboBox
                                     ItemTemplate="{StaticResource ColourPickerTemplate}"
@@ -236,31 +262,42 @@
                                     SelectedItem="{Binding ItemBackgroundColor}" />
                             </w4bui:ThreeColumnControl.MainContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Shortcuts Only">
+                        <w4bui:ThreeColumnControl LabelText="{Binding ShortcutsOnly, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
-                                <CheckBox Content="Only show keys that are listed in keymaps folder" IsChecked="{Binding Settings.DetectShortcutsOnly}" />
+                                <CheckBox Content="{Binding ShortcutsOnlyDesc, Source={x:Static utilities:Loc.Instance}}" IsChecked="{Binding Settings.DetectShortcutsOnly}" />
                             </w4bui:ThreeColumnControl.MainContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Only keys with Modifiers">
+                        <w4bui:ThreeColumnControl LabelText="{Binding CustomKeymaps, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
-                                <CheckBox Content="Only show keys that have ctrl, shift, alt or windows" IsChecked="{Binding Settings.ShowOnlyModifiers}" />
+                                <StackPanel Orientation="Vertical">
+                                    <DockPanel>
+                                        <Button Content="{Binding Browse, Source={x:Static utilities:Loc.Instance}}" Command="{Binding BrowseKeymapsFolderCommand}" DockPanel.Dock="Right" Margin="5,0,0,0" Padding="10,2" />
+                                        <TextBox Text="{Binding Settings.CustomKeymapsFolder}" />
+                                    </DockPanel>
+                                    <TextBlock HorizontalAlignment="Left" Text="{Binding CustomKeymapsDesc, Source={x:Static utilities:Loc.Instance}}" />
+                                </StackPanel>
                             </w4bui:ThreeColumnControl.MainContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Show Space as ␣">
+                        <w4bui:ThreeColumnControl LabelText="{Binding OnlyModifiers, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
-                                <CheckBox Content="Show Space as Unicode character '␣'" IsChecked="{Binding Settings.ShowSpaceAsUnicode}" />
+                                <CheckBox Content="{Binding OnlyModifiersDesc, Source={x:Static utilities:Loc.Instance}}" IsChecked="{Binding Settings.ShowOnlyModifiers}" />
                             </w4bui:ThreeColumnControl.MainContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Show Application Icon">
+                        <w4bui:ThreeColumnControl LabelText="{Binding ShowSpaceAsUnicode, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
-                                <CheckBox Content="Display the icon of the active application" IsChecked="{Binding Settings.ShowApplicationIcon}" />
+                                <CheckBox Content="{Binding ShowSpaceAsUnicodeDesc, Source={x:Static utilities:Loc.Instance}}" IsChecked="{Binding Settings.ShowSpaceAsUnicode}" />
                             </w4bui:ThreeColumnControl.MainContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Process Filter">
+                        <w4bui:ThreeColumnControl LabelText="{Binding ShowApplicationIcon, Source={x:Static utilities:Loc.Instance}}">
+                            <w4bui:ThreeColumnControl.MainContent>
+                                <CheckBox Content="{Binding ShowApplicationIconDesc, Source={x:Static utilities:Loc.Instance}}" IsChecked="{Binding Settings.ShowApplicationIcon}" />
+                            </w4bui:ThreeColumnControl.MainContent>
+                        </w4bui:ThreeColumnControl>
+                        <w4bui:ThreeColumnControl LabelText="{Binding ProcessFilter, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <StackPanel Orientation="Vertical">
                                     <TextBox Text="{Binding Settings.ProcessFilterExpression}" />
-                                    <TextBlock HorizontalAlignment="Left">Only show keys from processes matching this regular expression</TextBlock>
+                                    <TextBlock HorizontalAlignment="Left" Text="{Binding ProcessFilterDesc, Source={x:Static utilities:Loc.Instance}}" />
                                 </StackPanel>
                             </w4bui:ThreeColumnControl.MainContent>
                         </w4bui:ThreeColumnControl>
@@ -273,18 +310,18 @@
                     Orientation="Horizontal">
                     <Button
                         Command="{Binding ResetToDefaultsCommand}"
-                        Content="Reset to Defaults"
+                        Content="{Binding ResetToDefaults, Source={x:Static utilities:Loc.Instance}}"
                         Margin="0,0,5,0"
-                        Width="150" />
+                        Padding="10,2" />
                     <Button
                         Command="{Binding SaveCommand}"
-                        Content="Save"
-                        Width="50" />
+                        Content="{Binding Save, Source={x:Static utilities:Loc.Instance}}"
+                        Padding="10,2" />
                 </StackPanel>
             </Grid>
 
         </TabItem>
-        <TabItem Header="Mouse">
+        <TabItem Header="{Binding TabMouse, Source={x:Static utilities:Loc.Instance}}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -295,22 +332,22 @@
                     Margin="10,0,10,0"
                     VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Vertical">
-                        <w4bui:ThreeColumnControl LabelText="Show mouse clicks">
+                        <w4bui:ThreeColumnControl LabelText="{Binding ShowMouseClicks, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <CheckBox IsChecked="{Binding Settings.ShowMouseClicks}" />
                             </w4bui:ThreeColumnControl.MainContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Show clicks as keys">
+                        <w4bui:ThreeColumnControl LabelText="{Binding ShowClicksAsKeys, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <CheckBox IsChecked="{Binding Settings.ShowMouseClickKeys}" />
                             </w4bui:ThreeColumnControl.MainContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Show scroll as keys">
+                        <w4bui:ThreeColumnControl LabelText="{Binding ShowScrollAsKeys, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <CheckBox IsChecked="{Binding Settings.ShowMouseScrollKeys}" />
                             </w4bui:ThreeColumnControl.MainContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Mouse Key Size">
+                        <w4bui:ThreeColumnControl LabelText="{Binding MouseKeySize, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <Slider
                                     IsSnapToTickEnabled="True"
@@ -325,7 +362,7 @@
                                 <TextBox Foreground="White" Text="{Binding Settings.MouseKeySize}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Start Scale">
+                        <w4bui:ThreeColumnControl LabelText="{Binding StartScale, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <Slider
                                     IsSnapToTickEnabled="True"
@@ -340,7 +377,7 @@
                                 <TextBox Foreground="White" Text="{Binding Settings.ClickStartScale}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Start Border">
+                        <w4bui:ThreeColumnControl LabelText="{Binding StartBorder, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <Slider
                                     IsSnapToTickEnabled="True"
@@ -355,7 +392,7 @@
                                 <TextBox Foreground="White" Text="{Binding Settings.ClickStartBorder}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Start Opacity">
+                        <w4bui:ThreeColumnControl LabelText="{Binding StartOpacity, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <Slider
                                     IsSnapToTickEnabled="True"
@@ -370,7 +407,7 @@
                                 <TextBox Foreground="White" Text="{Binding Settings.ClickStartOpacity}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Stop Scale">
+                        <w4bui:ThreeColumnControl LabelText="{Binding StopScale, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <Slider
                                     IsSnapToTickEnabled="True"
@@ -385,7 +422,7 @@
                                 <TextBox Foreground="White" Text="{Binding Settings.ClickStopScale}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Stop Border">
+                        <w4bui:ThreeColumnControl LabelText="{Binding StopBorder, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <Slider
                                     IsSnapToTickEnabled="True"
@@ -400,7 +437,7 @@
                                 <TextBox Foreground="White" Text="{Binding Settings.ClickStopBorder, StringFormat={}{0:F2}}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Stop Opacity">
+                        <w4bui:ThreeColumnControl LabelText="{Binding StopOpacity, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <Slider
                                     IsSnapToTickEnabled="True"
@@ -415,7 +452,7 @@
                                 <TextBox Foreground="White" Text="{Binding Settings.ClickStopOpacity}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Circle Fade Delay (ms)">
+                        <w4bui:ThreeColumnControl LabelText="{Binding CircleFadeDelay, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <Slider
                                     IsSnapToTickEnabled="True"
@@ -430,7 +467,7 @@
                                 <TextBox Foreground="White" Text="{Binding Settings.ClickFadeDelay}" />
                             </w4bui:ThreeColumnControl.OptionalContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Left Click Color">
+                        <w4bui:ThreeColumnControl LabelText="{Binding LeftClickColor, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <ComboBox
                                     ItemTemplate="{StaticResource ColourPickerTemplate}"
@@ -438,7 +475,7 @@
                                     SelectedItem="{Binding LeftClickColor}" />
                             </w4bui:ThreeColumnControl.MainContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Right Click Color">
+                        <w4bui:ThreeColumnControl LabelText="{Binding RightClickColor, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <ComboBox
                                     ItemTemplate="{StaticResource ColourPickerTemplate}"
@@ -446,7 +483,7 @@
                                     SelectedItem="{Binding RightClickColor}" />
                             </w4bui:ThreeColumnControl.MainContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="Scroll Click Color">
+                        <w4bui:ThreeColumnControl LabelText="{Binding ScrollClickColor, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <ComboBox
                                     ItemTemplate="{StaticResource ColourPickerTemplate}"
@@ -454,7 +491,7 @@
                                     SelectedItem="{Binding ScrollClickColor}" />
                             </w4bui:ThreeColumnControl.MainContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="XButton1 Click Color">
+                        <w4bui:ThreeColumnControl LabelText="{Binding XButton1ClickColor, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <ComboBox
                                     ItemTemplate="{StaticResource ColourPickerTemplate}"
@@ -462,7 +499,7 @@
                                     SelectedItem="{Binding XButton1ClickColor}" />
                             </w4bui:ThreeColumnControl.MainContent>
                         </w4bui:ThreeColumnControl>
-                        <w4bui:ThreeColumnControl LabelText="XButton2 Click Color">
+                        <w4bui:ThreeColumnControl LabelText="{Binding XButton2ClickColor, Source={x:Static utilities:Loc.Instance}}">
                             <w4bui:ThreeColumnControl.MainContent>
                                 <ComboBox
                                     ItemTemplate="{StaticResource ColourPickerTemplate}"
@@ -480,17 +517,17 @@
                     Orientation="Horizontal">
                     <Button
                         Command="{Binding ResetToDefaultsCommand}"
-                        Content="Reset to Defaults"
+                        Content="{Binding ResetToDefaults, Source={x:Static utilities:Loc.Instance}}"
                         Margin="0,0,5,0"
-                        Width="150" />
+                        Padding="10,2" />
                     <Button
                         Command="{Binding SaveCommand}"
-                        Content="Save"
-                        Width="50" />
+                        Content="{Binding Save, Source={x:Static utilities:Loc.Instance}}"
+                        Padding="10,2" />
                 </StackPanel>
             </Grid>
         </TabItem>
-        <TabItem Header="About">
+        <TabItem Header="{Binding TabAbout, Source={x:Static utilities:Loc.Instance}}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -511,7 +548,7 @@
                                     Margin="0,-7,0,0"
                                     TextWrapping="Wrap"
                                     VerticalAlignment="Bottom">
-                                    <Run Text="a code52 project" />
+                                    <Run Text="{Binding AboutCode52, Source={x:Static utilities:Loc.Instance}, Mode=OneWay}" />
                                 </TextBlock>
                                 <TextBlock
                                     FontFamily="Segoe UI Light"
@@ -519,7 +556,7 @@
                                     Foreground="White"
                                     HorizontalAlignment="Left"
                                     Margin="0,8,0,0"
-                                    Text="a project by"
+                                    Text="{Binding AboutProjectBy, Source={x:Static utilities:Loc.Instance}}"
                                     TextWrapping="Wrap" />
                                 <TextBlock
                                     Foreground="White"
@@ -533,7 +570,7 @@
                                     HorizontalAlignment="Left"
                                     Margin="0,10,0,0"
                                     TextWrapping="Wrap">
-                                    <Run Text="Carnac uses" />
+                                    <Run Text="{Binding AboutUses, Source={x:Static utilities:Loc.Instance}, Mode=OneWay}" />
                                 </TextBlock>
                                 <TextBlock
                                     Foreground="White"
@@ -550,13 +587,13 @@
                                     VerticalAlignment="Top"
                                     Width="200" />
                                 <TextBlock
-                                    FontSize="69.333"
+                                    FontSize="50"
                                     FontWeight="Bold"
                                     Foreground="White"
                                     HorizontalAlignment="Left"
                                     Margin="-4,0,0,0"
                                     TextWrapping="Wrap">
-                                    <Run Text="Carnac" />
+                                    <Run Text="Carnac" /><LineBreak /><Run Text="w/ Mouse" />
                                 </TextBlock>
                             </StackPanel>
                         </StackPanel>
@@ -578,14 +615,14 @@
                             Margin="0,0,5,10"
                             TextWrapping="Wrap"
                             VerticalAlignment="Center">
-                            <Run Text="version " /><Run Text=" " /><Run Text="{Binding Version, Mode=OneTime}" />
+                            <Run Text="{Binding AboutVersion, Source={x:Static utilities:Loc.Instance}, Mode=OneWay}" /><Run Text=" " /><Run Text="{Binding Version, Mode=OneTime}" />
                         </TextBlock>
                         <Button
                             Command="{Binding VisitCommand}"
-                            Content="Visit Carnac Website"
+                            Content="{Binding VisitWebsite, Source={x:Static utilities:Loc.Instance}}"
                             HorizontalAlignment="Center"
                             Margin="0,0,5,0"
-                            Width="145" />
+                            Padding="10,2" />
                     </StackPanel>
                 </StackPanel>
             </Grid>
